@@ -19,11 +19,14 @@ import androidx.core.app.NotificationManagerCompat;
  */
 
 public class NotificationController {
+    public static final String ACTION_DISMISS = "de.rwu.medi_app.DISMISS";
     public static final String IDENTIFICATION = "identification";
     private static final String CHANNEL_ID = "remindChannel";
     public static final String channelName = "Erinnerungen";
     public static final String channelDescription = "Zeigt Erinnerungen für Medikamente an";
     public final int startnotID = 1;
+    private final int contentRqC = 0;
+    private final int dismissRqC = 2;
     private int importance = NotificationManager.IMPORTANCE_DEFAULT;
     private Context context;
     private NotificationCompat.Builder builder;
@@ -56,13 +59,25 @@ public class NotificationController {
      * Setzt eine Start-Notification wenn die App gestartet wird
      */
     public void setStartNotification() {
+        Intent contentIntent = new Intent(context, CallActivity.class);
+        contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent dismissIntent = new Intent(context, NotificationReceiver.class);
+        dismissIntent.setAction(ACTION_DISMISS);
+        PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, dismissRqC, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Notification")
                 .setContentText(context.getString(R.string.NotContent))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingcontentInt)
+                .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
                 .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
         notificationManager.notify(startnotID, builder.build());
+    }
+
+    public void dismissNotification(){
+        notificationManager.cancel(startnotID);
     }
 }
 

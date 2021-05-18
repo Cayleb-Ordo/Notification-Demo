@@ -5,4 +5,5 @@
     <string name="Channel1ID">Channel1</string>
     <!-- Notification-Contents-->
     <string name="NotContent">Ich bin eine Push-Nachricht</string>
+    <string name="NotActionClose">Schließen</string>
 </resources>
