@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Notification-Demo</string>
+    <string name="app_name">Notification-Demo App</string>
+    <string name="fab_content">Erstellt eine neue Notification</string>
+    <!-- Channel Names-->
+    <string name="Channel1ID">Channel1</string>
+    <!-- Notification-Contents-->
+    <string name="NotContent">Ich bin eine Push-Nachricht</string>
 </resources>
