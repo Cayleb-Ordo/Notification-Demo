@@ -4,6 +4,8 @@
     <!-- Channel Names-->
     <string name="Channel1ID">Channel1</string>
     <!-- Notification-Contents-->
+    <string name="NotTitleCh1">Kanal 1</string>
+    <string name="NotTitleCh2">Kanal 2</string>
     <string name="NotContent">Ich bin eine Push-Nachricht</string>
     <string name="NotActionClose">Schließen</string>
 </resources>

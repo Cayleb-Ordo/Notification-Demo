@@ -16,6 +16,6 @@ public class MainActivity extends AppCompatActivity {
         notificationController = new NotificationController(this.getApplicationContext());
         notificationController.createNotificationChannel();
         setContentView(R.layout.main_activity);
-        notificationController.setStartNotification();
+        notificationController.setNotificationChannel1();
     }
 }

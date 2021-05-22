@@ -6,8 +6,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -56,9 +54,9 @@ public class NotificationController {
     }
 
     /**
-     * Setzt eine Start-Notification wenn die App gestartet wird
+     * Setzt eine Notification auf Kanal 1
      */
-    public void setStartNotification() {
+    public void setNotificationChannel1() {
         Intent contentIntent = new Intent(context, CallActivity.class);
         contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Intent dismissIntent = new Intent(context, NotificationReceiver.class);
@@ -67,7 +65,7 @@ public class NotificationController {
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, dismissRqC, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("Notification")
+                .setContentTitle(context.getString(R.string.NotTitleCh1))
                 .setContentText(context.getString(R.string.NotContent))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingcontentInt)
@@ -76,6 +74,30 @@ public class NotificationController {
         notificationManager.notify(startnotID, builder.build());
     }
 
+    /**
+     * Setzt eine Notification auf Kanal 1
+     */
+    public void setNotificationChannel2() {
+        Intent contentIntent = new Intent(context, CallActivity.class);
+        contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent dismissIntent = new Intent(context, NotificationReceiver.class);
+        dismissIntent.setAction(ACTION_DISMISS);
+        PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, dismissRqC, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle(context.getString(R.string.NotTitleCh2))
+                .setContentText(context.getString(R.string.NotContent))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingcontentInt)
+                .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
+                .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
+        notificationManager.notify(startnotID, builder.build());
+    }
+
+    /**
+     * Lässt die Notification verschwinden
+     */
     public void dismissNotification(){
         notificationManager.cancel(startnotID);
     }
