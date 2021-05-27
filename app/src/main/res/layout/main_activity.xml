@@ -11,8 +11,8 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <include
-            android:id="@+id/main_toolbar"
-            layout="@layout/main_appbar" />
+            android:id="@+id/appBar"
+            layout="@layout/appbar" />
 
     </com.google.android.material.appbar.AppBarLayout>
     <include

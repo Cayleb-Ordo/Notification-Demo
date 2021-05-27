@@ -1,13 +1,12 @@
 package de.fentzl.notification_demo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
     public static final String debugTag = "NotDemo";
-    private Intent creminderoverviewIntent;
     private NotificationController notificationController;
 
     @Override
@@ -16,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
         notificationController = new NotificationController(this.getApplicationContext());
         notificationController.createNotificationChannel();
         setContentView(R.layout.main_activity);
-        notificationController.setNotificationChannel1();
+        //Toolbar
+        Toolbar toolbar = findViewById(R.id.appBar);
+        setSupportActionBar(toolbar);
+        setTitle(R.string.app_name);
     }
 }
