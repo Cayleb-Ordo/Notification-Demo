@@ -56,7 +56,7 @@ public class NotificationController {
     /**
      * Setzt eine Notification auf Kanal 1
      */
-    public void setNotificationChannel1() {
+    public void notifyChannel1() {
         Intent contentIntent = new Intent(context, CallActivity.class);
         contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Intent dismissIntent = new Intent(context, NotificationReceiver.class);
@@ -64,7 +64,7 @@ public class NotificationController {
         PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, dismissRqC, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.ic_channel1)
                 .setContentTitle(context.getString(R.string.NotTitleCh1))
                 .setContentText(context.getString(R.string.NotContent))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -77,7 +77,7 @@ public class NotificationController {
     /**
      * Setzt eine Notification auf Kanal 1
      */
-    public void setNotificationChannel2() {
+    public void notifyChannel2() {
         Intent contentIntent = new Intent(context, CallActivity.class);
         contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Intent dismissIntent = new Intent(context, NotificationReceiver.class);
@@ -85,7 +85,7 @@ public class NotificationController {
         PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, dismissRqC, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.ic_channel2)
                 .setContentTitle(context.getString(R.string.NotTitleCh2))
                 .setContentText(context.getString(R.string.NotContent))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

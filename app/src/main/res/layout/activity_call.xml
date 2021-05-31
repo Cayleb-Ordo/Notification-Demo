@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".CallActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/callActivity_ABL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/main_appbar"
+            layout="@layout/appbar" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
