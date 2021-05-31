@@ -4,8 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
+import android.view.View;
 
 /**
  * Diese Klasse setzt je nach Benuztereingabe eine Bestimmte Notification
@@ -13,24 +12,32 @@ import android.view.Menu;
  * @version 1
  */
 public class CreateNotification extends AppCompatActivity {
-
+    private NotificationController notificationController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        notificationController = new NotificationController(this.getApplicationContext());
         setContentView(R.layout.activity_create_notification);
-         /*
+        /*
         Toolbar-Einstellungen
          */
-
         Toolbar toolbar = findViewById(R.id.main_appbar);
-        if (toolbar == null)
-            Log.d(MainActivity.debugTag,"Toolbar wurde nicht erstellt");
         setSupportActionBar(toolbar);
         setTitle(R.string.app_name);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+
+    /**
+     *
+     */
+    public void onChannel1ButtonCLicked(View view){
+        notificationController.notifyChannel1();
+    }
+
+    /**
+     *
+     */
+    public void onChannel2ButtonClicked(View view){
+        notificationController.notifyChannel2();
     }
 }

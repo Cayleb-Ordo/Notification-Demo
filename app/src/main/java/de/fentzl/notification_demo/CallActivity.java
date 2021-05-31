@@ -4,7 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.view.Menu;
+/**
+ * Wird aufgerufen wenn auf die Push-Nachricht geklickt wird
+ * @author Simon Fentzl
+ * @version 1
+ */
 
 public class CallActivity extends AppCompatActivity {
 
@@ -16,9 +20,5 @@ public class CallActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.main_appbar);
         setSupportActionBar(toolbar);
         setTitle(R.string.app_name);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
     }
 }

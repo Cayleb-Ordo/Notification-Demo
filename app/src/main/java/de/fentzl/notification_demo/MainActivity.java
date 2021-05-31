@@ -5,7 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         notificationController = new NotificationController(this.getApplicationContext());
-        notificationController.createNotificationChannel();
+        notificationController.createNotificationChannel(true);
         setContentView(R.layout.main_activity);
         //Toolbar
         Toolbar toolbar = findViewById(R.id.main_appbar);
@@ -39,10 +38,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(createNotIntent);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
     }
 }

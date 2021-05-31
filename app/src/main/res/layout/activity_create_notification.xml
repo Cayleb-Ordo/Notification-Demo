@@ -22,26 +22,28 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/bt_channel1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:background="@drawable/button_rounded"
         android:text="@string/CNotCh1"
         android:textColor="@color/CustomTextColor"
+        android:onClick="onChannel1ButtonCLicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/bt_channel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:background="@drawable/button_rounded"
         android:text="@string/CNotCh2"
         android:textColor="@color/CustomTextColor"
+        android:onClick="onChannel2ButtonClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/bt_channel1" />
 </androidx.constraintlayout.widget.ConstraintLayout>
