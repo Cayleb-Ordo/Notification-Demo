@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -24,7 +25,9 @@ public class NotificationController {
     public static final String channel2Name = "Kanal 2";
     public static final String channel1Description = "Nachrichten-Kanal 1";
     public static final String channel2Description = "Nachrichten-Kanal 2";
-    public final int defaultNotID = 1;
+    public static final String PAYLOAD = "payload";
+    public final int notCh1 = 1;
+    public final int notCh2 = 2;
     private final int contentRqC = 0;
     private final int dismissRqC = 2;
     private int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -34,6 +37,7 @@ public class NotificationController {
 
     /**
      * Konstruktor, damit der Notification Manager mit context initialisiert werden kann
+     *
      * @param context Aplikations-kontext
      */
     public NotificationController(Context context) {
@@ -41,6 +45,7 @@ public class NotificationController {
         this.notificationManager = NotificationManagerCompat.from(context);
         ;
     }
+
     /**
      * Erstellt den Notwendigen Kanal für Geräte über Android8.0
      */
@@ -74,7 +79,7 @@ public class NotificationController {
         Intent contentIntent = new Intent(context, CallActivity.class);
         contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Intent dismissIntent = new Intent(context, NotificationReceiver.class);
-        dismissIntent.setAction(ACTION_DISMISS);
+        dismissIntent.setAction(ACTION_DISMISS).putExtra(PAYLOAD,notCh1);
         PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, dismissRqC, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder = new NotificationCompat.Builder(context, CHANNEL1_ID)
@@ -85,7 +90,7 @@ public class NotificationController {
                 .setContentIntent(pendingcontentInt)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
                 .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
-        notificationManager.notify(defaultNotID, builder.build());
+        notificationManager.notify(notCh1, builder.build());
     }
 
     /**
@@ -95,7 +100,7 @@ public class NotificationController {
         Intent contentIntent = new Intent(context, CallActivity.class);
         contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Intent dismissIntent = new Intent(context, NotificationReceiver.class);
-        dismissIntent.setAction(ACTION_DISMISS);
+        dismissIntent.setAction(ACTION_DISMISS).putExtra(PAYLOAD,notCh2);
         PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, dismissRqC, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder = new NotificationCompat.Builder(context, CHANNEL2_ID)
@@ -106,14 +111,21 @@ public class NotificationController {
                 .setContentIntent(pendingcontentInt)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
                 .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
-        notificationManager.notify(defaultNotID, builder.build());
+        notificationManager.notify(notCh2, builder.build());
     }
 
     /**
      * Lässt die Notification verschwinden
      */
-    public void dismissNotification(){
-        notificationManager.cancel(defaultNotID);
+    public void dismissNotification(int id) {
+        Log.d(MainActivity.debugTag, "ID: " + Integer.toString(id));
+        if(id == notCh1) {
+            notificationManager.cancel(notCh1);
+        }else if (id == notCh2){
+        notificationManager.cancel(notCh2);
+    }else
+        Log.d(MainActivity.debugTag,"Das sollte nicht passieren");
     }
 }
+
 
