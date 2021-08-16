@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         create_remind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent createNotIntent = new Intent(v.getContext(), CreateNotification.class);
+                Intent createNotIntent = new Intent(v.getContext(), CreateNotificationsOverview.class);
                 startActivity(createNotIntent);
             }
         });

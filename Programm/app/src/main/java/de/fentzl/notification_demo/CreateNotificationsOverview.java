@@ -11,13 +11,13 @@ import android.view.View;
  * @author Simon Fentzl
  * @version 1
  */
-public class CreateNotification extends AppCompatActivity {
+public class CreateNotificationsOverview extends AppCompatActivity {
     private NotificationController notificationController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         notificationController = new NotificationController(this.getApplicationContext());
-        setContentView(R.layout.activity_create_notification);
+        setContentView(R.layout.activity_create_notifications_overview);
         /*
         Toolbar-Einstellungen
          */

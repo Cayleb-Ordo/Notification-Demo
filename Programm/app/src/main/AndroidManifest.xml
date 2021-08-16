@@ -17,13 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateNotification">
+        <activity android:name=".CreateNotificationsOverview">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.fentzl.notification_demo.CreateNotification" />
+                android:value="de.fentzl.notification_demo.CreateNotificationsOverview" />
         </activity>
 
         <receiver
