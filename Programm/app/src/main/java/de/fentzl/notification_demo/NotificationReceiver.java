@@ -16,9 +16,11 @@ public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         notificationController = new NotificationController(context);
+        notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD,0));
+        /*Diese Methode brauch man nur wenn man nicht den RequestCode des PendingIntent variiert, sondern den darunterliegenden normalen Intent.
         if(intent.getAction().equals(NotificationController.ACTION_DISMISS)){
             Log.d(MainActivity.debugTag, "IF-Statement Class NotificationReceiver, function onReceive \n No specific Action specified");
         } else
-            notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD,0));
+            notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD,0));*/
    }
 }

@@ -19,8 +19,6 @@ import androidx.core.app.NotificationManagerCompat;
 
 public class NotificationController {
     public static final String ACTION_DISMISS = "de.rwu.medi_app.DISMISS";
-    private static final String CHANNEL1_ID = "Channel1";
-    private static final String CHANNEL2_ID = "Channel2";
     public static final String channel1Name = "Kanal 1";
     public static final String channel2Name = "Kanal 2";
     public static final String channel1Description = "Nachrichten-Kanal 1";
@@ -28,8 +26,10 @@ public class NotificationController {
     public static final String PAYLOAD = "payload";
     public static final int notCh1 = 1;
     public static final int notCh2 = 2;
-    private final int contentRqC = 0;
-    private final int dismissRqC = 2;
+    private final String CLASS_NOTIFICATIONCONTROLLER = "de.fentzl.notification_demo.NotificationController";
+    private static final String CHANNEL1_ID = "Channel1";
+    private static final String CHANNEL2_ID = "Channel2";
+    private final int contentRqC = 1;
     private int importance = NotificationManager.IMPORTANCE_DEFAULT;
     private Context context;
     private NotificationCompat.Builder builder;
@@ -79,9 +79,12 @@ public class NotificationController {
         Intent contentIntent = new Intent(context, CallActivity.class);
         contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Intent dismissIntent = new Intent(context, NotificationReceiver.class);
-        dismissIntent.setAction(ACTION_DISMISS + notCh1).putExtra(PAYLOAD,notCh1);
+        /*Sollte man nicht den PendingIntent variiern, zb bei unterschiedlicher RequestID, kann man den normalen Intent unterscheidbar machen. Zb eine Eindeutige Action zuweisen.
+        dismissIntent.setAction(ACTION_DISMISS + notCH1).putExtra(PAYLOAD,notCh1);
+         */
+        dismissIntent.setAction(ACTION_DISMISS).putExtra(PAYLOAD,notCh1);
         PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, dismissRqC, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notCh1, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder = new NotificationCompat.Builder(context, CHANNEL1_ID)
                 .setSmallIcon(R.drawable.ic_channel1)
                 .setContentTitle(context.getString(R.string.NotTitleCh1))
@@ -100,9 +103,9 @@ public class NotificationController {
         Intent contentIntent = new Intent(context, CallActivity.class);
         contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Intent dismissIntent = new Intent(context, NotificationReceiver.class);
-        dismissIntent.setAction(ACTION_DISMISS + notCh2).putExtra(PAYLOAD,notCh2);
+        dismissIntent.setAction(ACTION_DISMISS).putExtra(PAYLOAD,notCh2);
         PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, dismissRqC, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notCh2, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder = new NotificationCompat.Builder(context, CHANNEL2_ID)
                 .setSmallIcon(R.drawable.ic_channel2)
                 .setContentTitle(context.getString(R.string.NotTitleCh2))
@@ -120,7 +123,7 @@ public class NotificationController {
      * Lässt die Notification verschwinden
      */
     public void dismissNotification(int id) {
-        Log.d(MainActivity.debugTag, "Class NotificationController, Line 122. ID: " + Integer.toString(id));
+        Log.d(MainActivity.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + Integer.toString(id));
         if(id == notCh1) {
             notificationManager.cancel(notCh1);
         }else if (id == notCh2){
