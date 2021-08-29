@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_activity_ABL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include
+            android:id="@+id/main_appbar"
+            layout="@layout/appbar" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <include
+        android:id="@+id/include_content_reply_receiver"
+        layout="@layout/content_reply_" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

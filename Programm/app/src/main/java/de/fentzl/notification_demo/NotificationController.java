@@ -3,6 +3,7 @@ package de.fentzl.notification_demo;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.RemoteInput;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -18,7 +19,9 @@ import androidx.core.app.NotificationManagerCompat;
  */
 
 public class NotificationController {
-    public static final String ACTION_DISMISS = "de.rwu.medi_app.DISMISS";
+    public static final String ACTION_DISMISS = "de.fentzl.notification_demo.DISMISS";
+    public static final String ACTION_REPLY = "de.fentzl.notification_demo.REPLY";
+    public static final String KEY_TEXTRPLY = "reply";
     public static final String channel1Name = "Kanal 1";
     public static final String channel2Name = "Kanal 2";
     public static final String channel1Description = "Nachrichten-Kanal 1";
@@ -71,6 +74,27 @@ public class NotificationController {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+    /*
+    private NotificationCompat.Action buildRplyAction(int reqCode){
+        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
+                .setLabel(context.getString(R.string.NotRplyLabel))
+                .build();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Intent replyIntent = new Intent(context, Re.class);
+            PendingIntent replyPendingIntent = PendingIntent.getBroadcast(context,
+                    reqCode, replyIntent, PendingIntent.FLAG_ONE_SHOT);
+        } else {
+            //Activity normal starten
+            //und die Notification canceln
+        }
+        PendingIntent rplyIntent = PendingIntent.getBroadcast(context, reqCode, new Intent(context, MainActivity.class), PendingIntent.FLAG_ONE_SHOT);
+        NotificationCompat.Action rplyAction = new NotificationCompat.Action.Builder(
+                R.drawable.ic_reply,
+                R.string.NotActionReply,
+                rplyIntent).build();
+    }*/
 
     /**
      * Setzt eine Notification auf Kanal 1

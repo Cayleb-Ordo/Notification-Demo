@@ -8,7 +8,11 @@
     <string name="NotTitleCh2">Kanal 2</string>
     <string name="NotContent">Ich bin eine Push-Nachricht</string>
     <string name="NotActionClose">Schließen</string>
+    <string name="NotActionReply">Antworten</string>
+    <string name="NotRplyLabel">Sag was...</string>
     <!-- Button-Contents-->
     <string name="CNotCh1">Kanal 1</string>
     <string name="CNotCh2">Kanal 2</string>
+    <!--TextView-Contents-->
+    <string name="TxVCoCall">Ich wurde gerufen?</string>
 </resources>

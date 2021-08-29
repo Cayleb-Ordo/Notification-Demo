@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".ReplyActivity"
+            android:exported="true" />
         <activity android:name=".CallActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -21,6 +24,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.fentzl.notification_demo.CreateNotificationsOverview" />

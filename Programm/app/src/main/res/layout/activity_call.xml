@@ -21,18 +21,8 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="353dp"
-        android:layout_marginEnd="178dp"
-        android:layout_marginBottom="359dp"
-        android:text="Ich wurde gerufen?"
-        android:textSize="36dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/include_content_call"
+        layout="@layout/content_call"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
