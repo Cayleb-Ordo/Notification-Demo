@@ -15,4 +15,5 @@
     <string name="CNotCh2">Kanal 2</string>
     <!--TextView-Contents-->
     <string name="TxVCoCall">Ich wurde gerufen?</string>
+    <string name="TxVPlaceholder">Platzhalter</string>
 </resources>

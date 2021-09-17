@@ -18,14 +18,20 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(intent.getAction().equals(NotificationController.ACTION_DISMISS)) {
-            notificationController = new NotificationController(context);
+        notificationController = new NotificationController(context);
+        if(intent.getAction().equals("NotificationController.ACTION_DISMISS")) {
             notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD, 0));
         /*Diese Methode brauch man nur wenn man nicht den RequestCode des PendingIntent variiert, sondern den darunterliegenden normalen Intent.
         if(intent.getAction().equals(NotificationController.ACTION_DISMISS)){
             Log.d(MainActivity.debugTag, "IF-Statement Class NotificationReceiver, function onReceive \n No specific Action specified");
         } else
             notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD,0));*/
+        }else if(intent.getAction().equals(NotificationController.ACTION_DISMISS)){
+            Intent rplyIntent = new Intent();
+            rplyIntent.setClassName("de.fentzl.notification_demo", "de.fentzl.notification_demo.ReplyActivity");
+            rplyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD, 0));
+            context.startActivity(rplyIntent);
         }else
             Log.d(MainActivity.debugTag, NOTIFICATIONRECEIVER + " No specific Action received!");
    }

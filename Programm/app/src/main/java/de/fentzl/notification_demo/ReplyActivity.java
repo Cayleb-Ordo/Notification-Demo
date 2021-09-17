@@ -7,6 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+/**
+ * Wird aufgerufen wenn ein Direct-Reply gedrückt wird
+ * @author Simon Fentzl
+ * @version 1
+ */
 public class ReplyActivity extends AppCompatActivity {
     private TextView txtV_Rply;
 
