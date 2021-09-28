@@ -3,6 +3,7 @@ package de.fentzl.notification_demo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -32,6 +33,8 @@ public class CreateNotificationsOverview extends AppCompatActivity {
      */
     public void onChannel1ButtonCLicked(View view){
         notificationController.notifyChannel1();
+        Intent tmpInt = new Intent(CreateNotificationsOverview.this, MainActivity.class);
+        startActivity(tmpInt);
     }
 
     /**
@@ -39,5 +42,7 @@ public class CreateNotificationsOverview extends AppCompatActivity {
      */
     public void onChannel2ButtonClicked(View view){
         notificationController.notifyChannel2();
+        Intent tmpInt = new Intent(CreateNotificationsOverview.this, MainActivity.class);
+        startActivity(tmpInt);
     }
 }
