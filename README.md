@@ -27,7 +27,7 @@ was mit den Push-Notifications ereicht werden kann.
     - enthällt die Präsentation mit den Code Beispielen.
 - Programm:
     - enthällt die Android Sourcefiles.
-    - ordnerstrucktur ist die gleiche wie bei einem normalen Android-Studio Projekt.
+    - ordnerstruktur ist die gleiche wie bei einem normalen Android-Studio Projekt.
 
 
 ## Mitwirkende
