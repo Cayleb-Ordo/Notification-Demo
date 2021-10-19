@@ -99,16 +99,16 @@ public class NotificationController {
     /**
      * Setzt eine Notification auf Kanal 1
      */
-    public void notifyChannel1() {
+    private void buildDefaultNot(int channel){
         Intent contentIntent = new Intent(context, CallActivity.class);
         contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Intent dismissIntent = new Intent(context, NotificationReceiver.class);
         /*Sollte man nicht den PendingIntent variiern, zb bei unterschiedlicher RequestID, kann man den normalen Intent unterscheidbar machen. Zb eine Eindeutige Action zuweisen.
         dismissIntent.setAction(ACTION_DISMISS + notCH1).putExtra(PAYLOAD,notCh1);
          */
-        dismissIntent.setAction(ACTION_DISMISS).putExtra(PAYLOAD,notCh1);
+        dismissIntent.setAction(ACTION_DISMISS).putExtra(PAYLOAD,channel);
         PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notCh1, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, channel, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder = new NotificationCompat.Builder(context, CHANNEL1_ID)
                 .setSmallIcon(R.drawable.ic_channel1)
                 .setContentTitle(context.getString(R.string.NotTitleCh1))
@@ -117,32 +117,23 @@ public class NotificationController {
                 .setContentIntent(pendingcontentInt)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
                 .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
-        notificationManager.notify(notCh1, builder.build());
+        notificationManager.notify(channel, builder.build());
+    }
+
+    public void notifyChannel1() {
+        buildDefaultNot(notCh1);
     }
 
     /**
      * Setzt eine Notification auf Kanal 1
      */
     public void notifyChannel2() {
-        Intent contentIntent = new Intent(context, CallActivity.class);
-        contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        Intent dismissIntent = new Intent(context, NotificationReceiver.class);
-        dismissIntent.setAction(ACTION_DISMISS).putExtra(PAYLOAD,notCh2);
-        PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notCh2, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder = new NotificationCompat.Builder(context, CHANNEL2_ID)
-                .setSmallIcon(R.drawable.ic_channel2)
-                .setContentTitle(context.getString(R.string.NotTitleCh2))
-                .setContentText(context.getString(R.string.NotContent))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingcontentInt)
-                .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
-                .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
-        notificationManager.notify(notCh2, builder.build());
-        //Log.d(MainActivity.debugTag, "Class NotificationController, line 115: DismissPendingIntent payload" + Integer.toString(dismissPendingIntent));
-
+        buildDefaultNot(notCh2);
     }
 
+    private void buildProgressbarNot(){
+
+    }
     /**
      * Lässt die Notification verschwinden
      */
