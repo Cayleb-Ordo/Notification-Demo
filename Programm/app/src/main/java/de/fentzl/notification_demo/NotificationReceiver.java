@@ -27,11 +27,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         } else
             notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD,0));*/
         }else if(intent.getAction().equals("")){
-            Intent rplyIntent = new Intent();
-            rplyIntent.setClassName("de.fentzl.notification_demo", "de.fentzl.notification_demo.ReplyActivity");
-            rplyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD, 0));
-            context.startActivity(rplyIntent);
         }else
             Log.d(MainActivity.debugTag, NOTIFICATIONRECEIVER + " No specific Action received!");
    }
