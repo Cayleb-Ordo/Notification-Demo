@@ -3,7 +3,6 @@ package de.fentzl.notification_demo;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.RemoteInput;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -138,7 +137,7 @@ public class NotificationController {
      * Lässt die Notification verschwinden
      */
     public void dismissNotification(int id) {
-        Log.d(MainActivity.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + Integer.toString(id));
+        Log.d(MainActivity.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + id);
         if(id == notCh1) {
             notificationManager.cancel(notCh1);
         }else if (id == notCh2){
