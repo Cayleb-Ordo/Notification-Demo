@@ -3,10 +3,10 @@ package de.fentzl.notification_demo;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.RemoteInput;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.SystemClock;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -14,6 +14,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 /**
  * Kontrollklasse die die Notificationen verwaltet
+ *
  * @author Simon Fentzl
  * @version 1
  */
@@ -29,9 +30,10 @@ public class NotificationController {
     public static final String PAYLOAD = "payload";
     public static final int notCh1 = 1;
     public static final int notCh2 = 2;
-    private final String CLASS_NOTIFICATIONCONTROLLER = "de.fentzl.notification_demo.NotificationController";
     private static final String CHANNEL1_ID = "Channel1";
     private static final String CHANNEL2_ID = "Channel2";
+    private final String CLASS_NOTIFICATIONCONTROLLER = "de.fentzl.notification_demo.NotificationController";
+    private final int progressMax = 100;
     private final int contentRqC = 1;
     private int importance = NotificationManager.IMPORTANCE_DEFAULT;
     private Context context;
@@ -97,54 +99,95 @@ public class NotificationController {
     }*/
 
     /**
-     * Setzt eine Notification auf Kanal 1
+     * Erstellt eine Default Nachricht mit übergebbaren Kanaleinstellungen
+     *
+     * @param notID        Integer Individuelle Notification ID
+     * @param channelid    String Notification-Kanal identifizierung
+     * @param contentTitle String Titel der Notification
+     * @param icon         Integer Id des Icons
      */
-    private void buildDefaultNot(int channel){
+    private void buildDefaultNot(int notID, String channelid, String contentTitle, int icon) {
         Intent contentIntent = new Intent(context, CallActivity.class);
         contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         Intent dismissIntent = new Intent(context, NotificationReceiver.class);
         /*Sollte man nicht den PendingIntent variiern, zb bei unterschiedlicher RequestID, kann man den normalen Intent unterscheidbar machen. Zb eine Eindeutige Action zuweisen.
         dismissIntent.setAction(ACTION_DISMISS + notCH1).putExtra(PAYLOAD,notCh1);
          */
-        dismissIntent.setAction(ACTION_DISMISS).putExtra(PAYLOAD,channel);
+        dismissIntent.setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
         PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, channel, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder = new NotificationCompat.Builder(context, CHANNEL1_ID)
-                .setSmallIcon(R.drawable.ic_channel1)
-                .setContentTitle(context.getString(R.string.NotTitleCh1))
+        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder = new NotificationCompat.Builder(context, channelid)
+                .setSmallIcon(icon)
+                .setContentTitle(contentTitle)
                 .setContentText(context.getString(R.string.NotContent))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingcontentInt)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
                 .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
-        notificationManager.notify(channel, builder.build());
+        notificationManager.notify(notID, builder.build());
     }
 
     public void notifyChannel1() {
-        buildDefaultNot(notCh1);
+        buildDefaultNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
     }
 
     /**
      * Setzt eine Notification auf Kanal 1
      */
     public void notifyChannel2() {
-        buildDefaultNot(notCh2);
+        buildProgressbarNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2);
+        //buildDefaultNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2);
     }
 
-    private void buildProgressbarNot(){
-
+    /**
+     * Erstellt eine Progressbar-Notification und startet einen Thread zur Aktualisierung der Notification
+     *
+     * @param notID     Integer Individuelle Notification ID
+     * @param channelid String Notification-Kanal identifizierung
+     * @param icon      Integer Id des Icons
+     */
+    private void buildProgressbarNot(int notID, String channelid, int icon) {
+        Intent dismissIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
+        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder = new NotificationCompat.Builder(context, channelid).setSmallIcon(icon)
+                .setContentTitle(context.getString(R.string.NotProgTitle))
+                .setContentText(context.getString(R.string.NotProgStartText))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setOngoing(true)
+                .setOnlyAlertOnce(true)
+                .setProgress(progressMax, 0, false);
+        notificationManager.notify(notID, builder.build());
+        //Thread zur aktualisierung der Notification, damit ein Download simuliert wird
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SystemClock.sleep(2000); // Damit die Anfangs-Notification kurz stehen bleibt
+                //For loop zum aktualisieren der Notification(Fake-Download)
+                for (int progress = 0; progress <= progressMax; progress += 10) {
+                    builder.setProgress(progressMax, progress, false);
+                    notificationManager.notify(notID, builder.build());
+                    SystemClock.sleep(1000);
+                }
+                builder.setContentText(context.getString(R.string.NotProgEndText))
+                        .setProgress(0, 0, false)
+                        .setOngoing(false)
+                        .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent);
+                notificationManager.notify(notID, builder.build());
+            }
+        }).start();
     }
+
     /**
      * Lässt die Notification verschwinden
      */
     public void dismissNotification(int id) {
-        Log.d(MainActivity.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + Integer.toString(id));
-        if(id == notCh1) {
+        Log.d(MainActivity.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + id);
+        if (id == notCh1) {
             notificationManager.cancel(notCh1);
-        }else if (id == notCh2){
-        notificationManager.cancel(notCh2);
-    }else
-        Log.d(MainActivity.debugTag,"Das sollte nicht passieren");
+        } else if (id == notCh2) {
+            notificationManager.cancel(notCh2);
+        } else
+            Log.d(MainActivity.debugTag, "Das sollte nicht passieren");
     }
 }
 

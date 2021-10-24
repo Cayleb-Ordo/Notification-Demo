@@ -10,6 +10,9 @@
     <string name="NotActionClose">Schließen</string>
     <string name="NotActionReply">Antworten</string>
     <string name="NotRplyLabel">Sag was...</string>
+    <string name="NotProgTitle">Download</string>
+    <string name="NotProgStartText">Download läuft ...</string>
+    <string name="NotProgEndText">Download abgeschlossen</string>
     <!-- Button-Contents-->
     <string name="CNotCh1">Kanal 1</string>
     <string name="CNotCh2">Kanal 2</string>
