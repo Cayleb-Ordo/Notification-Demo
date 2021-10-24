@@ -157,6 +157,7 @@ public class NotificationController {
                 .setOnlyAlertOnce(true)
                 .setProgress(progressMax, 0, false);
         notificationManager.notify(notID, builder.build());
+        //Thread zur aktualisierung der Notification, damit ein Download simuliert wird
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -170,8 +171,7 @@ public class NotificationController {
                 builder.setContentText(context.getString(R.string.NotProgEndText))
                         .setProgress(0, 0, false)
                         .setOngoing(false)
-                        .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
-                ;
+                        .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent);
                 notificationManager.notify(notID, builder.build());
             }
         }).start();
