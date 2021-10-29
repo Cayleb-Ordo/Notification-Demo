@@ -18,7 +18,7 @@ public class CreateNotificationsOverview extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         notificationController = new NotificationController(this.getApplicationContext());
-        setContentView(R.layout.activity_create_notifications_overview);
+        setContentView(R.layout.activity_create_not_overv);
         /*
         Toolbar-Einstellungen
          */

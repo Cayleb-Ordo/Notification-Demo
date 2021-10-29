@@ -29,6 +29,41 @@ was mit den Push-Notifications ereicht werden kann.
     - enthällt die Android Sourcefiles.
     - ordnerstruktur ist die gleiche wie bei einem normalen Android-Studio Projekt.
 
+## Notifications Codebeispiele
+Alle Code-teile finden sich in der Klasse NotificationController. Zur besseren Übersicht wurden die Einzelkomponenten hier aufgeführt.  
+Zu beachten ist das hier zwei member Variablen verwendet werden.
+- notbuilder: Typ NotificationCompat.Builder
+- notificationManager: Typ NotificationManagerCompat
+
+### Default-Notification mit Action-Buttons
+Erstellung einer einfachen Push-Notification mit Titel, Tab-Action, Inhalt's Text, Icon und einem Action-Button.  
+**Code:** 
+```
+notbuilder = new NotificationCompat.Builder(context, channelid)
+        .setSmallIcon(icon)
+        .setContentTitle(contentTitle)
+        .setContentText(context.getString(R.string.NotContent))
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setContentIntent(pendingcontentInt)
+        .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
+        .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
+notificationManager.notify(notID, notbuilder.build());
+```
+
+### Progress bar Notification
+Erstellung einer Notification mit integrierter Progress bar.  
+**Code:**
+```
+notbuilder = new NotificationCompat.Builder(context, channelid)
+        .setSmallIcon(icon)
+        .setContentTitle(contentTitle)
+        .setContentText(context.getString(R.string.NotContent))
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setContentIntent(pendingcontentInt)
+        .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
+        .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
+        notificationManager.notify(notID, builder.build());
+```
 
 ## Mitwirkende
 

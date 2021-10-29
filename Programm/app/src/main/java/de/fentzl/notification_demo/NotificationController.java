@@ -37,7 +37,7 @@ public class NotificationController {
     private final int contentRqC = 1;
     private int importance = NotificationManager.IMPORTANCE_DEFAULT;
     private Context context;
-    private NotificationCompat.Builder builder;
+    private NotificationCompat.Builder notbuilder;
     private NotificationManagerCompat notificationManager;
 
     /**
@@ -116,7 +116,7 @@ public class NotificationController {
         dismissIntent.setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
         PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder = new NotificationCompat.Builder(context, channelid)
+        notbuilder = new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentTitle(contentTitle)
                 .setContentText(context.getString(R.string.NotContent))
@@ -124,7 +124,7 @@ public class NotificationController {
                 .setContentIntent(pendingcontentInt)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
                 .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
-        notificationManager.notify(notID, builder.build());
+        notificationManager.notify(notID, notbuilder.build());
     }
 
     public void notifyChannel1() {
@@ -149,30 +149,33 @@ public class NotificationController {
     private void buildProgressbarNot(int notID, String channelid, int icon) {
         Intent dismissIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder = new NotificationCompat.Builder(context, channelid).setSmallIcon(icon)
+        notbuilder = new NotificationCompat.Builder(context, channelid).setSmallIcon(icon)
                 .setContentTitle(context.getString(R.string.NotProgTitle))
-                .setContentText(context.getString(R.string.NotProgStartText))
+                .setContentText(context.getString(R.string.NotProgIndit))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
                 .setProgress(progressMax, 0, false);
-        notificationManager.notify(notID, builder.build());
+        notificationManager.notify(notID, notbuilder.build());
         //Thread zur aktualisierung der Notification, damit ein Download simuliert wird
         new Thread(new Runnable() {
             @Override
             public void run() {
+                notbuilder.setProgress(0,0,true);
+                notificationManager.notify(notID, notbuilder.build());
                 SystemClock.sleep(2000); // Damit die Anfangs-Notification kurz stehen bleibt
                 //For loop zum aktualisieren der Notification(Fake-Download)
                 for (int progress = 0; progress <= progressMax; progress += 10) {
-                    builder.setProgress(progressMax, progress, false);
-                    notificationManager.notify(notID, builder.build());
+                    notbuilder.setProgress(progressMax, progress, false)
+                           .setContentText(context.getString(R.string.NotProgStartText));
+                    notificationManager.notify(notID, notbuilder.build());
                     SystemClock.sleep(1000);
                 }
-                builder.setContentText(context.getString(R.string.NotProgEndText))
+                notbuilder.setContentText(context.getString(R.string.NotProgEndText))
                         .setProgress(0, 0, false)
                         .setOngoing(false)
                         .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent);
-                notificationManager.notify(notID, builder.build());
+                notificationManager.notify(notID, notbuilder.build());
             }
         }).start();
     }
