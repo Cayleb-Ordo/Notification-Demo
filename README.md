@@ -36,7 +36,7 @@ Zu beachten ist das hier zwei member Variablen verwendet werden.
 - notificationManager: Typ NotificationManagerCompat
 
 ### Default-Notification mit Action-Buttons
-Erstellung einer einfachen Push-Notification mit Titel, Tab-Action, Inhalt's Text, Icon und einem Action-Button.
+Erstellung einer einfachen Push-Notification mit Titel, Tab-Action, Inhalt's Text, Icon und einem Action-Button.  
 **Code:** 
 ```
 notbuilder = new NotificationCompat.Builder(context, channelid)
@@ -51,7 +51,7 @@ notificationManager.notify(notID, notbuilder.build());
 ```
 
 ### Progress bar Notification
-Erstellung einer Notification mit integrierter Progress bar.
+Erstellung einer Notification mit integrierter Progress bar.  
 **Code:**
 ```
 notbuilder = new NotificationCompat.Builder(context, channelid)
