@@ -151,7 +151,7 @@ public class NotificationController {
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder = new NotificationCompat.Builder(context, channelid).setSmallIcon(icon)
                 .setContentTitle(context.getString(R.string.NotProgTitle))
-                .setContentText(context.getString(R.string.NotProgStartText))
+                .setContentText(context.getString(R.string.NotProgIndit))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
@@ -161,10 +161,13 @@ public class NotificationController {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                builder.setProgress(0,0,true);
+                notificationManager.notify(notID, builder.build());
                 SystemClock.sleep(2000); // Damit die Anfangs-Notification kurz stehen bleibt
                 //For loop zum aktualisieren der Notification(Fake-Download)
                 for (int progress = 0; progress <= progressMax; progress += 10) {
-                    builder.setProgress(progressMax, progress, false);
+                    builder.setProgress(progressMax, progress, false)
+                           .setContentText(context.getString(R.string.NotProgStartText));
                     notificationManager.notify(notID, builder.build());
                     SystemClock.sleep(1000);
                 }
