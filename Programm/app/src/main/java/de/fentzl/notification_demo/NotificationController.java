@@ -5,6 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
@@ -77,6 +79,18 @@ public class NotificationController {
         }
     }
 
+    public void notifyChannel1() {
+        //buildDefaultNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
+        buildExpandableNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
+    }
+
+    /**
+     * Setzt eine Notification auf Kanal 1
+     */
+    public void notifyChannel2() {
+        buildProgressbarNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2);
+        //buildDefaultNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2);
+    }
     /*
     private NotificationCompat.Action buildRplyAction(int reqCode){
         RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
@@ -119,24 +133,12 @@ public class NotificationController {
         notbuilder = new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentTitle(contentTitle)
-                .setContentText(context.getString(R.string.NotContent))
+                .setContentText(context.getString(R.string.NotDefContent))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingcontentInt)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
                 .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
         notificationManager.notify(notID, notbuilder.build());
-    }
-
-    public void notifyChannel1() {
-        buildDefaultNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
-    }
-
-    /**
-     * Setzt eine Notification auf Kanal 1
-     */
-    public void notifyChannel2() {
-        buildProgressbarNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2);
-        //buildDefaultNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2);
     }
 
     /**
@@ -161,9 +163,10 @@ public class NotificationController {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //Hier wird die Progressbar auf unbestimmt gesetzt, heist es läuft ein band anstelle des Fortschrits
                 notbuilder.setProgress(0,0,true);
                 notificationManager.notify(notID, notbuilder.build());
-                SystemClock.sleep(2000); // Damit die Anfangs-Notification kurz stehen bleibt
+                SystemClock.sleep(3000); // Damit die Anfangs-Notification kurz stehen bleibt
                 //For loop zum aktualisieren der Notification(Fake-Download)
                 for (int progress = 0; progress <= progressMax; progress += 10) {
                     notbuilder.setProgress(progressMax, progress, false)
@@ -180,6 +183,34 @@ public class NotificationController {
         }).start();
     }
 
+    private void buildExpandableNot(int notID, String channelid, String contentTitle, int icon){
+        Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.drawable.rwu_logo);
+        Intent dismissIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
+        PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        notbuilder = new NotificationCompat.Builder(context, channelid)
+                .setSmallIcon(icon)
+                .setContentTitle(contentTitle)
+                .setContentText(context.getString(R.string.NotPicContent))
+                .setLargeIcon(logo)
+                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(logo).bigLargeIcon(null))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                //.setContentIntent(pendingcontentInt)
+                .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
+                .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
+        notificationManager.notify(notID, notbuilder.build());
+    }
+
+    private void buildMediaConNot(){
+
+    }
+
+    private void buildDirRplyMessStNot(){
+
+    }
+
+    private void buildCustomNot(){
+
+    }
     /**
      * Lässt die Notification verschwinden
      */

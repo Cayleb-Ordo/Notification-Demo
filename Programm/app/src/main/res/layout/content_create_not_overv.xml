@@ -6,7 +6,7 @@
 
     <Button
         android:id="@+id/bt_channel1"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:background="@drawable/button_rounded"
@@ -19,7 +19,7 @@
 
     <Button
         android:id="@+id/bt_channel2"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:background="@drawable/button_rounded"
