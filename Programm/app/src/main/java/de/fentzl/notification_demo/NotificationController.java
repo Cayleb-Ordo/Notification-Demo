@@ -50,7 +50,6 @@ public class NotificationController {
     public NotificationController(Context context) {
         this.context = context;
         this.notificationManager = NotificationManagerCompat.from(context);
-        ;
     }
 
     /**
@@ -79,17 +78,58 @@ public class NotificationController {
         }
     }
 
-    public void notifyChannel1() {
-        //buildDefaultNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
-        buildExpandableNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
+    /**
+     *
+     * @param selected
+     */
+    public void notifyChannel1(CreateNotificationsOverview.NotificationType selected) {
+        switch (selected){
+            case Default:
+                Log.d(MainActivity.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Case Default");
+                buildDefaultNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
+                break;
+            case Progress:
+                buildProgressbarNot(notCh1, CHANNEL1_ID, R.drawable.ic_channel1);
+                break;
+            case Expandable:
+                buildExpandableNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
+                break;
+            case Media:
+                break;
+            case Reply:
+                break;
+            case Custom:
+                break;
+            default:
+                Log.d(MainActivity.debugTag, "Das sollte nicht passieren");
+                break;
+        }
     }
 
     /**
      * Setzt eine Notification auf Kanal 1
      */
-    public void notifyChannel2() {
-        buildProgressbarNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2);
-        //buildDefaultNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2);
+    public void notifyChannel2(CreateNotificationsOverview.NotificationType selected) {
+        switch (selected){
+            case Default:
+                buildDefaultNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2);
+                break;
+            case Progress:
+                buildProgressbarNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2);
+                break;
+            case Expandable:
+                buildExpandableNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2);
+                break;
+            case Media:
+                break;
+            case Reply:
+                break;
+            case Custom:
+                break;
+            default:
+                Log.d(MainActivity.debugTag, "Das sollte nicht passieren");
+                break;
+        }
     }
     /*
     private NotificationCompat.Action buildRplyAction(int reqCode){
@@ -183,6 +223,14 @@ public class NotificationController {
         }).start();
     }
 
+    /**
+     *Erstellt eine Vergrößerbare Nachricht mit übergebbaren Kanaleinstellungen
+     *
+     * @param notID        Integer Individuelle Notification ID
+     * @param channelid    String Notification-Kanal identifizierung
+     * @param contentTitle String Titel der Notification
+     * @param icon         Integer Id des Icons
+     */
     private void buildExpandableNot(int notID, String channelid, String contentTitle, int icon){
         Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.drawable.rwu_logo);
         Intent dismissIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
