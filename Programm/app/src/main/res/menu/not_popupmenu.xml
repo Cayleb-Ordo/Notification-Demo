@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <item android:id="@+id/Pop_Default"
+        android:title="@string/Pop_Default">
+    </item>
+    <item android:id="@+id/Pop_Progress"
+        android:title="@string/Pop_Progress">
+    </item>
+    <item android:id="@+id/Pop_Expandable"
+        android:title="@string/Pop_Expandable">
+    </item>
+    <item android:id="@+id/Pop_Media"
+        android:title="@string/Pop_Media">
+    </item>
+    <item android:id="@+id/Pop_Rply"
+        android:title="@string/Pop_Rply">
+    </item>
+    <item android:id="@+id/Pop_Custom"
+        android:title="@string/Pop_Custom">
+    </item>
+</menu>
