@@ -62,7 +62,31 @@ notbuilder = new NotificationCompat.Builder(context, channelid)
         .setContentIntent(pendingcontentInt)
         .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
         .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
-        notificationManager.notify(notID, builder.build());
+notificationManager.notify(notID, builder.build());
+```
+
+### Expandable Notification
+Erstellung einer erweiterbaren Notification, mit großem Bild.  
+**Code:**
+```
+notbuilder = new NotificationCompat.Builder(context, channelid)
+        .setSmallIcon(icon)
+        .setContentTitle(contentTitle)
+        .setContentText(context.getString(R.string.NotPicContent))
+        .setLargeIcon(logo)
+        .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(logo).bigLargeIcon(null))
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        //.setContentIntent(pendingcontentInt)
+        .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
+        .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
+notificationManager.notify(notID, notbuilder.build());
+```
+
+### Media-Controls Notification
+Erstellung einer Notification zur Steuerung von Media Inhalten.  
+**Code**
+```
+
 ```
 
 ## Mitwirkende

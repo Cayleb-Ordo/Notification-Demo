@@ -196,7 +196,6 @@ public class NotificationController {
                 .setContentText(context.getString(R.string.NotProgIndit))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setOngoing(true)
-                .setOnlyAlertOnce(true)
                 .setProgress(progressMax, 0, false);
         notificationManager.notify(notID, notbuilder.build());
         //Thread zur aktualisierung der Notification, damit ein Download simuliert wird
@@ -204,13 +203,13 @@ public class NotificationController {
             @Override
             public void run() {
                 //Hier wird die Progressbar auf unbestimmt gesetzt, heist es läuft ein band anstelle des Fortschrits
-                notbuilder.setProgress(0,0,true);
+                notbuilder.setProgress(0,0,true).setOnlyAlertOnce(true);
                 notificationManager.notify(notID, notbuilder.build());
                 SystemClock.sleep(3000); // Damit die Anfangs-Notification kurz stehen bleibt
                 //For loop zum aktualisieren der Notification(Fake-Download)
                 for (int progress = 0; progress <= progressMax; progress += 10) {
                     notbuilder.setProgress(progressMax, progress, false)
-                           .setContentText(context.getString(R.string.NotProgStartText));
+                           .setContentText(context.getString(R.string.NotProgStartText)).setOnlyAlertOnce(true);
                     notificationManager.notify(notID, notbuilder.build());
                     SystemClock.sleep(1000);
                 }
