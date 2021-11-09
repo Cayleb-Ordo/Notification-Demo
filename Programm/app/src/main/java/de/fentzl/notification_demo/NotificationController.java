@@ -95,6 +95,7 @@ public class NotificationController {
                 buildExpandableNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
                 break;
             case Media:
+                buildMediaConNot(notCh1, CHANNEL1_ID, R.drawable.ic_channel1);
                 break;
             case Reply:
                 break;
@@ -121,6 +122,7 @@ public class NotificationController {
                 buildExpandableNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2);
                 break;
             case Media:
+                buildMediaConNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2);
                 break;
             case Reply:
                 break;
@@ -196,7 +198,6 @@ public class NotificationController {
                 .setContentText(context.getString(R.string.NotProgIndit))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setOngoing(true)
-                .setOnlyAlertOnce(true)
                 .setProgress(progressMax, 0, false);
         notificationManager.notify(notID, notbuilder.build());
         //Thread zur aktualisierung der Notification, damit ein Download simuliert wird
@@ -204,13 +205,13 @@ public class NotificationController {
             @Override
             public void run() {
                 //Hier wird die Progressbar auf unbestimmt gesetzt, heist es läuft ein band anstelle des Fortschrits
-                notbuilder.setProgress(0,0,true);
+                notbuilder.setProgress(0,0,true).setOnlyAlertOnce(true);
                 notificationManager.notify(notID, notbuilder.build());
                 SystemClock.sleep(3000); // Damit die Anfangs-Notification kurz stehen bleibt
                 //For loop zum aktualisieren der Notification(Fake-Download)
                 for (int progress = 0; progress <= progressMax; progress += 10) {
                     notbuilder.setProgress(progressMax, progress, false)
-                           .setContentText(context.getString(R.string.NotProgStartText));
+                           .setContentText(context.getString(R.string.NotProgStartText)).setOnlyAlertOnce(true);
                     notificationManager.notify(notID, notbuilder.build());
                     SystemClock.sleep(1000);
                 }
@@ -242,14 +243,27 @@ public class NotificationController {
                 .setLargeIcon(logo)
                 .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(logo).bigLargeIcon(null))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                //.setContentIntent(pendingcontentInt)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
                 .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
         notificationManager.notify(notID, notbuilder.build());
     }
 
-    private void buildMediaConNot(){
-
+    private void buildMediaConNot(int notID, String channelid,int icon){
+        Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.drawable.mausi);
+        notbuilder = new NotificationCompat.Builder(context, channelid)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .addAction(R.drawable.ic_volume_on, context.getString(R.string.NotExpAMute),null)
+                .addAction(R.drawable.ic_prev, context.getString(R.string.NotExpAPrev), null)
+                .addAction(R.drawable.ic_pause, context.getString(R.string.NotExpAPause), null)
+                .addAction(R.drawable.ic_next, context.getString(R.string.NotExpANext), null)
+                .addAction(R.drawable.ic_close, context.getString(R.string.NotExpAAbort), null)
+                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+                        .setShowActionsInCompactView(1,2,3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
+                .setContentTitle(context.getString(R.string.NotExpanTitle))
+                .setContentText(context.getString(R.string.NotExpanText))
+                .setLargeIcon(logo)
+                .setSmallIcon(icon);
+        notificationManager.notify(notID, notbuilder.build());
     }
 
     private void buildDirRplyMessStNot(){

@@ -17,7 +17,9 @@ import android.widget.PopupMenu;
  * @version 1
  */
 public class CreateNotificationsOverview extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+    private final String CLASS_CreateNotificationsOverview = "de.fentzl.notification_demo.CreateNotificationsOverview";
     private NotificationController notificationController;
+    private boolean button1Clicked = false;
 
     enum NotificationType {
         Default,
@@ -47,31 +49,49 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
         Intent tmpInt = new Intent(CreateNotificationsOverview.this, MainActivity.class);
         switch (item.getItemId()) {
             case R.id.Pop_Default:
-                notificationController.notifyChannel1(NotificationType.Default);
+                if (button1Clicked)
+                    notificationController.notifyChannel1(NotificationType.Default);
+                else
+                    notificationController.notifyChannel2(NotificationType.Default);
                 startActivity(tmpInt);
                 return true;
             case R.id.Pop_Progress:
-                notificationController.notifyChannel1(NotificationType.Progress);
+                if (button1Clicked)
+                    notificationController.notifyChannel1(NotificationType.Progress);
+                else
+                    notificationController.notifyChannel2(NotificationType.Progress);
                 startActivity(tmpInt);
                 return true;
             case R.id.Pop_Expandable:
-                notificationController.notifyChannel1(NotificationType.Expandable);
+                if (button1Clicked)
+                    notificationController.notifyChannel1(NotificationType.Expandable);
+                else
+                    notificationController.notifyChannel2(NotificationType.Expandable);
                 startActivity(tmpInt);
                 return true;
             case R.id.Pop_Media:
-                notificationController.notifyChannel1(NotificationType.Media);
+                if (button1Clicked)
+                    notificationController.notifyChannel1(NotificationType.Media);
+                else
+                    notificationController.notifyChannel2(NotificationType.Media);
                 startActivity(tmpInt);
                 return true;
             case R.id.Pop_Rply:
-                notificationController.notifyChannel1(NotificationType.Reply);
+                if (button1Clicked)
+                    notificationController.notifyChannel1(NotificationType.Reply);
+                else
+                    notificationController.notifyChannel2(NotificationType.Reply);
                 startActivity(tmpInt);
                 return true;
             case R.id.Pop_Custom:
-                notificationController.notifyChannel1(NotificationType.Custom);
+                if (button1Clicked)
+                    notificationController.notifyChannel1(NotificationType.Custom);
+                else
+                    notificationController.notifyChannel2(NotificationType.Custom);
                 startActivity(tmpInt);
                 return true;
             default:
-                Log.d(MainActivity.debugTag, "Klappt nicht ");
+                Log.d(MainActivity.debugTag, CLASS_CreateNotificationsOverview + ": Default von MenuItem Listener");
                 return false;
         }
     }
@@ -88,6 +108,7 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
      */
     public void onChannel1ButtonCLicked(View view) {
         showPopupMenu(view);
+        button1Clicked = true;
     }
 
     /**
@@ -95,5 +116,6 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
      */
     public void onChannel2ButtonClicked(View view) {
         showPopupMenu(view);
+        button1Clicked = false;
     }
 }
