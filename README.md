@@ -3,8 +3,7 @@
 Demo App für Android Push-Notifications.
 ## Beschreibung
 
-Dieses Repository enthällt den Code für eine Demonstrations Anwendung für Android Push-Notifications. Diese Anwendung zeigt anschaulich   
-was mit den Push-Notifications ereicht werden kann.
+Dieses Repository enthällt den Code für eine Demonstrations Anwendung für Android Push-Notifications. Diese Anwendung zeigt anschaulich was mit den Push-Notifications ereicht werden kann.
 
 ## Inhalt
 
