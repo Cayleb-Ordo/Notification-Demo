@@ -1,3 +1,4 @@
-Dismiss-Button bei mehreren ID. Immer die letzt erzeugte Notification wurde gelöscht, aber nicht die eigentlich selektierte. Lösung: Der PendingIntent der Unterschiedlichen Notifications war immer derselbe. 
-Dadurch hat sich nur die Payload immer überschrieben und somit wurde nicht das aktuelle genommen.
-Reply, konnte nicht realisieren was geplant, da von einem BroadcastReceiver keine Activity gestartet werden soll.
+- Dismiss-Button bei mehreren ID. Immer die letzt erzeugte Notification wurde gelöscht, aber nicht die eigentlich selektierte. Lösung: Der PendingIntent der Unterschiedlichen Notifications war immer derselbe. 
+    Dadurch hat sich nur die Payload immer überschrieben und somit wurde nicht das aktuelle genommen.
+- Reply, konnte nicht realisieren was geplant, da von einem BroadcastReceiver keine Activity gestartet werden soll.
+- Die korrekte Gradle abhängigkeit für den MediaStyle war nicht einfach herauszufinden.

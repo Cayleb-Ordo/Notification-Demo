@@ -8,13 +8,21 @@
     <string name="NotTitleCh2">Kanal 2</string>
     <string name="NotDefContent">Ich bin eine Push-Nachricht</string>
     <string name="NotPicContent">Ich bin eine Pig-Picture Style Nachricht</string>
-    <string name="NotActionClose">Schließen</string>
-    <string name="NotActionReply">Antworten</string>
     <string name="NotRplyLabel">Sag was...</string>
     <string name="NotProgTitle">Download</string>
     <string name="NotProgIndit">Download startet ...</string>
     <string name="NotProgStartText">Download läuft ...</string>
     <string name="NotProgEndText">Download abgeschlossen</string>
+    <string name="NotExpanTitle">Mausi\'s Katzenschrei</string>
+    <string name="NotExpanText">Mausi und die Mäuse</string>
+    <!-- Notification-Action-Buttons-->
+    <string name="NotActionClose">Schließen</string>
+    <string name="NotActionReply">Antworten</string>
+    <string name="NotExpAPrev">Vorheriges</string>
+    <string name="NotExpANext">Nächstes</string>
+    <string name="NotExpAPause">Pausieren</string>
+    <string name="NotExpAMute">Ton aus</string>
+    <string name="NotExpAAbort">Beenden</string>
     <!-- Button-Contents-->
     <string name="CNotCh1">Kanal 1</string>
     <string name="CNotCh2">Kanal 2</string>
