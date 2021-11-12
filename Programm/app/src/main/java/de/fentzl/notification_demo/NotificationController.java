@@ -41,8 +41,9 @@ public class NotificationController {
     private final int contentRqC = 1;
     private int importance = NotificationManager.IMPORTANCE_DEFAULT;
     private Context context;
-    private NotificationCompat.Builder notbuilder;
+    private NotificationCompat.Builder updateBuilder;
     private NotificationManagerCompat notificationManager;
+    private Notification mediaConNot;
 
     /**
      * Konstruktor, damit der Notification Manager mit context initialisiert werden kann
@@ -81,11 +82,10 @@ public class NotificationController {
     }
 
     /**
-     *
      * @param selected
      */
     public void notifyChannel1(CreateNotificationsOverview.NotificationType selected) {
-        switch (selected){
+        switch (selected) {
             case Default:
                 Log.d(MainActivity.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Case Default");
                 buildDefaultNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
@@ -97,7 +97,7 @@ public class NotificationController {
                 buildExpandableNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
                 break;
             case BigText:
-                buildBigTextStyleNot(notCh1,CHANNEL1_ID,context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
+                buildBigTextStyleNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
                 break;
             case Media:
                 buildMediaConNot(notCh1, CHANNEL1_ID, R.drawable.ic_channel1);
@@ -116,7 +116,7 @@ public class NotificationController {
      * Setzt eine Notification auf Kanal 1
      */
     public void notifyChannel2(CreateNotificationsOverview.NotificationType selected) {
-        switch (selected){
+        switch (selected) {
             case Default:
                 buildDefaultNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2);
                 break;
@@ -127,7 +127,7 @@ public class NotificationController {
                 buildExpandableNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2);
                 break;
             case BigText:
-                buildBigTextStyleNot(notCh2,CHANNEL2_ID,context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2);
+                buildBigTextStyleNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2);
                 break;
             case Media:
                 buildMediaConNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2);
@@ -180,7 +180,7 @@ public class NotificationController {
         dismissIntent.setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
         PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        defaultNot = new NotificationCompat.Builder(context, channelid)
+        Notification defaultNot = new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentTitle(contentTitle)
                 .setContentText(context.getString(R.string.NotDefContent))
@@ -202,50 +202,51 @@ public class NotificationController {
     private void buildProgressbarNot(int notID, String channelid, int icon) {
         Intent dismissIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        notbuilder = new NotificationCompat.Builder(context, channelid).setSmallIcon(icon)
+        NotificationCompat.Builder progressNot = new NotificationCompat.Builder(context, channelid)
+                .setSmallIcon(icon)
                 .setContentTitle(context.getString(R.string.NotProgTitle))
                 .setContentText(context.getString(R.string.NotProgIndit))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setOngoing(true)
                 .setProgress(progressMax, 0, false);
-        notificationManager.notify(notID, notbuilder.build());
+        notificationManager.notify(notID, progressNot.build());
         //Thread zur aktualisierung der Notification, damit ein Download simuliert wird
         new Thread(new Runnable() {
             @Override
             public void run() {
                 //Hier wird die Progressbar auf unbestimmt gesetzt, heist es läuft ein band anstelle des Fortschrits
-                notbuilder.setProgress(0,0,true).setOnlyAlertOnce(true);
-                notificationManager.notify(notID, notbuilder.build());
+                progressNot.setProgress(0, 0, true).setOnlyAlertOnce(true);
+                notificationManager.notify(notID, progressNot.build());
                 SystemClock.sleep(3000); // Damit die Anfangs-Notification kurz stehen bleibt
                 //For loop zum aktualisieren der Notification(Fake-Download)
                 for (int progress = 0; progress <= progressMax; progress += 10) {
-                    notbuilder.setProgress(progressMax, progress, false)
-                           .setContentText(context.getString(R.string.NotProgStartText)).setOnlyAlertOnce(true);
-                    notificationManager.notify(notID, notbuilder.build());
+                    progressNot.setProgress(progressMax, progress, false)
+                            .setContentText(context.getString(R.string.NotProgStartText)).setOnlyAlertOnce(true);
+                    notificationManager.notify(notID, progressNot.build());
                     SystemClock.sleep(1000);
                 }
-                notbuilder.setContentText(context.getString(R.string.NotProgEndText))
+                progressNot.setContentText(context.getString(R.string.NotProgEndText))
                         .setProgress(0, 0, false)
                         .setOngoing(false)
                         .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent);
-                notificationManager.notify(notID, notbuilder.build());
+                notificationManager.notify(notID, progressNot.build());
             }
         }).start();
     }
 
     /**
-     *Erstellt eine Vergrößerbare Nachricht mit übergebbaren Kanaleinstellungen
+     * Erstellt eine Vergrößerbare Nachricht mit übergebbaren Kanaleinstellungen
      *
      * @param notID        Integer Individuelle Notification ID
      * @param channelid    String Notification-Kanal identifizierung
      * @param contentTitle String Titel der Notification
      * @param icon         Integer Id des Icons
      */
-    private void buildExpandableNot(int notID, String channelid, String contentTitle, int icon){
+    private void buildExpandableNot(int notID, String channelid, String contentTitle, int icon) {
         Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.drawable.rwu_logo);
         Intent dismissIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        notbuilder = new NotificationCompat.Builder(context, channelid)
+        Notification expandNot = new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentTitle(contentTitle)
                 .setContentText(context.getString(R.string.NotPicContent))
@@ -253,17 +254,18 @@ public class NotificationController {
                 .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(logo).bigLargeIcon(null))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
-                .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
-        notificationManager.notify(notID, notbuilder.build());
+                .setAutoCancel(true)
+                .build();
+        notificationManager.notify(notID,expandNot);
     }
 
-    private void buildMediaConNot(int notID, String channelid,int icon){
+    private void buildMediaConNot(int notID, String channelid, int icon) {
         Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.drawable.mausi);
         Intent muteIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_MUTE).putExtra(PAYLOAD, notID);
         Intent dismissIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
         PendingIntent mutePendingIntent = PendingIntent.getBroadcast(context, notID, muteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        notbuilder = new NotificationCompat.Builder(context, channelid)
+        mediaConNot= new NotificationCompat.Builder(context, channelid)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .addAction(R.drawable.ic_volume_on, context.getString(R.string.NotExpAMute), mutePendingIntent)
                 .addAction(R.drawable.ic_prev, context.getString(R.string.NotExpAPrev), null)
@@ -271,18 +273,18 @@ public class NotificationController {
                 .addAction(R.drawable.ic_next, context.getString(R.string.NotExpANext), null)
                 .addAction(R.drawable.ic_close, context.getString(R.string.NotExpAAbort), dismissPendingIntent)
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
-                        .setShowActionsInCompactView(1,2,3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
+                        .setShowActionsInCompactView(1, 2, 3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
                 .setContentTitle(context.getString(R.string.NotExpanTitle))
                 .setContentText(context.getString(R.string.NotExpanText))
                 .setLargeIcon(logo)
-                .setSmallIcon(icon);
-        notificationManager.notify(notID, notbuilder.build());
+                .setSmallIcon(icon).build();
+        notificationManager.notify(notID, mediaConNot);
     }
 
-    private void buildBigTextStyleNot(int notID, String channelid, String contentTitle, int icon){
+    private void buildBigTextStyleNot(int notID, String channelid, String contentTitle, int icon) {
         Intent dismissIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
         PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        notbuilder = new NotificationCompat.Builder(context, channelid)
+        Notification bigTxtNot = new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentTitle(contentTitle)
                 .setContentText(context.getString(R.string.NotBTextContent))
@@ -291,27 +293,29 @@ public class NotificationController {
                         .setBigContentTitle(context.getString(R.string.NotBTextConTitle))
                         .setSummaryText(context.getString(R.string.NotBTextSumm)))
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
-                .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
-        notificationManager.notify(notID, notbuilder.build());
+                .setAutoCancel(true)
+                .build();
+        notificationManager.notify(notID, bigTxtNot);
     }
-    private void buildDirRplyMessStNot(){
+
+    private void buildDirRplyMessStNot() {
 
     }
 
-    private void buildCustomNot(){
+    private void buildCustomNot() {
 
     }
 
-    //Evtl später noch implementieren
-    public void updateMediaCont(int notID){
-        notbuilder.addAction(R.drawable.ic_volume_off, context.getString(R.string.NotExpAMute), null);
-        notificationManager.notify(notID, notbuilder.build());
+    public void updateMediaCont(int notID) {
+        updateBuilder = new NotificationCompat.Builder(context, mediaConNot).addAction(R.drawable.ic_volume_off, context.getString(R.string.NotExpAMute), null);
+        notificationManager.notify(notID, updateBuilder.build());
     }
+
     /**
      * Lässt die Notification verschwinden
      */
     public void dismissNotification(int id) {
-        Log.d(MainActivity.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + id);
+        //Log.d(MainActivity.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + id);
         if (id == notCh1) {
             notificationManager.cancel(notCh1);
         } else if (id == notCh2) {

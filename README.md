@@ -30,56 +30,81 @@ Dieses Repository enthällt den Code für eine Demonstrations Anwendung für And
 
 ## Notifications Codebeispiele
 Alle Code-teile finden sich in der Klasse NotificationController. Zur besseren Übersicht wurden die Einzelkomponenten hier aufgeführt.  
-Zu beachten ist das hier zwei member Variablen verwendet werden.
-- notbuilder: Typ NotificationCompat.Builder
+Zu beachten ist das hier eine Member Variable verwendet wird.
 - notificationManager: Typ NotificationManagerCompat
 
 ### Default-Notification mit Action-Buttons
 Erstellung einer einfachen Push-Notification mit Titel, Tab-Action, Inhalt's Text, Icon und einem Action-Button.  
-Es muss bei der Action kein Icon spezifiziert werden.  
+Es muss bei der Action kein Icon spezifiziert werden. Bei der Unterscheidung der PendingIntent's aufpassen.  
+Diese müssen eindeutig Unterscheidbar sein. Zb. eine eindeutige Action.  
 **Code:** 
 ```
-notbuilder = new NotificationCompat.Builder(context, channelid)
+Intent contentIntent = new Intent(context, CallActivity.class);
+contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+Intent dismissIntent = new Intent(context, NotificationReceiver.class);
+dismissIntent.setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
+PendingIntent pendingcontentInt = PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+Notification defaultNot = new NotificationCompat.Builder(context, channelid)
         .setSmallIcon(icon)
         .setContentTitle(contentTitle)
-        .setContentText(context.getString(R.string.NotContent))
+        .setContentText(context.getString(R.string.NotDefContent))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         .setContentIntent(pendingcontentInt)
         .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
-        .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
-notificationManager.notify(notID, notbuilder.build());
+        .setAutoCancel(true) // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
+        .build();
+notificationManager.notify(notID, defaultNot);
 ```
 
 ### Progress bar Notification
 Erstellung einer Notification mit integrierter Progress bar.  
 **Code:**
 ```
-notbuilder = new NotificationCompat.Builder(context, channelid)
+NotificationCompat.Builder progressNot = new NotificationCompat.Builder(context, channelid)
         .setSmallIcon(icon)
-        .setContentTitle(contentTitle)
-        .setContentText(context.getString(R.string.NotContent))
+        .setContentTitle(context.getString(R.string.NotProgTitle))
+        .setContentText(context.getString(R.string.NotProgIndit))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        .setContentIntent(pendingcontentInt)
-        .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
-        .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
-notificationManager.notify(notID, builder.build());
+        .setOngoing(true)
+        .setProgress(progressMax, 0, false);
+notificationManager.notify(notID, progressNot.build());
 ```
 
 ### Expandable Notification
 Erstellung einer erweiterbaren Notification, mit großem Bild.  
 **Code:**
 ```
-notbuilder = new NotificationCompat.Builder(context, channelid)
+Notification expandNot = new NotificationCompat.Builder(context, channelid)
         .setSmallIcon(icon)
         .setContentTitle(contentTitle)
         .setContentText(context.getString(R.string.NotPicContent))
         .setLargeIcon(logo)
         .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(logo).bigLargeIcon(null))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        //.setContentIntent(pendingcontentInt)
         .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
-        .setAutoCancel(true); // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
-notificationManager.notify(notID, notbuilder.build());
+        .setAutoCancel(true)
+        .build();
+notificationManager.notify(notID,expandNot);
+```
+
+### BigPictureStyle Notification
+Erstellung einer BigPictureStyle Notification.  
+**Code:**
+```
+Notification bigTxtNot = new NotificationCompat.Builder(context, channelid)
+        .setSmallIcon(icon)
+        .setContentTitle(contentTitle)
+        .setContentText(context.getString(R.string.NotBTextContent))
+        .setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(context.getString(R.string.NotBText_lorem))
+                .setBigContentTitle(context.getString(R.string.NotBTextConTitle))
+                .setSummaryText(context.getString(R.string.NotBTextSumm)))
+        .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
+        .setAutoCancel(true)
+        .build();
+notificationManager.notify(notID, bigTxtNot);
 ```
 
 ### Media-Controls Notification

@@ -32,7 +32,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             /*case NotificationController.ACTION_MUTE:
                 notificationController.updateMediaCont(intent.getIntExtra(NotificationController.PAYLOAD, 0));
                 Log.d(MainActivity.debugTag, NOTIFICATIONRECEIVER + " case Action Mute");
-                break; Evtl später*/
+                break;*/
             default:
                 Log.d(MainActivity.debugTag, NOTIFICATIONRECEIVER + " No specific Action received!");
                 break;
