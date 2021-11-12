@@ -25,9 +25,11 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
         Default,
         Progress,
         Expandable,
+        BigText,
         Custom,
         Media,
         Reply
+
     }
 
     @Override
@@ -67,6 +69,13 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
                     notificationController.notifyChannel1(NotificationType.Expandable);
                 else
                     notificationController.notifyChannel2(NotificationType.Expandable);
+                startActivity(tmpInt);
+                return true;
+            case R.id.Pop_BigText:
+                if (button1Clicked)
+                    notificationController.notifyChannel1(NotificationType.BigText);
+                else
+                    notificationController.notifyChannel2(NotificationType.BigText);
                 startActivity(tmpInt);
                 return true;
             case R.id.Pop_Media:

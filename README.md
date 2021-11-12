@@ -36,6 +36,7 @@ Zu beachten ist das hier zwei member Variablen verwendet werden.
 
 ### Default-Notification mit Action-Buttons
 Erstellung einer einfachen Push-Notification mit Titel, Tab-Action, Inhalt's Text, Icon und einem Action-Button.  
+Es muss bei der Action kein Icon spezifiziert werden.  
 **Code:** 
 ```
 notbuilder = new NotificationCompat.Builder(context, channelid)
@@ -102,6 +103,8 @@ notbuilder = new NotificationCompat.Builder(context, channelid)
         .setSmallIcon(icon);
 notificationManager.notify(notID, notbuilder.build());
 ```
+
+### Messenging-Style und Reply Button
 
 ## Mitwirkende
 
