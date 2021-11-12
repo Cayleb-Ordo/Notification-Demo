@@ -43,4 +43,14 @@
     <string name="Pop_Media">Media Kontrollen</string>
     <string name="Pop_Rply">Messenger Style</string>
     <string name="Pop_Custom">Benutzerdefiniert</string>
+    <!--Messenging-Style-"Nachrichten"-->
+    <string name="MessageTitle">Party Chat</string>
+    <string name="MessageMoring">Moin Leute</string>
+    <string name="MessageAnswer1">Morgen, so früh auf?</string>
+    <string name="MessageAnswer2">Wir sind schon lang wach</string>
+    <string name="MessageAnna">Anna</string>
+    <string name="MessageRichard">Richard</string>
+    <string name="MessageMe">Ich</string>
+    <!--Toast-Strings-->
+    <string name="ToIntErr">Interner Fehler</string>
 </resources>

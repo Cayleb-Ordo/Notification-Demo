@@ -110,6 +110,7 @@ notificationManager.notify(notID, bigTxtNot);
 ### Media-Controls Notification
 Erstellung einer Notification zur Steuerung von Media Inhalten.  
 !! Zu beachten ist die richtige importierung in build.gradle.  
+Ab Android Oreo kann eine MediaSession hinzugefügt werden, dadurch wird die gesammte Notification in der Farbe des Albumcovers eingefärbt.  
 **Code**
 ```
 notbuilder = new NotificationCompat.Builder(context, channelid)
