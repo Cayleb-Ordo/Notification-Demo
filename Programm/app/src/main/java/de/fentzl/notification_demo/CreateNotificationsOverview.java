@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -100,7 +99,7 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
                 startActivity(tmpInt);
                 return true;
             default:
-                Log.d(MainActivity.debugTag, CLASS_CreateNotificationsOverview + ": Default von MenuItem Listener");
+                Log.d(NotificationDemoApplication.debugTag, CLASS_CreateNotificationsOverview + ": Default von MenuItem Listener");
                 return false;
         }
     }

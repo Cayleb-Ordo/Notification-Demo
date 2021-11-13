@@ -93,7 +93,7 @@ public class NotificationController {
     public void notifyChannel1(CreateNotificationsOverview.NotificationType selected) {
         switch (selected) {
             case Default:
-                Log.d(MainActivity.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Case Default");
+                Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Case Default");
                 buildDefaultNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1);
                 break;
             case Progress:
@@ -114,7 +114,7 @@ public class NotificationController {
             case Custom:
                 break;
             default:
-                Log.d(MainActivity.debugTag, "Das sollte nicht passieren");
+                Log.d(NotificationDemoApplication.debugTag, "Das sollte nicht passieren");
                 break;
         }
     }
@@ -145,7 +145,7 @@ public class NotificationController {
             case Custom:
                 break;
             default:
-                Log.d(MainActivity.debugTag, "Das sollte nicht passieren");
+                Log.d(NotificationDemoApplication.debugTag, "Das sollte nicht passieren");
                 break;
         }
     }
@@ -302,7 +302,7 @@ public class NotificationController {
         //MessangingStyle, wichtig hier das Person Objekt. Nur eine Charsequence ist in der alten Funktion.
         NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(me)
                 .setConversationTitle("Gruppen Chat");
-        for (Message chatMessage : MainActivity.MESSAGES){
+        for (Message chatMessage : NotificationDemoApplication.MESSAGES){
             NotificationCompat.MessagingStyle.Message notMessage = new NotificationCompat.MessagingStyle.Message(
                     chatMessage.getText(),
                     chatMessage.getTimestamp(),
@@ -343,7 +343,7 @@ public class NotificationController {
         } else if (id == notCh2) {
             notificationManager.cancel(notCh2);
         } else
-            Log.d(MainActivity.debugTag, "Das sollte nicht passieren");
+            Log.d(NotificationDemoApplication.debugTag, "Das sollte nicht passieren");
     }
 }
 

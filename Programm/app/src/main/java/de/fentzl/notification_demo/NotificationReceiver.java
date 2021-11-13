@@ -28,7 +28,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         switch (intent.getAction()){
             case NotificationController.ACTION_DISMISS:
                 notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD, 0));
-                Log.d(MainActivity.debugTag, NOTIFICATIONRECEIVER + "case Action Dismiss");
+                Log.d(NotificationDemoApplication.debugTag, NOTIFICATIONRECEIVER + "case Action Dismiss");
                 break;
             /*case NotificationController.ACTION_MUTE:
                 notificationController.updateMediaCont(intent.getIntExtra(NotificationController.PAYLOAD, 0));
@@ -38,7 +38,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
                 if (remoteInput != null){
                     CharSequence rplyText = remoteInput.getCharSequence(NotificationController.KEY_TEXTRPLY);
-                    MainActivity.MESSAGES.add(new Message(rplyText, null));
+                    NotificationDemoApplication.MESSAGES.add(new Message(rplyText, null));
                     if (intent.getIntExtra(NotificationController.PAYLOAD, 0) == NotificationController.notCh1)
                         notificationController.notifyChannel1(CreateNotificationsOverview.NotificationType.Reply);
                     else if (intent.getIntExtra(NotificationController.PAYLOAD, 0) == NotificationController.notCh2)
@@ -48,7 +48,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 }
                 break;
             default:
-                Log.d(MainActivity.debugTag, NOTIFICATIONRECEIVER + " No specific Action received!");
+                Log.d(NotificationDemoApplication.debugTag, NOTIFICATIONRECEIVER + " No specific Action received!");
                 break;
         }
    }
