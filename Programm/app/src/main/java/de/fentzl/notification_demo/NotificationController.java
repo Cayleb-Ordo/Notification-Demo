@@ -301,7 +301,7 @@ public class NotificationController {
                 .build();
         //MessangingStyle, wichtig hier das Person Objekt. Nur eine Charsequence ist in der alten Funktion.
         NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(me)
-                .setConversationTitle(context.getString(R.string.MessageTitle));
+                .setConversationTitle("Gruppen Chat");
         for (Message chatMessage : MainActivity.MESSAGES){
             NotificationCompat.MessagingStyle.Message notMessage = new NotificationCompat.MessagingStyle.Message(
                     chatMessage.getText(),
