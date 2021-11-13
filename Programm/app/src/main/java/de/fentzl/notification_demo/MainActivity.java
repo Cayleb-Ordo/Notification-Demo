@@ -2,26 +2,26 @@ package de.fentzl.notification_demo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.Person;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Hauptklasse. Startet alle Unteraktivitäten
  * @author Simon Fentzl
  * @version 1
  */
 public class MainActivity extends AppCompatActivity {
-    public static final String debugTag = "NotDemo";
-    private NotificationController notificationController;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        notificationController = new NotificationController(this.getApplicationContext());
-        notificationController.createNotificationChannel(true);
         setContentView(R.layout.main_activity);
         //Toolbar
         Toolbar toolbar = findViewById(R.id.main_appbar);

@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -25,9 +24,11 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
         Default,
         Progress,
         Expandable,
+        BigText,
         Custom,
         Media,
         Reply
+
     }
 
     @Override
@@ -69,6 +70,13 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
                     notificationController.notifyChannel2(NotificationType.Expandable);
                 startActivity(tmpInt);
                 return true;
+            case R.id.Pop_BigText:
+                if (button1Clicked)
+                    notificationController.notifyChannel1(NotificationType.BigText);
+                else
+                    notificationController.notifyChannel2(NotificationType.BigText);
+                startActivity(tmpInt);
+                return true;
             case R.id.Pop_Media:
                 if (button1Clicked)
                     notificationController.notifyChannel1(NotificationType.Media);
@@ -91,7 +99,7 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
                 startActivity(tmpInt);
                 return true;
             default:
-                Log.d(MainActivity.debugTag, CLASS_CreateNotificationsOverview + ": Default von MenuItem Listener");
+                Log.d(NotificationDemoApplication.debugTag, CLASS_CreateNotificationsOverview + ": Default von MenuItem Listener");
                 return false;
         }
     }

@@ -15,6 +15,10 @@
     <string name="NotProgEndText">Download abgeschlossen</string>
     <string name="NotExpanTitle">Mausi\'s Katzenschrei</string>
     <string name="NotExpanText">Mausi und die Mäuse</string>
+    <string name="NotBTextContent">Großer Text Notification</string>
+    <string name="NotBText_lorem">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</string>
+    <string name="NotBTextConTitle">Das ist viel Text</string>
+    <string name="NotBTextSumm">Zusammenfasung:</string>
     <!-- Notification-Action-Buttons-->
     <string name="NotActionClose">Schließen</string>
     <string name="NotActionReply">Antworten</string>
@@ -35,7 +39,18 @@
     <string name="Pop_Default">Standard Notification</string>
     <string name="Pop_Progress">Progress bar</string>
     <string name="Pop_Expandable">Erweiterbare Notification</string>
+    <string name="Pop_BigText">Großer Text</string>
     <string name="Pop_Media">Media Kontrollen</string>
-    <string name="Pop_Rply">Messanger Style</string>
+    <string name="Pop_Rply">Messenger Style</string>
     <string name="Pop_Custom">Benutzerdefiniert</string>
+    <!--Messenging-Style-"Nachrichten"-->
+    <string name="MessageTitle">Party Chat</string>
+    <string name="MessageMoring">Moin Leute</string>
+    <string name="MessageAnswer1">Morgen, so früh auf?</string>
+    <string name="MessageAnswer2">Wir sind schon lang wach</string>
+    <string name="MessageAnna">Anna</string>
+    <string name="MessageRichard">Richard</string>
+    <string name="MessageMe">Ich</string>
+    <!--Toast-Strings-->
+    <string name="ToIntErr">Interner Fehler</string>
 </resources>

@@ -17,6 +17,9 @@
     <item android:id="@+id/Pop_Rply"
         android:title="@string/Pop_Rply">
     </item>
+    <item android:id="@+id/Pop_BigText"
+        android:title="@string/Pop_BigText">
+    </item>
     <item android:id="@+id/Pop_Custom"
         android:title="@string/Pop_Custom">
     </item>
