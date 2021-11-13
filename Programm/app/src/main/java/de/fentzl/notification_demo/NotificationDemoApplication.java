@@ -21,6 +21,6 @@ public class NotificationDemoApplication extends Application {
         MESSAGES.add(new Message(getString(R.string.MessageAnswer1),null));
         MESSAGES.add(new Message(getString(R.string.MessageAnswer2),new Person.Builder().setName(getString(R.string.MessageRichard)).setKey(richardKey).build()));
         notificationController = new NotificationController(this.getApplicationContext());
-        notificationController.createNotificationChannel(true);
+        notificationController.createNotificationChannels(true);
     }
 }
