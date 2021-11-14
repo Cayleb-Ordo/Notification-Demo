@@ -32,6 +32,7 @@ Dieses Repository enthällt den Code für eine Demonstrations Anwendung für And
 Alle Code-teile finden sich in der Klasse NotificationController. Zur besseren Übersicht wurden die Einzelkomponenten hier aufgeführt.  
 Zu beachten ist das hier eine Member Variable verwendet wird.
 - notificationManager: Typ NotificationManagerCompat
+Ebenfalls müssen für eigenimplementation die Jeweiligen Intents, Key-Strings und Actions geändert werden.  
 
 ### Default-Notification mit Action-Buttons
 Erstellung einer einfachen Push-Notification mit Titel, Tab-Action, Inhalt's Text, Icon und einem Action-Button.  
@@ -130,8 +131,56 @@ notbuilder = new NotificationCompat.Builder(context, channelid)
 notificationManager.notify(notID, notbuilder.build());
 ```
 
-### Messenging-Style und Reply Button
+### Messaging-Style und Reply Button
+Erstellen einer Messaging-Style Notification mit Antwortmöglichkeit(siehe WhatsApp).  
+Diese erfordert weitere Einstellungen um zu Funktionnieren. Wichtig ist das der ConversionTitle im Style nicht für Chats   
+unter drei Personen verwendet werden soll. Ebenfalls wichtig ist bei den PendingIntent des RemotInput immer einzigartig ist, sonnst  
+könnte es sein das der User einem anderen Chat die Nachricht schreibt als er annimmt.
+**Code:**
+RemotInput
+---
+```
+//RemoteInput, anhand dessen wird er eingegebene Text später entnommen
+RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
+        .setLabel(context.getString(R.string.NotRplyLabel))
+        .build();
+```
+ActionButton mit RemoteInput
+---
+```
+Intent rplyIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_REPLY).putExtra(PAYLOAD,notID);
+PendingIntent rplyPendingIntent = PendingIntent.getBroadcast(context, notID, rplyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+NotificationCompat.Action rplyAction = new NotificationCompat.Action.Builder(R.drawable.ic_reply, context.getString(R.string.NotActionReply), rplyPendingIntent )
+        .addRemoteInput(remoteInput)
+        .build();
+```
+MessagingStyle
+---
+```
+//MessangingStyle, wichtig hier das Person Objekt. Nur eine Charsequence ist in der alten Funktion.
+NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(me)
+        .setConversationTitle(context.getString(R.string.MessageTitle));
+messagingStyle.addMessage(notMessage); // Fügt die Nachricht dem Style hinzu
+```
+Notification
+---
+```
+Notification rplyNot = new NotificationCompat.Builder(context, channelid)
+        .setSmallIcon(icon)
+        .setStyle(messagingStyle)
+        .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), dismissPendingIntent)
+        .addAction(rplyAction)
+        .setColor(Color.GREEN)
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setAutoCancel(true)
+        .setOnlyAlertOnce(true)
+        .build();
+notificationManager.notify(notID, rplyNot);
+```
 
+### Custom
+RemoteViews
+CollapsedView höhe max 64dp. ExpandedView höhe 256dp.
 ## Mitwirkende
 
 Simon Fentzl
