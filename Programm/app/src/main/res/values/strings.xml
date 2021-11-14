@@ -36,7 +36,6 @@
     <string name="CNotCh2">Kanal 2</string>
     <!--TextView-Contents-->
     <string name="TxVCoCall">Ich wurde gerufen?</string>
-    <string name="TxVPlaceholder">Platzhalter</string>
     <!--Content-Descriptions-->
     <string name="Iv_background">Hintergrundbild</string>
     <!--Popup-Menu-->
