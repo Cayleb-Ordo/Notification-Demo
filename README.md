@@ -178,6 +178,9 @@ Notification rplyNot = new NotificationCompat.Builder(context, channelid)
 notificationManager.notify(notID, rplyNot);
 ```
 
+### Custom
+RemoteViews
+CollapsedView höhe max 64dp. ExpandedView höhe 256dp.
 ## Mitwirkende
 
 Simon Fentzl
