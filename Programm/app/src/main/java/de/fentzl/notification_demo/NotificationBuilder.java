@@ -188,7 +188,7 @@ public class NotificationBuilder {
     public Notification buildCustomNot(int notID, String channelid, int icon) {
         RemoteViews collapsedView = new RemoteViews(context.getPackageName(), R.layout.notification_collapsed);
         RemoteViews expandedView = new RemoteViews(context.getPackageName(), R.layout.notification_expanded);
-
+        expandedView.setOnClickPendingIntent(R.id.not_expan_Img, buildContentIntent());
         Notification customNot = new NotificationCompat.Builder(context,channelid)
                 .setSmallIcon(icon)
                 .setCustomContentView(collapsedView) //kleiner Status
