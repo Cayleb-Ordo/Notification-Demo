@@ -142,7 +142,7 @@ Erstellen einer Messaging-Style Notification mit Antwortmöglichkeit(siehe Whats
 Diese erfordert weitere Einstellungen um zu Funktionnieren. Wichtig ist das der ConversionTitle im Style nicht für Chats   
 unter drei Personen verwendet werden soll. Ebenfalls wichtig ist bei den PendingIntent des RemotInput immer einzigartig ist, sonnst  
 könnte es sein das der User einem anderen Chat die Nachricht schreibt als er annimmt.  
-**Code:**
+**Code:**  
 RemotInput
 ---
 ```
