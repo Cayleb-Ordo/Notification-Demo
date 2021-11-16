@@ -35,6 +35,7 @@ Zu beachten ist das hier eine Member Variable verwendet wird.
 Ebenfalls müssen für eigenimplementation die Jeweiligen Intents, Key-Strings und Actions geändert werden.  
 
 ### Default-Notification mit Action-Buttons
+---
 Erstellung einer einfachen Push-Notification mit Titel, Tab-Action, Inhalt's Text, Icon und einem Action-Button.  
 Es muss bei der Action kein Icon spezifiziert werden. Bei der Unterscheidung der PendingIntent's aufpassen.  
 Diese müssen eindeutig Unterscheidbar sein. Zb. eine eindeutige Action.  
@@ -60,6 +61,7 @@ notificationManager.notify(notID, defaultNot);
 ```
 
 ### Progress bar Notification
+---
 Erstellung einer Notification mit integrierter Progress bar.  
 **Code:**
 ```
@@ -74,6 +76,7 @@ notificationManager.notify(notID, progressNot.build());
 ```
 
 ### Expandable Notification
+---
 Erstellung einer erweiterbaren Notification, mit großem Bild.  
 **Code:**
 ```
@@ -91,6 +94,7 @@ notificationManager.notify(notID,expandNot);
 ```
 
 ### BigPictureStyle Notification
+---
 Erstellung einer BigPictureStyle Notification.  
 **Code:**
 ```
@@ -109,6 +113,7 @@ notificationManager.notify(notID, bigTxtNot);
 ```
 
 ### Media-Controls Notification
+---
 Erstellung einer Notification zur Steuerung von Media Inhalten.  
 !! Zu beachten ist die richtige importierung in build.gradle.  
 Ab Android Oreo kann eine MediaSession hinzugefügt werden, dadurch wird die gesammte Notification in der Farbe des Albumcovers eingefärbt.  
@@ -132,10 +137,11 @@ notificationManager.notify(notID, notbuilder.build());
 ```
 
 ### Messaging-Style und Reply Button
+---
 Erstellen einer Messaging-Style Notification mit Antwortmöglichkeit(siehe WhatsApp).  
 Diese erfordert weitere Einstellungen um zu Funktionnieren. Wichtig ist das der ConversionTitle im Style nicht für Chats   
 unter drei Personen verwendet werden soll. Ebenfalls wichtig ist bei den PendingIntent des RemotInput immer einzigartig ist, sonnst  
-könnte es sein das der User einem anderen Chat die Nachricht schreibt als er annimmt.
+könnte es sein das der User einem anderen Chat die Nachricht schreibt als er annimmt.  
 **Code:**
 RemotInput
 ---
@@ -179,8 +185,24 @@ notificationManager.notify(notID, rplyNot);
 ```
 
 ### Custom
-RemoteViews
-CollapsedView höhe max 64dp. ExpandedView höhe 256dp.
+---
+Erstellt eine Komplett benutzerdefiniert Notification. Es werden Layouts für RemoteViews benötigt.  
+Zwei Einschrenkungen: CollapsedView(Notification ist klein) höhe max 64dp. ExpandedView(Erweiterte Notification) höhe 256dp.  
+Um einen Konsistentes Aussehen mit den restlichen Notifications zu ereichen sollte man die Notification mit dem NotificationCompat.DecoratedCustomViewStyle versehen.  
+**Code:**
+```
+RemoteViews collapsedView = new RemoteViews(context.getPackageName(), R.layout.notification_collapsed);
+RemoteViews expandedView = new RemoteViews(context.getPackageName(), R.layout.notification_expanded);
+expandedView.setOnClickPendingIntent(R.id.not_expan_Img, buildContentIntent());
+Notification customNot = new NotificationCompat.Builder(context,channelid)
+        .setSmallIcon(icon)
+        .setCustomContentView(collapsedView) //kleiner Status
+        .setCustomBigContentView(expandedView)
+        .setStyle(new NotificationCompat.DecoratedCustomViewStyle()) // Das nur machen wenn ein konsistenter aussehen mit den restlichen Notifications ereicht werden soll
+        .build();
+                
+```
+
 ## Mitwirkende
 
 Simon Fentzl

@@ -3,9 +3,9 @@ package de.fentzl.notification_demo;
 import androidx.core.app.Person;
 
 public class Message {
-    private CharSequence text;
-    private long timestamp;
-    private Person sender;
+    private final CharSequence text;
+    private final long timestamp;
+    private final Person sender;
 
     public Message(CharSequence text, Person sender){
         this.text = text;
