@@ -139,11 +139,10 @@ notificationManager.notify(notID, notbuilder.build());
 ### Messaging-Style und Reply Button
 ---
 Erstellen einer Messaging-Style Notification mit Antwortmöglichkeit(siehe WhatsApp).  
-Diese erfordert weitere Einstellungen um zu Funktionnieren. Wichtig ist das der ConversionTitle im Style nicht für Chats   
-unter drei Personen verwendet werden soll. Ebenfalls wichtig ist bei den PendingIntent des RemotInput immer einzigartig ist, sonnst  
+Diese erfordert weitere Einstellungen um zu Funktionnieren. Wichtig ist das der ConversionTitle im Style nicht für Chats unter drei Personen verwendet werden soll. Ebenfalls wichtig ist bei den PendingIntent des RemotInput immer einzigartig ist, sonnst  
 könnte es sein das der User einem anderen Chat die Nachricht schreibt als er annimmt.  
 **Code:**
-RemotInput
+#### RemotInput
 ---
 ```
 //RemoteInput, anhand dessen wird er eingegebene Text später entnommen
@@ -151,7 +150,7 @@ RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
         .setLabel(context.getString(R.string.NotRplyLabel))
         .build();
 ```
-ActionButton mit RemoteInput
+#### ActionButton mit RemoteInput
 ---
 ```
 Intent rplyIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_REPLY).putExtra(PAYLOAD,notID);
@@ -160,7 +159,7 @@ NotificationCompat.Action rplyAction = new NotificationCompat.Action.Builder(R.d
         .addRemoteInput(remoteInput)
         .build();
 ```
-MessagingStyle
+#### MessagingStyle
 ---
 ```
 //MessangingStyle, wichtig hier das Person Objekt. Nur eine Charsequence ist in der alten Funktion.
@@ -168,7 +167,7 @@ NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.Messag
         .setConversationTitle(context.getString(R.string.MessageTitle));
 messagingStyle.addMessage(notMessage); // Fügt die Nachricht dem Style hinzu
 ```
-Notification
+#### Notification
 ---
 ```
 Notification rplyNot = new NotificationCompat.Builder(context, channelid)
@@ -198,6 +197,7 @@ Notification customNot = new NotificationCompat.Builder(context,channelid)
         .setSmallIcon(icon)
         .setCustomContentView(collapsedView) //kleiner Status
         .setCustomBigContentView(expandedView)
+        .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), buildDismissIntent(notID))
         .setStyle(new NotificationCompat.DecoratedCustomViewStyle()) // Das nur machen wenn ein konsistenter aussehen mit den restlichen Notifications ereicht werden soll
         .build();
                 

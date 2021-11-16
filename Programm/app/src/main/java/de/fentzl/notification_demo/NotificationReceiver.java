@@ -14,7 +14,7 @@ import android.widget.Toast;
  * @version 1
  */
 public class NotificationReceiver extends BroadcastReceiver {
-    private final String NOTIFICATIONRECEIVER = "de.fentzl.notification_demo.NotificationReceiver";
+    private final String CLASS_NOTIFICATIONRECEIVER = "de.fentzl.notification_demo.NotificationReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -29,7 +29,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 notificationController.dismissNotification(intent.getIntExtra(NotificationBuilder.PAYLOAD, 0));
                 break;
             case NotificationBuilder.ACTION_MUTE:
-                //notificationController.updateMediaCont(intent.getIntExtra(NotificationBuilder.PAYLOAD, 0));
+                notificationController.updateMediaCont(intent.getIntExtra(NotificationBuilder.PAYLOAD, 0));
                 break;
             case NotificationBuilder.ACTION_REPLY:
                 Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
@@ -45,7 +45,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 }
                 break;
             default:
-                Log.d(NotificationDemoApplication.debugTag, NOTIFICATIONRECEIVER + " No specific Action received!");
+                Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONRECEIVER + " No specific Action received!");
                 break;
         }
    }

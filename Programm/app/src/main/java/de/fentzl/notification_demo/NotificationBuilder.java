@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
@@ -17,12 +18,11 @@ public class NotificationBuilder {
     public static final String ACTION_MUTE = "de.fentzl.notificatin_demo.MUTE";
     public static final String KEY_TEXTRPLY = "reply";
     public static final String PAYLOAD = "payload";
+    public Notification mediaConNot;
     private final String CLASS_NOTIFICATIONBUILDER = "de.fentzl.notification_demo.NotificationBuilder";
     private final String personKey = "de.fentzl.me";
     private final Person me;
     private final Context context;
-    private final NotificationManagerCompat notificationManager;
-    private Notification mediaConNot;
 
     /**
      * Konstruktor, damit der Notification Manager mit context initialisiert werden kann
@@ -30,7 +30,6 @@ public class NotificationBuilder {
      */
     public NotificationBuilder(Context context) {
         this.context = context;
-        this.notificationManager = NotificationManagerCompat.from(context);
         this.me = new Person.Builder().setName(context.getString(R.string.MessageMe)).setKey(personKey).build();
     }
 
@@ -113,7 +112,7 @@ public class NotificationBuilder {
         return expandNot;
     }
 
-    public Notification buildMediaConNot(int notID, String channelid, int icon) {
+    public Notification buildMediaConNot(int notID, String channelid, int icon, boolean update) {
         Intent muteIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_MUTE).putExtra(PAYLOAD, notID);
         PendingIntent mutePendingIntent = PendingIntent.getBroadcast(context, notID, muteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mediaConNot= new NotificationCompat.Builder(context, channelid)
@@ -193,6 +192,7 @@ public class NotificationBuilder {
                 .setSmallIcon(icon)
                 .setCustomContentView(collapsedView) //kleiner Status
                 .setCustomBigContentView(expandedView)
+                .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), buildDismissIntent(notID))
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle()) // Das nur machen wenn ein konsistenter aussehen mit den restlichen Notifications ereicht werden soll
                 .build();
         return customNot;
