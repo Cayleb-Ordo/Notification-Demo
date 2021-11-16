@@ -17,10 +17,12 @@ public class NotificationDemoApplication extends Application {
     private final String annKey = "de.fentzl.anna";
     private final String richardKey = "de.fentl.richard";
     static List<Message> MESSAGES = new ArrayList<>();
+    static NotificationBuilder notBuilder;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        notBuilder = new NotificationBuilder(getApplicationContext());
         rwu_logo = BitmapFactory.decodeResource(getResources(), R.drawable.rwu_logo);
         mausi_logo = BitmapFactory.decodeResource(getResources(), R.drawable.mausi);
         MESSAGES.add(new Message(getString(R.string.MessageMoring),new Person.Builder().setName(getString(R.string.MessageAnna)).setKey(annKey).build()));

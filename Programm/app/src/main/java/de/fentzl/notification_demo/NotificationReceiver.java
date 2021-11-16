@@ -25,20 +25,20 @@ public class NotificationReceiver extends BroadcastReceiver {
         } else
             notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD,0));*/
         switch (intent.getAction()){
-            case NotificationController.ACTION_DISMISS:
-                notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD, 0));
+            case NotificationBuilder.ACTION_DISMISS:
+                notificationController.dismissNotification(intent.getIntExtra(NotificationBuilder.PAYLOAD, 0));
                 break;
-            /*case NotificationController.ACTION_MUTE:
-                notificationController.updateMediaCont(intent.getIntExtra(NotificationController.PAYLOAD, 0));
-                break;*/
-            case NotificationController.ACTION_REPLY:
+            case NotificationBuilder.ACTION_MUTE:
+                //notificationController.updateMediaCont(intent.getIntExtra(NotificationBuilder.PAYLOAD, 0));
+                break;
+            case NotificationBuilder.ACTION_REPLY:
                 Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
                 if (remoteInput != null){
-                    CharSequence rplyText = remoteInput.getCharSequence(NotificationController.KEY_TEXTRPLY);
+                    CharSequence rplyText = remoteInput.getCharSequence(NotificationBuilder.KEY_TEXTRPLY);
                     NotificationDemoApplication.MESSAGES.add(new Message(rplyText, null));
-                    if (intent.getIntExtra(NotificationController.PAYLOAD, 0) == NotificationController.notCh1)
+                    if (intent.getIntExtra(NotificationBuilder.PAYLOAD, 0) == NotificationController.notCh1)
                         notificationController.notifyChannel1(CreateNotificationsOverview.NotificationType.Reply);
-                    else if (intent.getIntExtra(NotificationController.PAYLOAD, 0) == NotificationController.notCh2)
+                    else if (intent.getIntExtra(NotificationBuilder.PAYLOAD, 0) == NotificationController.notCh2)
                         notificationController.notifyChannel2(CreateNotificationsOverview.NotificationType.Reply);
                     else
                         Toast.makeText(context, context.getString(R.string.ToIntErr), Toast.LENGTH_LONG).show();
