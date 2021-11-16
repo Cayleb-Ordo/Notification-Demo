@@ -36,6 +36,7 @@ public class NotificationController {
     private final int importance = NotificationManager.IMPORTANCE_DEFAULT;
     private final Context context;
     private final NotificationManagerCompat notificationManager;
+    private NotificationCompat.Builder updateBuilder;
 
     /**
      * Konstruktor, damit der Notification Manager mit context initialisiert werden kann
@@ -99,7 +100,7 @@ public class NotificationController {
                 break;
             case Media:
                 notificationManager.notify(notCh1,
-                        NotificationDemoApplication.notBuilder.buildMediaConNot(notCh1, CHANNEL1_ID, R.drawable.ic_channel1));
+                        NotificationDemoApplication.notBuilder.buildMediaConNot(notCh1, CHANNEL1_ID, R.drawable.ic_channel1, false));
                 break;
             case Reply:
                 notificationManager.notify(notCh1,
@@ -140,7 +141,7 @@ public class NotificationController {
                 break;
             case Media:
                 notificationManager.notify(notCh2,
-                        NotificationDemoApplication.notBuilder.buildMediaConNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2));
+                        NotificationDemoApplication.notBuilder.buildMediaConNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2, false));
                 break;
             case Reply:
                 notificationManager.notify(notCh2,
@@ -182,10 +183,13 @@ public class NotificationController {
         }).start();
     }
 
-    /*public void updateMediaCont(int notID) {
-        NotificationDemoApplication.notBuilder.updateBuilder = new NotificationCompat.Builder(context, mediaConNot).addAction(R.drawable.ic_volume_off, context.getString(R.string.NotExpAMute), null);
-        notificationManager.notify(notID, updateBuilder.build());
-    }*/
+    public void updateMediaCont(int notID) {
+        Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": updateMediaCont");
+        if(notID == notCh1)
+            notificationManager.notify(notID, NotificationDemoApplication.notBuilder.buildMediaConNot(notID, channel1Name, R.drawable.ic_channel1, true));
+        else
+            notificationManager.notify(notID, NotificationDemoApplication.notBuilder.buildMediaConNot(notID, channel2Name, R.drawable.ic_channel2, true));
+    }
 
     /**
      * Lässt die Notification verschwinden
