@@ -1,9 +1,10 @@
 # Notification Demo App
 
 Demo App für Android Push-Notifications.
+
 ## Beschreibung
 
-Dieses Repository enthällt den Code für eine Demonstrations Anwendung für Android Push-Notifications. Diese Anwendung zeigt anschaulich was mit den Push-Notifications ereicht werden kann.
+Dieses Repository enthällt den Code einer Demonstration's Anwendung für Android Push-Notifications. Diese Anwendung zeigt anschaulich was mit den Push-Notifications ereicht werden kann.
 
 ## Inhalt
 
@@ -18,7 +19,7 @@ Dieses Repository enthällt den Code für eine Demonstrations Anwendung für And
     - enthällt die Projekt-Dokumentation.
     - Problems.txt: darin sind aufgetretene Probleme und deren Lösungen aufgeführt.
     - Arbeitszeit.xlsx: Excel Datei zum festhalten der Arbeitszeit.
-- Dokumentation/JavaDoc:
+- Dokumentation/JavaDoc: **aktuell nicht erstellbar**
     - enthällt das JavaDoc der App.
 - Dokumentation/Planung:
     - enthällt die Datei, wo erstmalig aufgeschrieben wurde was umgesetzt werden soll.
@@ -29,10 +30,8 @@ Dieses Repository enthällt den Code für eine Demonstrations Anwendung für And
     - ordnerstruktur ist die gleiche wie bei einem normalen Android-Studio Projekt.
 
 ## Notifications Codebeispiele
-Alle Code-teile finden sich in der Klasse NotificationController. Zur besseren Übersicht wurden die Einzelkomponenten hier aufgeführt.  
-Zu beachten ist das hier eine Member Variable verwendet wird.
-- notificationManager: Typ NotificationManagerCompat
-Ebenfalls müssen für eigenimplementation die Jeweiligen Intents, Key-Strings und Actions geändert werden.  
+Alle Code-teile finden sich in der Klasse NotificationBuilder. Zur besseren Übersicht wurden die Einzelkomponenten hier aufgeführt.  
+Ebenfalls müssen für eigen Implementation die Jeweiligen Intents, Key-Strings und Actions geändert werden.  
 
 ### Default-Notification mit Action-Buttons
 ---

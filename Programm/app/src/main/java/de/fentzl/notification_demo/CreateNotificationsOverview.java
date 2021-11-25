@@ -23,7 +23,7 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
     enum NotificationType {
         Default,
         Progress,
-        Expandable,
+        BigPicture,
         BigText,
         Custom,
         Media,
@@ -63,11 +63,11 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
                     notificationController.notifyChannel2(NotificationType.Progress);
                 startActivity(tmpInt);
                 return true;
-            case R.id.Pop_Expandable:
+            case R.id.Pop_BigPicture:
                 if (button1Clicked)
-                    notificationController.notifyChannel1(NotificationType.Expandable);
+                    notificationController.notifyChannel1(NotificationType.BigPicture);
                 else
-                    notificationController.notifyChannel2(NotificationType.Expandable);
+                    notificationController.notifyChannel2(NotificationType.BigPicture);
                 startActivity(tmpInt);
                 return true;
             case R.id.Pop_BigText:

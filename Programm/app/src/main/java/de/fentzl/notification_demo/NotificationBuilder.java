@@ -20,6 +20,7 @@ public class NotificationBuilder {
     public static final String PAYLOAD = "payload";
     public Notification mediaConNot;
     private final String CLASS_NOTIFICATIONBUILDER = "de.fentzl.notification_demo.NotificationBuilder";
+    private final String NOTIFICATION_GROUP_KEY = "de.fentzl.notification_demo.Gruppe";
     private final String personKey = "de.fentzl.me";
     private final Person me;
     private final Context context;
@@ -66,6 +67,7 @@ public class NotificationBuilder {
                 .setContentIntent(buildContentIntent())
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), buildDismissIntent(notID))
                 .setAutoCancel(true) // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
+                .setGroup(NOTIFICATION_GROUP_KEY)
                 .build();
         return defaultNot;
     }
@@ -85,6 +87,7 @@ public class NotificationBuilder {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setOngoing(true)
                 .setContentIntent(buildContentIntent())
+                .setGroup(NOTIFICATION_GROUP_KEY)
                 .setProgress(NotificationController.progressMax, 0, false);
         return progressNot;
     }
@@ -97,7 +100,7 @@ public class NotificationBuilder {
      * @param contentTitle String Titel der Notification
      * @param icon         Integer Id des Icons
      */
-    public Notification buildExpandableNot(int notID, String channelid, String contentTitle, int icon) {
+    public Notification buildBigPictureStyleNot(int notID, String channelid, String contentTitle, int icon) {
         Notification expandNot = new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentTitle(contentTitle)
@@ -108,6 +111,7 @@ public class NotificationBuilder {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), buildDismissIntent(notID))
                 .setAutoCancel(true)
+                .setGroup(NOTIFICATION_GROUP_KEY)
                 .build();
         return expandNot;
     }
@@ -127,7 +131,9 @@ public class NotificationBuilder {
                 .setContentTitle(context.getString(R.string.NotExpanTitle))
                 .setContentText(context.getString(R.string.NotExpanText))
                 .setLargeIcon(NotificationDemoApplication.mausi_logo)
-                .setSmallIcon(icon).build();
+                .setSmallIcon(icon)
+                .setGroup(NOTIFICATION_GROUP_KEY)
+                .build();
         return mediaConNot;
     }
 
@@ -143,6 +149,7 @@ public class NotificationBuilder {
                         .setSummaryText(context.getString(R.string.NotBTextSumm)))
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), buildDismissIntent(notID))
                 .setAutoCancel(true)
+                .setGroup(NOTIFICATION_GROUP_KEY)
                 .build();
         return bigTxtNot;
     }
@@ -159,8 +166,7 @@ public class NotificationBuilder {
                 .addRemoteInput(remoteInput)
                 .build();
         //MessangingStyle, wichtig hier das Person Objekt. Nur eine Charsequence ist in der alten Funktion.
-        NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(me)
-                .setConversationTitle(context.getString(R.string.MessageTitle));
+        NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(me);
         for (Message chatMessage : NotificationDemoApplication.MESSAGES){
             NotificationCompat.MessagingStyle.Message notMessage = new NotificationCompat.MessagingStyle.Message(
                     chatMessage.getText(),
@@ -173,13 +179,14 @@ public class NotificationBuilder {
         Notification rplyNot = new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentIntent(buildContentIntent())
-                .setStyle(messagingStyle)
+                .setStyle(messagingStyle.setConversationTitle(context.getString(R.string.MessageTitle)))
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), buildDismissIntent(notID))
                 .addAction(rplyAction)
                 .setColor(context.getColor(R.color.Primary))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
+                .setGroup(NOTIFICATION_GROUP_KEY)
                 .build();
         return rplyNot;
     }
@@ -194,6 +201,7 @@ public class NotificationBuilder {
                 .setCustomBigContentView(expandedView)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), buildDismissIntent(notID))
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle()) // Das nur machen wenn ein konsistenter aussehen mit den restlichen Notifications ereicht werden soll
+                .setGroup(NOTIFICATION_GROUP_KEY)
                 .build();
         return customNot;
     }

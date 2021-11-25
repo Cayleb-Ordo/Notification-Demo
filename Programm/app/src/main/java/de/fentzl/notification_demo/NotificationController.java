@@ -1,20 +1,14 @@
 package de.fentzl.notification_demo;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
-import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.app.Person;
-import androidx.core.app.RemoteInput;
 
 /**
  * Kontrollklasse die die Notificationen verwaltet
@@ -37,6 +31,7 @@ public class NotificationController {
     private final Context context;
     private final NotificationManagerCompat notificationManager;
     private NotificationCompat.Builder updateBuilder;
+
 
     /**
      * Konstruktor, damit der Notification Manager mit context initialisiert werden kann
@@ -81,18 +76,17 @@ public class NotificationController {
     public void notifyChannel1(CreateNotificationsOverview.NotificationType selected) {
         switch (selected) {
             case Default:
-                Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Case Default");
                 notificationManager.notify(notCh1,
                         NotificationDemoApplication.notBuilder.buildDefaultNot(notCh1, CHANNEL1_ID,context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
                 break;
             case Progress:
                 NotificationCompat.Builder tmpBuilder = NotificationDemoApplication.notBuilder.buildProgressbarNot(notCh1, CHANNEL1_ID, R.drawable.ic_channel1);
                 notificationManager.notify(notCh1,tmpBuilder.build() );
-                creatThread(tmpBuilder, notCh1);
+                createThread(tmpBuilder, notCh1);
                 break;
-            case Expandable:
+            case BigPicture:
                 notificationManager.notify(notCh1,
-                        NotificationDemoApplication.notBuilder.buildExpandableNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
+                        NotificationDemoApplication.notBuilder.buildBigPictureStyleNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
                 break;
             case BigText:
                 notificationManager.notify(notCh1,
@@ -129,11 +123,11 @@ public class NotificationController {
             case Progress:
                 NotificationCompat.Builder tmpBuilder = NotificationDemoApplication.notBuilder.buildProgressbarNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2);
                 notificationManager.notify(notCh2, tmpBuilder.build());
-                creatThread(tmpBuilder, notCh2);
+                createThread(tmpBuilder, notCh2);
                 break;
-            case Expandable:
+            case BigPicture:
                 notificationManager.notify(notCh2,
-                        NotificationDemoApplication.notBuilder.buildExpandableNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
+                        NotificationDemoApplication.notBuilder.buildBigPictureStyleNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
                 break;
             case BigText:
                 notificationManager.notify(notCh2,
@@ -157,7 +151,7 @@ public class NotificationController {
         }
     }
 
-    private void creatThread(NotificationCompat.Builder notBuilder, int notID){
+    private void createThread(NotificationCompat.Builder notBuilder, int notID){
         //Thread zur aktualisierung der Notification, damit ein Download simuliert wird
         new Thread(new Runnable() {
             @Override
@@ -201,6 +195,6 @@ public class NotificationController {
         } else if (id == notCh2) {
             notificationManager.cancel(notCh2);
         } else
-            Log.d(NotificationDemoApplication.debugTag, "Das sollte nicht passieren");
+            Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ":Das sollte nicht passieren");
     }
 }
