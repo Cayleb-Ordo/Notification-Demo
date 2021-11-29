@@ -1,9 +1,9 @@
 package de.fentzl.notification_demo;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.os.Bundle;
 /**
  * Wird aufgerufen wenn auf die Push-Nachricht geklickt wird
  * @author Simon Fentzl

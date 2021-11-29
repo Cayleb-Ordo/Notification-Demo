@@ -151,6 +151,11 @@ public class NotificationController {
         }
     }
 
+    /**
+     * Erstellt den Hintergrundthread für die Progressbar Notification
+     * @param notBuilder NotificationCompat.Builder builder-Objekt zum aktualisieren der Nachricht
+     * @param notID Integer ID der Notification
+     */
     private void createThread(NotificationCompat.Builder notBuilder, int notID){
         //Thread zur aktualisierung der Notification, damit ein Download simuliert wird
         new Thread(new Runnable() {
@@ -177,6 +182,10 @@ public class NotificationController {
         }).start();
     }
 
+    /**
+     * Aktualisiert die Mediakontrollen Notification(aktuell nicht verwendet)
+     * @param notID Integer ID der Notification
+     */
     public void updateMediaCont(int notID) {
         Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": updateMediaCont");
         if(notID == notCh1)
@@ -187,6 +196,7 @@ public class NotificationController {
 
     /**
      * Lässt die Notification verschwinden
+     * @param id Integer ID der Notification
      */
     public void dismissNotification(int id) {
         //Log.d(MainActivity.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + id);

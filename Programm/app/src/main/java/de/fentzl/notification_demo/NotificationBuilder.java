@@ -4,14 +4,16 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.Person;
 import androidx.core.app.RemoteInput;
-
+/**
+ * Bau-Klasse für Notifications
+ * @author Simon Fentzl
+ * @version 1
+ */
 public class NotificationBuilder {
     public static final String ACTION_DISMISS = "de.fentzl.notification_demo.DISMISS";
     public static final String ACTION_REPLY = "de.fentzl.notification_demo.REPLY";
@@ -26,7 +28,7 @@ public class NotificationBuilder {
     private final Context context;
 
     /**
-     * Konstruktor, damit der Notification Manager mit context initialisiert werden kann
+     * Konstruktor, damit der Notification Builder mit context initialisiert werden kann
      * @param context Aplikations-kontext
      */
     public NotificationBuilder(Context context) {
@@ -34,7 +36,10 @@ public class NotificationBuilder {
         this.me = new Person.Builder().setName(context.getString(R.string.MessageMe)).setKey(personKey).build();
     }
 
-
+    /**
+     * Erstellt den Content Intent
+     * @return PendingIntent Gibt den ContentIntent zurück
+     */
     public PendingIntent buildContentIntent(){
         Intent contentIntent = new Intent(context, CallActivity.class)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -42,6 +47,11 @@ public class NotificationBuilder {
         return PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
+    /**
+     * Erstellt den Dismiss Intent
+     * @param notID Integer ID der Notification
+     * @return PendingIntent Gibt den DismissIntent zurück
+     */
     public PendingIntent buildDismissIntent(int notID){
         /*Sollte man nicht den PendingIntent variiern, zb bei unterschiedlicher RequestID, kann man den normalen Intent unterscheidbar machen. Zb eine Eindeutige Action zuweisen.
         dismissIntent.setAction(ACTION_DISMISS + notCH1).putExtra(PAYLOAD,notCh1);
@@ -57,6 +67,7 @@ public class NotificationBuilder {
      * @param channelid    String Notification-Kanal identifizierung
      * @param contentTitle String Titel der Notification
      * @param icon         Integer Id des Icons
+     * @return Notification Gibt die Notification zurück
      */
     public Notification buildDefaultNot(int notID, String channelid, String contentTitle, int icon) {
         Notification defaultNot = new NotificationCompat.Builder(context, channelid)
@@ -77,7 +88,7 @@ public class NotificationBuilder {
      *  @param notID     Integer Individuelle Notification ID
      * @param channelid String Notification-Kanal identifizierung
      * @param icon      Integer Id des Icons
-     * @return
+     * @return NotificationCompat.Builder Gibt das NotificationCompat.Builder Objekt zurück
      */
     public NotificationCompat.Builder buildProgressbarNot(int notID, String channelid, int icon) {
         NotificationCompat.Builder progressNot = new NotificationCompat.Builder(context, channelid)
@@ -99,6 +110,7 @@ public class NotificationBuilder {
      * @param channelid    String Notification-Kanal identifizierung
      * @param contentTitle String Titel der Notification
      * @param icon         Integer Id des Icons
+     * @return Notification Gibt die Notification zurück
      */
     public Notification buildBigPictureStyleNot(int notID, String channelid, String contentTitle, int icon) {
         Notification expandNot = new NotificationCompat.Builder(context, channelid)
@@ -116,6 +128,14 @@ public class NotificationBuilder {
         return expandNot;
     }
 
+    /**
+     *
+     * @param notID Integer Individuelle Notification ID
+     * @param channelid String Notification-Kanal identifizierung
+     * @param icon Integer Id des Icons
+     * @param update Boolean Gibt an, ob die Notification ein Update erhalten soll oder nicht.(Aktuell nicht verwendet)
+     * @return Notification Gibt die Notification zurück
+     */
     public Notification buildMediaConNot(int notID, String channelid, int icon, boolean update) {
         Intent muteIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_MUTE).putExtra(PAYLOAD, notID);
         PendingIntent mutePendingIntent = PendingIntent.getBroadcast(context, notID, muteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -137,6 +157,14 @@ public class NotificationBuilder {
         return mediaConNot;
     }
 
+    /**
+     *
+     * @param notID Integer Individuelle Notification ID
+     * @param channelid String Notification-Kanal identifizierung
+     * @param contentTitle String Titel der Notification
+     * @param icon Integer Id des Icons
+     * @return Notification Gibt die Notification zurück
+     */
     public Notification buildBigTextStyleNot(int notID, String channelid, String contentTitle, int icon) {
         Notification bigTxtNot = new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
@@ -154,6 +182,13 @@ public class NotificationBuilder {
         return bigTxtNot;
     }
 
+    /**
+     *
+     * @param notID Integer Individuelle Notification ID
+     * @param channelid String Notification-Kanal identifizierung
+     * @param icon Integer Id des Icons
+     * @return Notification Gibt die Notification zurück
+     */
     public Notification buildDirRplyMessStNot(int notID,String channelid, int icon) {
         //RemoteInput, anhand dessen wird er eingegebene Text später entnommen
         RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
@@ -167,6 +202,7 @@ public class NotificationBuilder {
                 .build();
         //MessangingStyle, wichtig hier das Person Objekt. Nur eine Charsequence ist in der alten Funktion.
         NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(me);
+        messagingStyle.setConversationTitle(context.getString(R.string.MessageTitle));
         for (Message chatMessage : NotificationDemoApplication.MESSAGES){
             NotificationCompat.MessagingStyle.Message notMessage = new NotificationCompat.MessagingStyle.Message(
                     chatMessage.getText(),
@@ -179,9 +215,9 @@ public class NotificationBuilder {
         Notification rplyNot = new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentIntent(buildContentIntent())
-                .setStyle(messagingStyle.setConversationTitle(context.getString(R.string.MessageTitle)))
-                .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), buildDismissIntent(notID))
+                .setStyle(messagingStyle)
                 .addAction(rplyAction)
+                .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), buildDismissIntent(notID))
                 .setColor(context.getColor(R.color.Primary))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
@@ -191,6 +227,13 @@ public class NotificationBuilder {
         return rplyNot;
     }
 
+    /**
+     *
+     * @param notID Integer Individuelle Notification ID
+     * @param channelid String Notification-Kanal identifizierung
+     * @param icon Integer Id des Icons
+     * @return Notification Gibt die Notification zurück
+     */
     public Notification buildCustomNot(int notID, String channelid, int icon) {
         RemoteViews collapsedView = new RemoteViews(context.getPackageName(), R.layout.notification_collapsed);
         RemoteViews expandedView = new RemoteViews(context.getPackageName(), R.layout.notification_expanded);

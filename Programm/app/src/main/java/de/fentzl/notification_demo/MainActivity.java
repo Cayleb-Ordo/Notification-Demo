@@ -1,17 +1,13 @@
 package de.fentzl.notification_demo;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.Person;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * Hauptklasse. Startet alle Unteraktivitäten
