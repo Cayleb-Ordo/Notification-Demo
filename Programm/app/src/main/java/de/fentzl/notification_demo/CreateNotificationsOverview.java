@@ -1,14 +1,14 @@
 package de.fentzl.notification_demo;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 /**
  * Diese Klasse setzt je nach Benuztereingabe eine Bestimmte Notification
@@ -20,15 +20,17 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
     private NotificationController notificationController;
     private boolean button1Clicked = false;
 
+    /**
+     * Enumeration für die Unterschiedlichen Typen von Notifications
+     */
     enum NotificationType {
         Default,
         Progress,
-        Expandable,
+        BigPicture,
         BigText,
         Custom,
         Media,
         Reply
-
     }
 
     @Override
@@ -63,11 +65,11 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
                     notificationController.notifyChannel2(NotificationType.Progress);
                 startActivity(tmpInt);
                 return true;
-            case R.id.Pop_Expandable:
+            case R.id.Pop_BigPicture:
                 if (button1Clicked)
-                    notificationController.notifyChannel1(NotificationType.Expandable);
+                    notificationController.notifyChannel1(NotificationType.BigPicture);
                 else
-                    notificationController.notifyChannel2(NotificationType.Expandable);
+                    notificationController.notifyChannel2(NotificationType.BigPicture);
                 startActivity(tmpInt);
                 return true;
             case R.id.Pop_BigText:
@@ -104,6 +106,10 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
         }
     }
 
+    /**
+     * Zeigt ein Custom Popup Menü an
+     * @param view View Das View Objekt, an dem dieses Menü angehängt wird
+     */
     private void showPopupMenu(View view) {
         PopupMenu popup = new PopupMenu(this.getApplicationContext(), view);
         popup.inflate(R.menu.not_popupmenu);
@@ -112,7 +118,7 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
     }
 
     /**
-     *
+     * Listener für Button Channel1
      */
     public void onChannel1ButtonCLicked(View view) {
         showPopupMenu(view);
@@ -120,7 +126,7 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
     }
 
     /**
-     *
+     * Listener für Button Channel2
      */
     public void onChannel2ButtonClicked(View view) {
         showPopupMenu(view);

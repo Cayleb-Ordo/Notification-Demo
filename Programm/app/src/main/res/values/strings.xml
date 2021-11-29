@@ -41,7 +41,7 @@
     <!--Popup-Menu-->
     <string name="Pop_Default">Standard Notification</string>
     <string name="Pop_Progress">Progress bar</string>
-    <string name="Pop_Expandable">Erweiterbare Notification</string>
+    <string name="Pop_Expandable">Großes Bild</string>
     <string name="Pop_BigText">Großer Text</string>
     <string name="Pop_Media">Media Kontrollen</string>
     <string name="Pop_Rply">Messenger Style</string>

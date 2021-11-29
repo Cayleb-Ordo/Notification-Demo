@@ -8,7 +8,7 @@
     <item android:id="@+id/Pop_Progress"
         android:title="@string/Pop_Progress">
     </item>
-    <item android:id="@+id/Pop_Expandable"
+    <item android:id="@+id/Pop_BigPicture"
         android:title="@string/Pop_Expandable">
     </item>
     <item android:id="@+id/Pop_Media"
