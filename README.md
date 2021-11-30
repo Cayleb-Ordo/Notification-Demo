@@ -5,14 +5,13 @@ Demo App für Android Push-Notifications.
 ## Beschreibung
 
 Dieses Repository enthällt den Code einer Demonstration's Anwendung für Android Push-Notifications. Diese Anwendung zeigt anschaulich was mit den Push-Notifications ereicht werden kann.
+Diese App wurde für Android 8(Oreo) konzipiert und getestet.
 
 ## Inhalt
 
 - Android-Studio Sourcefiles
 - Javadoc
-- PowerPoint Präsentation mit Code Beispielen
-- APK-Datei zur Installation auf Android Geräten
-
+- PowerPoint Präsentation 
 
 ## Ordnerstruktur
 - Dokumentation:
@@ -27,11 +26,16 @@ Dieses Repository enthällt den Code einer Demonstration's Anwendung für Androi
     - enthällt die Präsentation mit den Code Beispielen.
 - Programm:
     - enthällt die Android Sourcefiles.
-    - ordnerstruktur ist die gleiche wie bei einem normalen Android-Studio Projekt.
+    - ordnerstruktur Gleich wie bei einem normalen Android-Studio Projekt.
+    
+## Installation
+Zum Installieren am einfachsten das Android-Studio Projekt laden und für die Benötigte Android-Version kompilieren.  
+Es wird keine Separate apk-Datei mitgeliefert.
 
 ## Notifications Codebeispiele
 Alle Code-teile finden sich in der Klasse NotificationBuilder. Zur besseren Übersicht wurden die Einzelkomponenten hier aufgeführt.  
 Ebenfalls müssen für eigen Implementation die Jeweiligen Intents, Key-Strings und Actions geändert werden.  
+Die verwendeten Android-Librarys sind alle androidx.
 
 ### Default-Notification mit Action-Buttons
 ---
