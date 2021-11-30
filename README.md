@@ -215,4 +215,4 @@ Simon Fentzl
 ```
 This Projekt is licensed under the GNU General Public License v3.0
 ```
-(C) 2021 Simon Fentzl
+&copy; 2021 Simon Fentzl
