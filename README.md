@@ -5,7 +5,7 @@ Demo App für Android Push-Notifications.
 ## Beschreibung
 
 Dieses Repository enthällt den Code einer Demonstration's Anwendung für Android Push-Notifications. Diese Anwendung zeigt anschaulich was mit den Push-Notifications ereicht werden kann.
-Diese App wurde für Android 8(Oreo) konzipiert und getestet.
+Diese App wurde für Android 8(Oreo) konzipiert und getestet. 
 
 ## Inhalt
 
@@ -24,6 +24,8 @@ Diese App wurde für Android 8(Oreo) konzipiert und getestet.
     - enthällt die Datei, wo erstmalig aufgeschrieben wurde was umgesetzt werden soll.
 - Dokumentation/Präsentation:
     - enthällt die Präsentation mit den Code Beispielen.
+- Dokumentation/Projektarbeit:
+    - enthällt die Projektarbeit.
 - Programm:
     - enthällt die Android Sourcefiles.
     - ordnerstruktur Gleich wie bei einem normalen Android-Studio Projekt.
@@ -41,7 +43,7 @@ Die verwendeten Android-Librarys sind alle androidx.
 ---
 Erstellung einer einfachen Push-Notification mit Titel, Tab-Action, Inhalt's Text, Icon und einem Action-Button.  
 Es muss bei der Action kein Icon spezifiziert werden. Bei der Unterscheidung der PendingIntent's aufpassen.  
-Diese müssen eindeutig Unterscheidbar sein. Zb. eine eindeutige Action.  
+Diese müssen eindeutig unterscheidbar sein, z. B. eine eindeutige Action.  
 **Code:** 
 ```
 Intent contentIntent = new Intent(context, CallActivity.class);
@@ -141,9 +143,9 @@ notificationManager.notify(notID, notbuilder.build());
 
 ### Messaging-Style und Reply Button
 ---
-Erstellen einer Messaging-Style Notification mit Antwortmöglichkeit(siehe WhatsApp).  
-Diese erfordert weitere Einstellungen um zu Funktionnieren. Wichtig ist das der ConversionTitle im Style nicht für Chats   
-unter drei Personen verwendet werden soll. Ebenfalls wichtig ist bei den PendingIntent des RemotInput immer einzigartig ist, sonnst  
+Erstellen einer Messaging-Style Notification mit Antwortmöglichkeit (siehe WhatsApp).  
+Diese erfordert weitere Einstellungen um zu Funktionieren. Wichtig ist das der ConversionTitle im Style nicht für Chats   
+unter drei Personen verwendet werden soll. Ebenfalls wichtig ist bei das der PendingIntent des RemotInput immer einzigartig ist, sonst  
 könnte es sein das der User einem anderen Chat die Nachricht schreibt als er annimmt.  
 **Code:**  
 #### RemotInput
