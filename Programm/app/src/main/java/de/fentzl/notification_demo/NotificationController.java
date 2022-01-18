@@ -32,7 +32,6 @@ public class NotificationController {
     private final NotificationManagerCompat notificationManager;
     private NotificationCompat.Builder updateBuilder;
 
-
     /**
      * Konstruktor, damit der Notification Manager mit context initialisiert werden kann
      * @param context Aplikations-kontext
