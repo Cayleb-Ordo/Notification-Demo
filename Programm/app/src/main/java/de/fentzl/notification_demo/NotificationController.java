@@ -10,6 +10,8 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.util.Random;
+
 /**
  * Kontrollklasse die die Notificationen verwaltet
  * @author Simon Fentzl
@@ -31,6 +33,9 @@ public class NotificationController {
     private final Context context;
     private final NotificationManagerCompat notificationManager;
     private NotificationCompat.Builder updateBuilder;
+    private Random random = new Random();
+    private int randMax = 20;
+    private int randMin = 1;
 
     /**
      * Konstruktor, damit der Notification Manager mit context initialisiert werden kann
@@ -73,35 +78,36 @@ public class NotificationController {
      * @param selected Enum Gibt an was der Benutzer ausgewählt hat.
      */
     public void notifyChannel1(CreateNotificationsOverview.NotificationType selected) {
+        int stray = random.nextInt(randMax -randMin) + randMin;
         switch (selected) {
             case Default:
-                notificationManager.notify(notCh1,
-                        NotificationDemoApplication.notBuilder.buildDefaultNot(notCh1, CHANNEL1_ID,context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
+                notificationManager.notify(stray,
+                        NotificationDemoApplication.notBuilder.buildDefaultNot(stray, CHANNEL1_ID,context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
                 break;
             case Progress:
-                NotificationCompat.Builder tmpBuilder = NotificationDemoApplication.notBuilder.buildProgressbarNot(notCh1, CHANNEL1_ID, R.drawable.ic_channel1);
-                notificationManager.notify(notCh1,tmpBuilder.build() );
-                createThread(tmpBuilder, notCh1);
+                NotificationCompat.Builder tmpBuilder = NotificationDemoApplication.notBuilder.buildProgressbarNot(stray, CHANNEL1_ID, R.drawable.ic_channel1);
+                notificationManager.notify(stray,tmpBuilder.build() );
+                createThread(tmpBuilder, stray);
                 break;
             case BigPicture:
-                notificationManager.notify(notCh1,
-                        NotificationDemoApplication.notBuilder.buildBigPictureStyleNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
+                notificationManager.notify(stray,
+                        NotificationDemoApplication.notBuilder.buildBigPictureStyleNot(stray, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
                 break;
             case BigText:
-                notificationManager.notify(notCh1,
-                        NotificationDemoApplication.notBuilder.buildBigTextStyleNot(notCh1, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
+                notificationManager.notify(stray,
+                        NotificationDemoApplication.notBuilder.buildBigTextStyleNot(stray, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
                 break;
             case Media:
-                notificationManager.notify(notCh1,
-                        NotificationDemoApplication.notBuilder.buildMediaConNot(notCh1, CHANNEL1_ID, R.drawable.ic_channel1, false));
+                notificationManager.notify(stray,
+                        NotificationDemoApplication.notBuilder.buildMediaConNot(stray, CHANNEL1_ID, R.drawable.ic_channel1, false));
                 break;
             case Reply:
-                notificationManager.notify(notCh1,
-                        NotificationDemoApplication.notBuilder.buildDirRplyMessStNot(notCh1, CHANNEL1_ID, R.drawable.ic_channel1));
+                notificationManager.notify(stray,
+                        NotificationDemoApplication.notBuilder.buildDirRplyMessStNot(stray, CHANNEL1_ID, R.drawable.ic_channel1));
                 break;
             case Custom:
-                notificationManager.notify(notCh1,
-                        NotificationDemoApplication.notBuilder.buildCustomNot(notCh1, CHANNEL1_ID, R.drawable.ic_channel1));
+                notificationManager.notify(stray,
+                        NotificationDemoApplication.notBuilder.buildCustomNot(stray, CHANNEL1_ID, R.drawable.ic_channel1));
                 break;
             default:
                 Log.d(NotificationDemoApplication.debugTag, "Das sollte nicht passieren");
@@ -114,35 +120,36 @@ public class NotificationController {
      * @param selected Enum Gibt an was der Benutzer ausgewählt hat.
      */
     public void notifyChannel2(CreateNotificationsOverview.NotificationType selected) {
+        int stray = random.nextInt(randMax -randMin) + randMin;
         switch (selected) {
             case Default:
-                notificationManager.notify(notCh2,
-                        NotificationDemoApplication.notBuilder.buildDefaultNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
+                notificationManager.notify(stray,
+                        NotificationDemoApplication.notBuilder.buildDefaultNot(stray, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
                 break;
             case Progress:
-                NotificationCompat.Builder tmpBuilder = NotificationDemoApplication.notBuilder.buildProgressbarNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2);
-                notificationManager.notify(notCh2, tmpBuilder.build());
-                createThread(tmpBuilder, notCh2);
+                NotificationCompat.Builder tmpBuilder = NotificationDemoApplication.notBuilder.buildProgressbarNot(stray, CHANNEL2_ID, R.drawable.ic_channel2);
+                notificationManager.notify(stray, tmpBuilder.build());
+                createThread(tmpBuilder, stray);
                 break;
             case BigPicture:
-                notificationManager.notify(notCh2,
-                        NotificationDemoApplication.notBuilder.buildBigPictureStyleNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
+                notificationManager.notify(stray,
+                        NotificationDemoApplication.notBuilder.buildBigPictureStyleNot(stray, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
                 break;
             case BigText:
-                notificationManager.notify(notCh2,
-                        NotificationDemoApplication.notBuilder.buildBigTextStyleNot(notCh2, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
+                notificationManager.notify(stray,
+                        NotificationDemoApplication.notBuilder.buildBigTextStyleNot(stray, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
                 break;
             case Media:
-                notificationManager.notify(notCh2,
-                        NotificationDemoApplication.notBuilder.buildMediaConNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2, false));
+                notificationManager.notify(stray,
+                        NotificationDemoApplication.notBuilder.buildMediaConNot(stray, CHANNEL2_ID, R.drawable.ic_channel2, false));
                 break;
             case Reply:
-                notificationManager.notify(notCh2,
-                        NotificationDemoApplication.notBuilder.buildDirRplyMessStNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2));
+                notificationManager.notify(stray,
+                        NotificationDemoApplication.notBuilder.buildDirRplyMessStNot(stray, CHANNEL2_ID, R.drawable.ic_channel2));
                 break;
             case Custom:
-                notificationManager.notify(notCh2,
-                        NotificationDemoApplication.notBuilder.buildCustomNot(notCh2, CHANNEL2_ID, R.drawable.ic_channel2));
+                notificationManager.notify(stray,
+                        NotificationDemoApplication.notBuilder.buildCustomNot(stray, CHANNEL2_ID, R.drawable.ic_channel2));
                 break;
             default:
                 Log.d(NotificationDemoApplication.debugTag, "Das sollte nicht passieren");
@@ -198,12 +205,10 @@ public class NotificationController {
      * @param id Integer ID der Notification
      */
     public void dismissNotification(int id) {
-        //Log.d(MainActivity.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + id);
-        if (id == notCh1) {
-            notificationManager.cancel(notCh1);
-        } else if (id == notCh2) {
-            notificationManager.cancel(notCh2);
-        } else
+        //Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + id);
+        if (id == 0)
             Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ":Das sollte nicht passieren");
+        else
+            notificationManager.cancel(id);
     }
 }

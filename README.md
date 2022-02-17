@@ -145,10 +145,10 @@ notificationManager.notify(notID, notbuilder.build());
 ---
 Erstellen einer Messaging-Style Notification mit Antwortmöglichkeit (siehe WhatsApp).  
 Diese erfordert weitere Einstellungen um zu Funktionieren. Wichtig ist das der ConversionTitle im Style nicht für Chats   
-unter drei Personen verwendet werden soll. Ebenfalls wichtig ist bei das der PendingIntent des RemotInput immer einzigartig ist, sonst  
+unter drei Personen verwendet werden soll. Ebenfalls wichtig ist bei das der PendingIntent des RemoteInput immer einzigartig ist, sonst  
 könnte es sein das der User einem anderen Chat die Nachricht schreibt als er annimmt.  
 **Code:**  
-#### RemotInput
+#### RemoteInput
 ---
 ```
 //RemoteInput, anhand dessen wird er eingegebene Text später entnommen
