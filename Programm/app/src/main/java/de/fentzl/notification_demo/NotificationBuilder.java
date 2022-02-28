@@ -139,7 +139,7 @@ public class NotificationBuilder {
     public Notification buildMediaConNot(int notID, String channelid, int icon, boolean update) {
         Intent muteIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_MUTE).putExtra(PAYLOAD, notID);
         PendingIntent mutePendingIntent = PendingIntent.getBroadcast(context, notID, muteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mediaConNot= new NotificationCompat.Builder(context, channelid)
+        mediaConNot = new NotificationCompat.Builder(context, channelid)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .addAction(R.drawable.ic_volume_on, context.getString(R.string.NotExpAMute), mutePendingIntent)
                 .addAction(R.drawable.ic_prev, context.getString(R.string.NotExpAPrev), null)
@@ -194,7 +194,7 @@ public class NotificationBuilder {
         RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
                 .setLabel(context.getString(R.string.NotRplyLabel))
                 .build();
-        //Antwort ActionButton, dem der RemotInput angehängt wird.
+        //Antwort ActionButton, dem der RemoteInput angehängt wird.
         Intent rplyIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_REPLY).putExtra(PAYLOAD,notID);
         PendingIntent rplyPendingIntent = PendingIntent.getBroadcast(context, notID, rplyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Action rplyAction = new NotificationCompat.Action.Builder(R.drawable.ic_reply, context.getString(R.string.NotActionReply), rplyPendingIntent )
