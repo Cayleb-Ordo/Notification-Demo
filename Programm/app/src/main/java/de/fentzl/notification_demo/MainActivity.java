@@ -2,7 +2,6 @@ package de.fentzl.notification_demo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -27,12 +26,9 @@ public class MainActivity extends AppCompatActivity {
         fab Button Einstellungen
          */
         final FloatingActionButton create_remind = findViewById(R.id.fab_new_Notification);
-        create_remind.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent createNotIntent = new Intent(v.getContext(), CreateNotificationsOverview.class);
-                startActivity(createNotIntent);
-            }
+        create_remind.setOnClickListener(v -> {
+            Intent createNotIntent = new Intent(v.getContext(), CreateNotificationsOverview.class);
+            startActivity(createNotIntent);
         });
     }
 }

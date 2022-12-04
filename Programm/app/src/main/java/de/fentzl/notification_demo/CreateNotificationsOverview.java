@@ -10,6 +10,8 @@ import android.widget.PopupMenu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Objects;
+
 /**
  * Diese Klasse setzt je nach Benuztereingabe eine Bestimmte Notification
  * @author Simon Fentzl
@@ -44,7 +46,7 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
         Toolbar toolbar = findViewById(R.id.main_appbar);
         setSupportActionBar(toolbar);
         setTitle(R.string.app_name);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
