@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
@@ -19,7 +20,8 @@ public class NotificationBuilder {
     public static final String ACTION_REPLY = "de.fentzl.notification_demo.REPLY";
     public static final String ACTION_MUTE = "de.fentzl.notificatin_demo.MUTE";
     public static final String KEY_TEXTRPLY = "reply";
-    public static final String PAYLOAD = "payload";
+    public static final String PAYLOADCHID = "payloadCHID";
+    public static final String PAYLOADNOTID = "payloadNotID";
     public Notification mediaConNot;
     private final String CLASS_NOTIFICATIONBUILDER = "de.fentzl.notification_demo.NotificationBuilder";
     private final String NOTIFICATION_GROUP_KEY = "de.fentzl.notification_demo.Gruppe";
@@ -57,12 +59,11 @@ public class NotificationBuilder {
         dismissIntent.setAction(ACTION_DISMISS + notCH1).putExtra(PAYLOAD,notCh1);
          */
         Intent dismissIntent = new Intent(context, NotificationReceiver.class)
-                .setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
+                .setAction(ACTION_DISMISS).putExtra(PAYLOADNOTID, notID);
         return PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
     }
     /**
      * Erstellt eine Default Nachricht mit übergebbaren Kanaleinstellungen
-     *
      * @param notID        Integer Individuelle Notification ID
      * @param channelid    String Notification-Kanal identifizierung
      * @param contentTitle String Titel der Notification
@@ -84,7 +85,7 @@ public class NotificationBuilder {
 
     /**
      * Erstellt eine Progressbar-Notification und startet einen Thread zur Aktualisierung der Notification
-     *  @param notID     Integer Individuelle Notification ID
+     * @param notID     Integer Individuelle Notification ID
      * @param channelid String Notification-Kanal identifizierung
      * @param icon      Integer Id des Icons
      * @return NotificationCompat.Builder Gibt das NotificationCompat.Builder Objekt zurück
@@ -103,7 +104,6 @@ public class NotificationBuilder {
 
     /**
      * Erstellt eine Vergrößerbare Nachricht mit übergebbaren Kanaleinstellungen
-     *
      * @param notID        Integer Individuelle Notification ID
      * @param channelid    String Notification-Kanal identifizierung
      * @param contentTitle String Titel der Notification
@@ -126,7 +126,7 @@ public class NotificationBuilder {
     }
 
     /**
-     *
+     * Erstellt eine Mediakontrollen Notification
      * @param notID Integer Individuelle Notification ID
      * @param channelid String Notification-Kanal identifizierung
      * @param icon Integer Id des Icons
@@ -134,7 +134,7 @@ public class NotificationBuilder {
      * @return Notification Gibt die Notification zurück
      */
     public Notification buildMediaConNot(int notID, String channelid, int icon, boolean update) {
-        Intent muteIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_MUTE).putExtra(PAYLOAD, notID);
+        Intent muteIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_MUTE).putExtra(PAYLOADNOTID, notID);
         PendingIntent mutePendingIntent = PendingIntent.getBroadcast(context, notID, muteIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mediaConNot = new NotificationCompat.Builder(context, channelid)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -155,7 +155,7 @@ public class NotificationBuilder {
     }
 
     /**
-     *
+     * Erstellt eine BigText Style Notification
      * @param notID Integer Individuelle Notification ID
      * @param channelid String Notification-Kanal identifizierung
      * @param contentTitle String Titel der Notification
@@ -179,19 +179,19 @@ public class NotificationBuilder {
     }
 
     /**
-     *
+     * Aktualisiert oder erstellt eine Messagingstyle Notification
      * @param notID Integer Individuelle Notification ID
      * @param channelid String Notification-Kanal identifizierung
      * @param icon Integer Id des Icons
      * @return Notification Gibt die Notification zurück
      */
-    public Notification buildDirRplyMessStNot(int notID,String channelid, int icon) {
-        //RemoteInput, anhand dessen wird er eingegebene Text später entnommen
+    public Notification buildDirRplyMessStNot(int notID,String channelid, int icon, int chanID) {
+        //RemoteInput, anhand dessen wird der eingegebene Text später entnommen
         RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
                 .setLabel(context.getString(R.string.NotRplyLabel))
                 .build();
         //Antwort ActionButton, dem der RemoteInput angehängt wird.
-        Intent rplyIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_REPLY).putExtra(PAYLOAD, channelid);
+        Intent rplyIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_REPLY).putExtra(PAYLOADNOTID, chanID).putExtra(PAYLOADCHID, chanID);
         PendingIntent rplyPendingIntent = PendingIntent.getBroadcast(context, notID, rplyIntent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Action rplyAction = new NotificationCompat.Action.Builder(R.drawable.ic_reply, context.getString(R.string.NotActionReply), rplyPendingIntent )
                 .addRemoteInput(remoteInput)
@@ -207,7 +207,7 @@ public class NotificationBuilder {
             );
             messagingStyle.addMessage(notMessage); // Fügt die Nachricht dem Style hinzu
         }
-        //Eigentlich Notification bauen
+        //Eigentliche Notification bauen
         return new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentIntent(buildContentIntent())
@@ -223,7 +223,7 @@ public class NotificationBuilder {
     }
 
     /**
-     *
+     * Erstellt eine eigene Notification
      * @param notID Integer Individuelle Notification ID
      * @param channelid String Notification-Kanal identifizierung
      * @param icon Integer Id des Icons

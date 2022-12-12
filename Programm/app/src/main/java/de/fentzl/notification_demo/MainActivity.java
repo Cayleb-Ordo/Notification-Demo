@@ -51,14 +51,7 @@ public class MainActivity extends AppCompatActivity {
         MESSAGES.add(new Message(getString(R.string.MessageAnswer1),null));
         String richardKey = "de.fentzl.richard";
         MESSAGES.add(new Message(getString(R.string.MessageAnswer2),new Person.Builder().setName(getString(R.string.MessageRichard)).setKey(richardKey).build()));
-        ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-            if(isGranted){
-                Log.d(NotificationDemoApplication.debugTag, "if in on create main Activity");
-            }else {
-                Log.d(NotificationDemoApplication.debugTag, "else in on create main Activity");
-            }
-        });
-        checkUserPermissions(requestPermissionLauncher);
+        checkUserPermissions();
     }
 
     /**
@@ -69,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         return MESSAGES;
     }
 
-    private void checkUserPermissions(ActivityResultLauncher<String> permLauncher){
+    private void checkUserPermissions(){
         if(ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED){
             return;
         } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)){
@@ -79,12 +72,19 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     // Request the permission
                     ActivityCompat.requestPermissions(MainActivity.this,
-                            new String[]{Manifest.permission.CAMERA},
+                            new String[]{Manifest.permission.POST_NOTIFICATIONS},
                             PERMISSION_REQUEST_NOT);
                 }
             }).show();
         }else{
-            permLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if(isGranted){
+                    Log.d(NotificationDemoApplication.debugTag, "if in on create main Activity");
+                }else {
+                    Log.d(NotificationDemoApplication.debugTag, "else in on create main Activity");
+                }
+            });
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
         }
     }
 }

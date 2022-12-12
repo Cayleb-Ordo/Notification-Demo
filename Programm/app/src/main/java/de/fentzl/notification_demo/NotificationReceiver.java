@@ -26,27 +26,26 @@ public class NotificationReceiver extends BroadcastReceiver {
             notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD,0));*/
         switch (intent.getAction()){
             case NotificationBuilder.ACTION_DISMISS:
-                notificationController.dismissNotification(intent.getIntExtra(NotificationBuilder.PAYLOAD, 0));
+                notificationController.dismissNotification(intent.getIntExtra(NotificationBuilder.PAYLOADNOTID, 0));
                 break;
             case NotificationBuilder.ACTION_MUTE:
-                notificationController.updateMediaCont(intent.getIntExtra(NotificationBuilder.PAYLOAD, 0));
+                notificationController.updateMediaCont(intent.getIntExtra(NotificationBuilder.PAYLOADNOTID, 0));
                 break;
             case NotificationBuilder.ACTION_REPLY:
                 Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
                 if (remoteInput != null){
                     CharSequence rplyText = remoteInput.getCharSequence(NotificationBuilder.KEY_TEXTRPLY);
-                    Log.d(NotificationDemoApplication.debugTag, String.valueOf(intent.getIntExtra(NotificationBuilder.PAYLOAD, 0)));
                     MainActivity.getMessages().add(new Message(rplyText, null));
-                    if (intent.getIntExtra(NotificationBuilder.PAYLOAD, 0) == NotificationController.notCh1)
-                        notificationController.notifyChannel1(CreateNotificationsOverview.NotificationType.Reply);
-                    else if (intent.getIntExtra(NotificationBuilder.PAYLOAD, 0) == NotificationController.notCh2)
-                        notificationController.notifyChannel2(CreateNotificationsOverview.NotificationType.Reply);
+                    if (intent.getIntExtra(NotificationBuilder.PAYLOADCHID, 0) == NotificationController.notCh1)
+                        notificationController.handleReply(intent.getIntExtra(NotificationBuilder.PAYLOADCHID, 0), intent.getIntExtra(NotificationBuilder.PAYLOADNOTID, -1));
+                    else if (intent.getIntExtra(NotificationBuilder.PAYLOADCHID, 0) == NotificationController.notCh2)
+                        notificationController.handleReply(intent.getIntExtra(NotificationBuilder.PAYLOADCHID, 0), intent.getIntExtra(NotificationBuilder.PAYLOADNOTID, -1));
                     else
-                        Toast.makeText(context, context.getString(R.string.ToIntErr), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, context.getString(R.string.ToIntErr) + ": Kein valider Kanal empfangen!", Toast.LENGTH_LONG).show();
                 }
                 break;
             default:
-                Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONRECEIVER + " No specific Action received!");
+                Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONRECEIVER + ": No specific Action received!");
                 break;
         }
    }

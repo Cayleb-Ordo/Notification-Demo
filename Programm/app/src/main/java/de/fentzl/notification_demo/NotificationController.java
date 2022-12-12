@@ -34,7 +34,6 @@ public class NotificationController {
     private final Random random = new Random();
     private final int randMax = 20;
     private final int randMin = 1;
-    private boolean hasPermission = false;
 
     /**
      * Konstruktor, damit der Notification Manager mit Kontext initialisiert werden kann
@@ -43,14 +42,6 @@ public class NotificationController {
     public NotificationController(Context context) {
         this.context = context;
         this.notificationManager = NotificationManagerCompat.from(context);
-    }
-
-    public boolean getPermission() {
-        return hasPermission;
-    }
-
-    public void setPermission(boolean hasPermission) {
-        this.hasPermission = hasPermission;
     }
 
     /**
@@ -111,7 +102,7 @@ public class NotificationController {
                 break;
             case Reply:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(stray, CHANNEL1_ID, R.drawable.ic_channel1));
+                        NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(stray, CHANNEL1_ID, R.drawable.ic_channel1, notCh1));
                 break;
             case Custom:
                 notificationManager.notify(stray,
@@ -153,7 +144,7 @@ public class NotificationController {
                 break;
             case Reply:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(stray, CHANNEL2_ID, R.drawable.ic_channel2));
+                        NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(stray, CHANNEL2_ID, R.drawable.ic_channel2, notCh2));
                 break;
             case Custom:
                 notificationManager.notify(stray,
@@ -203,6 +194,21 @@ public class NotificationController {
             notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildMediaConNot(notID, channel1Name, R.drawable.ic_channel1, true));
         else
             notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildMediaConNot(notID, channel2Name, R.drawable.ic_channel2, true));
+    }
+
+    /**
+     * Aktualisiert die übergebene MessagingStyle Notification
+     * @param channelID String Notification-Kanal identifizierung
+     * @param notID Integer Notification ID
+     */
+    public void handleReply(int channelID, int notID){
+        if(channelID == notCh1) {
+            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(notID, CHANNEL1_ID, R.drawable.ic_channel2, notCh1));
+        } else if (channelID == notCh2){
+            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(notID, CHANNEL2_ID, R.drawable.ic_channel2, notCh2));
+        } else {
+            Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Konnte den Kanal nicht identifizieren!");
+        }
     }
 
     /**
