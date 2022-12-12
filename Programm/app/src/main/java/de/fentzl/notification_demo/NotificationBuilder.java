@@ -191,7 +191,7 @@ public class NotificationBuilder {
                 .setLabel(context.getString(R.string.NotRplyLabel))
                 .build();
         //Antwort ActionButton, dem der RemoteInput angehängt wird.
-        Intent rplyIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_REPLY).putExtra(PAYLOADNOTID, chanID).putExtra(PAYLOADCHID, chanID);
+        Intent rplyIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_REPLY).putExtra(PAYLOADNOTID, notID).putExtra(PAYLOADCHID, chanID  );
         PendingIntent rplyPendingIntent = PendingIntent.getBroadcast(context, notID, rplyIntent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Action rplyAction = new NotificationCompat.Action.Builder(R.drawable.ic_reply, context.getString(R.string.NotActionReply), rplyPendingIntent )
                 .addRemoteInput(remoteInput)

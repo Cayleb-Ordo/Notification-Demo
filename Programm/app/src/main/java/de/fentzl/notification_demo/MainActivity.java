@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
         return MESSAGES;
     }
 
+    /**
+     * Überprüft ob die App die benötigten Berechtigungen hat
+     */
     private void checkUserPermissions(){
         if(ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED){
             return;
