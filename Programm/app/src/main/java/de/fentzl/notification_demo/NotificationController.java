@@ -13,7 +13,7 @@ import androidx.core.app.NotificationManagerCompat;
 import java.util.Random;
 
 /**
- * Kontrollklasse die die Notificationen verwaltet
+ * Kontrollklasse, die die Notificationen verwaltet
  * @author Simon Fentzl
  * @version 1
  */
@@ -29,15 +29,15 @@ public class NotificationController {
     private static final String CHANNEL1_ID = "Channel1";
     private static final String CHANNEL2_ID = "Channel2";
     private final String CLASS_NOTIFICATIONCONTROLLER = "de.fentzl.notification_demo.NotificationController";
-    private final int importance = NotificationManager.IMPORTANCE_DEFAULT;
     private final Context context;
     private final NotificationManagerCompat notificationManager;
     private final Random random = new Random();
     private final int randMax = 20;
     private final int randMin = 1;
+    private boolean hasPermission = false;
 
     /**
-     * Konstruktor, damit der Notification Manager mit context initialisiert werden kann
+     * Konstruktor, damit der Notification Manager mit Kontext initialisiert werden kann
      * @param context Aplikations-kontext
      */
     public NotificationController(Context context) {
@@ -45,11 +45,20 @@ public class NotificationController {
         this.notificationManager = NotificationManagerCompat.from(context);
     }
 
+    public boolean getPermission() {
+        return hasPermission;
+    }
+
+    public void setPermission(boolean hasPermission) {
+        this.hasPermission = hasPermission;
+    }
+
     /**
      * Erstellt den Notwendigen Kanal für Geräte über Android8.0
      * @param createOption Boolean Gibt an ob zwei oder nur ein Notification Channel erstellt werden soll.
      */
     public void createNotificationChannels(boolean createOption) {
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
         if (createOption) {
             //der if prüft ob wir android 8.0 oder höher haben, sonnst muss er kein channel erstellen.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

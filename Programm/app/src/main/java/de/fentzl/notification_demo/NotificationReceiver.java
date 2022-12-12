@@ -35,7 +35,8 @@ public class NotificationReceiver extends BroadcastReceiver {
                 Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
                 if (remoteInput != null){
                     CharSequence rplyText = remoteInput.getCharSequence(NotificationBuilder.KEY_TEXTRPLY);
-                    NotificationDemoApplication.MESSAGES.add(new Message(rplyText, null));
+                    Log.d(NotificationDemoApplication.debugTag, String.valueOf(intent.getIntExtra(NotificationBuilder.PAYLOAD, 0)));
+                    MainActivity.getMessages().add(new Message(rplyText, null));
                     if (intent.getIntExtra(NotificationBuilder.PAYLOAD, 0) == NotificationController.notCh1)
                         notificationController.notifyChannel1(CreateNotificationsOverview.NotificationType.Reply);
                     else if (intent.getIntExtra(NotificationBuilder.PAYLOAD, 0) == NotificationController.notCh2)
