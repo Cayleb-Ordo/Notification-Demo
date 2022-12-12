@@ -23,7 +23,6 @@ public class NotificationBuilder {
     public Notification mediaConNot;
     private final String CLASS_NOTIFICATIONBUILDER = "de.fentzl.notification_demo.NotificationBuilder";
     private final String NOTIFICATION_GROUP_KEY = "de.fentzl.notification_demo.Gruppe";
-    private final String personKey = "de.fentzl.me";
     private final Person me;
     private final Context context;
 
@@ -33,6 +32,7 @@ public class NotificationBuilder {
      */
     public NotificationBuilder(Context context) {
         this.context = context;
+        String personKey = "de.fentzl.me";
         this.me = new Person.Builder().setName(context.getString(R.string.MessageMe)).setKey(personKey).build();
     }
 
@@ -44,7 +44,7 @@ public class NotificationBuilder {
         Intent contentIntent = new Intent(context, CallActivity.class)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         int contentRqC = 1;
-        return PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT );
     }
 
     /**
@@ -58,7 +58,7 @@ public class NotificationBuilder {
          */
         Intent dismissIntent = new Intent(context, NotificationReceiver.class)
                 .setAction(ACTION_DISMISS).putExtra(PAYLOAD, notID);
-        return PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, notID, dismissIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
     }
     /**
      * Erstellt eine Default Nachricht mit übergebbaren Kanaleinstellungen
@@ -70,7 +70,7 @@ public class NotificationBuilder {
      * @return Notification Gibt die Notification zurück
      */
     public Notification buildDefaultNot(int notID, String channelid, String contentTitle, int icon) {
-        Notification defaultNot = new NotificationCompat.Builder(context, channelid)
+        return new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentTitle(contentTitle)
                 .setContentText(context.getString(R.string.NotDefContent))
@@ -80,7 +80,6 @@ public class NotificationBuilder {
                 .setAutoCancel(true) // Lässt die Nachricht nicht verschwinden bis auf sie geklickt wird
                 .setGroup(NOTIFICATION_GROUP_KEY)
                 .build();
-        return defaultNot;
     }
 
     /**
@@ -91,7 +90,7 @@ public class NotificationBuilder {
      * @return NotificationCompat.Builder Gibt das NotificationCompat.Builder Objekt zurück
      */
     public NotificationCompat.Builder buildProgressbarNot(int notID, String channelid, int icon) {
-        NotificationCompat.Builder progressNot = new NotificationCompat.Builder(context, channelid)
+        return new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentTitle(context.getString(R.string.NotProgTitle))
                 .setContentText(context.getString(R.string.NotProgIndit))
@@ -100,7 +99,6 @@ public class NotificationBuilder {
                 .setContentIntent(buildContentIntent())
                 .setGroup(NOTIFICATION_GROUP_KEY)
                 .setProgress(NotificationController.progressMax, 0, false);
-        return progressNot;
     }
 
     /**
@@ -113,7 +111,7 @@ public class NotificationBuilder {
      * @return Notification Gibt die Notification zurück
      */
     public Notification buildBigPictureStyleNot(int notID, String channelid, String contentTitle, int icon) {
-        Notification expandNot = new NotificationCompat.Builder(context, channelid)
+        return new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentTitle(contentTitle)
                 .setContentText(context.getString(R.string.NotPicContent))
@@ -125,7 +123,6 @@ public class NotificationBuilder {
                 .setAutoCancel(true)
                 .setGroup(NOTIFICATION_GROUP_KEY)
                 .build();
-        return expandNot;
     }
 
     /**
@@ -138,7 +135,7 @@ public class NotificationBuilder {
      */
     public Notification buildMediaConNot(int notID, String channelid, int icon, boolean update) {
         Intent muteIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_MUTE).putExtra(PAYLOAD, notID);
-        PendingIntent mutePendingIntent = PendingIntent.getBroadcast(context, notID, muteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent mutePendingIntent = PendingIntent.getBroadcast(context, notID, muteIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mediaConNot = new NotificationCompat.Builder(context, channelid)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .addAction(R.drawable.ic_volume_on, context.getString(R.string.NotExpAMute), mutePendingIntent)
@@ -166,7 +163,7 @@ public class NotificationBuilder {
      * @return Notification Gibt die Notification zurück
      */
     public Notification buildBigTextStyleNot(int notID, String channelid, String contentTitle, int icon) {
-        Notification bigTxtNot = new NotificationCompat.Builder(context, channelid)
+        return new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentTitle(contentTitle)
                 .setContentText(context.getString(R.string.NotBTextContent))
@@ -179,7 +176,6 @@ public class NotificationBuilder {
                 .setAutoCancel(true)
                 .setGroup(NOTIFICATION_GROUP_KEY)
                 .build();
-        return bigTxtNot;
     }
 
     /**
@@ -195,15 +191,15 @@ public class NotificationBuilder {
                 .setLabel(context.getString(R.string.NotRplyLabel))
                 .build();
         //Antwort ActionButton, dem der RemoteInput angehängt wird.
-        Intent rplyIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_REPLY).putExtra(PAYLOAD,notID);
-        PendingIntent rplyPendingIntent = PendingIntent.getBroadcast(context, notID, rplyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent rplyIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_REPLY).putExtra(PAYLOAD, channelid);
+        PendingIntent rplyPendingIntent = PendingIntent.getBroadcast(context, notID, rplyIntent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Action rplyAction = new NotificationCompat.Action.Builder(R.drawable.ic_reply, context.getString(R.string.NotActionReply), rplyPendingIntent )
                 .addRemoteInput(remoteInput)
                 .build();
         //MessangingStyle, wichtig hier das Person Objekt. Nur eine Charsequence ist in der alten Funktion.
         NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(me);
         messagingStyle.setConversationTitle(context.getString(R.string.MessageTitle));
-        for (Message chatMessage : NotificationDemoApplication.MESSAGES){
+        for (Message chatMessage : MainActivity.getMessages()){
             NotificationCompat.MessagingStyle.Message notMessage = new NotificationCompat.MessagingStyle.Message(
                     chatMessage.getText(),
                     chatMessage.getTimestamp(),
@@ -212,7 +208,7 @@ public class NotificationBuilder {
             messagingStyle.addMessage(notMessage); // Fügt die Nachricht dem Style hinzu
         }
         //Eigentlich Notification bauen
-        Notification rplyNot = new NotificationCompat.Builder(context, channelid)
+        return new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentIntent(buildContentIntent())
                 .setStyle(messagingStyle)
@@ -224,7 +220,6 @@ public class NotificationBuilder {
                 .setOnlyAlertOnce(true)
                 .setGroup(NOTIFICATION_GROUP_KEY)
                 .build();
-        return rplyNot;
     }
 
     /**
@@ -238,7 +233,7 @@ public class NotificationBuilder {
         RemoteViews collapsedView = new RemoteViews(context.getPackageName(), R.layout.notification_collapsed);
         RemoteViews expandedView = new RemoteViews(context.getPackageName(), R.layout.notification_expanded);
         expandedView.setOnClickPendingIntent(R.id.not_expan_Img, buildContentIntent());
-        Notification customNot = new NotificationCompat.Builder(context,channelid)
+        return new NotificationCompat.Builder(context,channelid)
                 .setSmallIcon(icon)
                 .setCustomContentView(collapsedView) //kleiner Status
                 .setCustomBigContentView(expandedView)
@@ -246,6 +241,5 @@ public class NotificationBuilder {
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle()) // Das nur machen wenn ein konsistenter aussehen mit den restlichen Notifications ereicht werden soll
                 .setGroup(NOTIFICATION_GROUP_KEY)
                 .build();
-        return customNot;
     }
 }

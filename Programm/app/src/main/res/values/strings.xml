@@ -56,4 +56,7 @@
     <string name="MessageMe">Ich</string>
     <!--Toast-Strings-->
     <string name="ToIntErr">Interner Fehler</string>
+    <!--Anfragen der Berechtigungen-->
+    <string name="AskPerm">Benachrictigungen müssen aktiviert sein, sonnst kann diese App nichts darstellen!</string>
+    <string name="Ok">Ok</string>
 </resources>
