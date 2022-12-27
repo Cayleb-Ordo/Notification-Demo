@@ -22,7 +22,6 @@ public class NotificationBuilder {
     public static final String KEY_TEXTRPLY = "reply";
     public static final String PAYLOADCHID = "payloadCHID";
     public static final String PAYLOADNOTID = "payloadNotID";
-    public Notification mediaConNot;
     private final String CLASS_NOTIFICATIONBUILDER = "de.fentzl.notification_demo.NotificationBuilder";
     private final String NOTIFICATION_GROUP_KEY = "de.fentzl.notification_demo.Gruppe";
     private final Person me;
@@ -133,25 +132,44 @@ public class NotificationBuilder {
      * @param update Boolean Gibt an, ob die Notification ein Update erhalten soll oder nicht.(Aktuell nicht verwendet)
      * @return Notification Gibt die Notification zurück
      */
-    public Notification buildMediaConNot(int notID, String channelid, int icon, boolean update) {
-        Intent muteIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_MUTE).putExtra(PAYLOADNOTID, notID);
+    public Notification buildMediaConNot(int notID, int chanID, String channelid, int icon, boolean update) {
+        Intent muteIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_MUTE).putExtra(PAYLOADNOTID, notID).putExtra(PAYLOADCHID, chanID);
         PendingIntent mutePendingIntent = PendingIntent.getBroadcast(context, notID, muteIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        mediaConNot = new NotificationCompat.Builder(context, channelid)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .addAction(R.drawable.ic_volume_on, context.getString(R.string.NotExpAMute), mutePendingIntent)
-                .addAction(R.drawable.ic_prev, context.getString(R.string.NotExpAPrev), null)
-                .addAction(R.drawable.ic_pause, context.getString(R.string.NotExpAPause), null)
-                .addAction(R.drawable.ic_next, context.getString(R.string.NotExpANext), null)
-                .addAction(R.drawable.ic_close, context.getString(R.string.NotExpAAbort), buildDismissIntent(notID))
-                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
-                        .setShowActionsInCompactView(1, 2, 3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
-                .setContentTitle(context.getString(R.string.NotExpanTitle))
-                .setContentText(context.getString(R.string.NotExpanText))
-                .setLargeIcon(NotificationDemoApplication.mausi_logo)
-                .setSmallIcon(icon)
-                .setGroup(NOTIFICATION_GROUP_KEY)
-                .build();
-        return mediaConNot;
+        if(!update) {
+            return new NotificationCompat.Builder(context, channelid)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                    .addAction(R.drawable.ic_volume_on, context.getString(R.string.NotExpAMute), mutePendingIntent)
+                    .addAction(R.drawable.ic_prev, context.getString(R.string.NotExpAPrev), null)
+                    .addAction(R.drawable.ic_pause, context.getString(R.string.NotExpAPause), null)
+                    .addAction(R.drawable.ic_next, context.getString(R.string.NotExpANext), null)
+                    .addAction(R.drawable.ic_close, context.getString(R.string.NotExpAAbort), buildDismissIntent(notID))
+                    .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+                            .setShowActionsInCompactView(1, 2, 3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
+                    .setContentTitle(context.getString(R.string.NotExpanTitle))
+                    .setContentText(context.getString(R.string.NotExpanText))
+                    .setLargeIcon(NotificationDemoApplication.mausi_logo)
+                    .setSmallIcon(icon)
+                    .setOnlyAlertOnce(true)
+                    .setGroup(NOTIFICATION_GROUP_KEY)
+                    .build();
+        } else {
+            return new NotificationCompat.Builder(context, channelid)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                    .addAction(R.drawable.ic_volume_off, context.getString(R.string.NotExpAUMute), mutePendingIntent)
+                    .addAction(R.drawable.ic_prev, context.getString(R.string.NotExpAPrev), null)
+                    .addAction(R.drawable.ic_pause, context.getString(R.string.NotExpAPause), null)
+                    .addAction(R.drawable.ic_next, context.getString(R.string.NotExpANext), null)
+                    .addAction(R.drawable.ic_close, context.getString(R.string.NotExpAAbort), buildDismissIntent(notID))
+                    .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+                            .setShowActionsInCompactView(1, 2, 3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
+                    .setContentTitle(context.getString(R.string.NotExpanTitle))
+                    .setContentText(context.getString(R.string.NotExpanText))
+                    .setLargeIcon(NotificationDemoApplication.mausi_logo)
+                    .setSmallIcon(icon)
+                    .setOnlyAlertOnce(true)
+                    .setGroup(NOTIFICATION_GROUP_KEY)
+                    .build();
+        }
     }
 
     /**
@@ -185,7 +203,7 @@ public class NotificationBuilder {
      * @param icon Integer Id des Icons
      * @return Notification Gibt die Notification zurück
      */
-    public Notification buildDirRplyMessStNot(int notID,String channelid, int icon, int chanID) {
+    public Notification buildDirRplyMessStNot(int notID, int chanID, String channelid, int icon) {
         //RemoteInput, anhand dessen wird der eingegebene Text später entnommen
         RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
                 .setLabel(context.getString(R.string.NotRplyLabel))

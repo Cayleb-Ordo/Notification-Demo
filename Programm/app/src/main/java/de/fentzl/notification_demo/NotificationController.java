@@ -77,6 +77,9 @@ public class NotificationController {
      * @param selected Enum Gibt an was der Benutzer ausgewählt hat.
      */
     public void notifyChannel1(CreateNotificationsOverview.NotificationType selected) {
+        if (!notificationManager.areNotificationsEnabled()){
+            Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Notifications nicht aktiviert!");
+        }
         int stray = random.nextInt(randMax -randMin) + randMin;
         switch (selected) {
             case Default:
@@ -98,18 +101,18 @@ public class NotificationController {
                 break;
             case Media:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildMediaConNot(stray, CHANNEL1_ID, R.drawable.ic_channel1, false));
+                        NotificationDemoApplication.getNotBuilder().buildMediaConNot(stray, notCh1, CHANNEL1_ID, R.drawable.ic_channel1, false));
                 break;
             case Reply:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(stray, CHANNEL1_ID, R.drawable.ic_channel1, notCh1));
+                        NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(stray, notCh1, CHANNEL1_ID, R.drawable.ic_channel1));
                 break;
             case Custom:
                 notificationManager.notify(stray,
                         NotificationDemoApplication.getNotBuilder().buildCustomNot(stray, CHANNEL1_ID, R.drawable.ic_channel1));
                 break;
             default:
-                Log.d(NotificationDemoApplication.debugTag, "Das sollte nicht passieren");
+                Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Das sollte nicht passieren");
                 break;
         }
     }
@@ -119,6 +122,9 @@ public class NotificationController {
      * @param selected Enum Gibt an was der Benutzer ausgewählt hat.
      */
     public void notifyChannel2(CreateNotificationsOverview.NotificationType selected) {
+        if (!notificationManager.areNotificationsEnabled()){
+            Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Notifications nicht aktiviert!");
+        }
         int stray = random.nextInt(randMax -randMin) + randMin;
         switch (selected) {
             case Default:
@@ -140,18 +146,18 @@ public class NotificationController {
                 break;
             case Media:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildMediaConNot(stray, CHANNEL2_ID, R.drawable.ic_channel2, false));
+                        NotificationDemoApplication.getNotBuilder().buildMediaConNot(stray, notCh2, CHANNEL2_ID, R.drawable.ic_channel2, false));
                 break;
             case Reply:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(stray, CHANNEL2_ID, R.drawable.ic_channel2, notCh2));
+                        NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(stray, notCh2, CHANNEL2_ID, R.drawable.ic_channel2));
                 break;
             case Custom:
                 notificationManager.notify(stray,
                         NotificationDemoApplication.getNotBuilder().buildCustomNot(stray, CHANNEL2_ID, R.drawable.ic_channel2));
                 break;
             default:
-                Log.d(NotificationDemoApplication.debugTag, "Das sollte nicht passieren");
+                Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Das sollte nicht passieren");
                 break;
         }
     }
@@ -162,9 +168,9 @@ public class NotificationController {
      * @param notID Integer ID der Notification
      */
     private void createThread(NotificationCompat.Builder notBuilder, int notID){
-        //Thread zur aktualisierung der Notification, damit ein Download simuliert wird
+        //Thread zur Aktualisierung der Notification, damit ein Download simuliert wird
         new Thread(() -> {
-            //Hier wird die Progressbar auf unbestimmt gesetzt, heist es läuft ein band anstelle des Fortschrits
+            //Hier wird die Progressbar auf unbestimmt gesetzt, heist es läuft ein Band anstelle des Fortschritsbalkens
             notBuilder.setProgress(0, 0, true).setOnlyAlertOnce(true);
             notificationManager.notify(notID, notBuilder.build());
             SystemClock.sleep(3000); // Damit die Anfangs-Notification kurz stehen bleibt
@@ -188,12 +194,12 @@ public class NotificationController {
      * Aktualisiert die Mediakontrollen Notification(aktuell nicht verwendet)
      * @param notID Integer ID der Notification
      */
-    public void updateMediaCont(int notID) {
+    public void updateMediaCont(int channelID, int notID) {
         Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": updateMediaCont");
-        if(notID == notCh1)
-            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildMediaConNot(notID, channel1Name, R.drawable.ic_channel1, true));
-        else
-            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildMediaConNot(notID, channel2Name, R.drawable.ic_channel2, true));
+        if(channelID == notCh1)
+            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL1_ID, R.drawable.ic_channel1, true));
+        else if (channelID == notCh2)
+            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL2_ID, R.drawable.ic_channel2, true));
     }
 
     /**
@@ -203,9 +209,9 @@ public class NotificationController {
      */
     public void handleReply(int channelID, int notID){
         if(channelID == notCh1) {
-            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(notID, CHANNEL1_ID, R.drawable.ic_channel2, notCh1));
+            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(notID, channelID, CHANNEL1_ID, R.drawable.ic_channel2));
         } else if (channelID == notCh2){
-            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(notID, CHANNEL2_ID, R.drawable.ic_channel2, notCh2));
+            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(notID, channelID, CHANNEL2_ID, R.drawable.ic_channel2));
         } else {
             Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Konnte den Kanal nicht identifizieren!");
         }
@@ -218,7 +224,7 @@ public class NotificationController {
     public void dismissNotification(int id) {
         //Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + id);
         if (id == 0)
-            Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ":Das sollte nicht passieren");
+            Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Das sollte nicht passieren");
         else
             notificationManager.cancel(id);
     }

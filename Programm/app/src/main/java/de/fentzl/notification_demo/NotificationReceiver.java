@@ -29,7 +29,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 notificationController.dismissNotification(intent.getIntExtra(NotificationBuilder.PAYLOADNOTID, 0));
                 break;
             case NotificationBuilder.ACTION_MUTE:
-                notificationController.updateMediaCont(intent.getIntExtra(NotificationBuilder.PAYLOADNOTID, 0));
+                notificationController.updateMediaCont(intent.getIntExtra(NotificationBuilder.PAYLOADCHID, 0), intent.getIntExtra(NotificationBuilder.PAYLOADNOTID, -1));
                 break;
             case NotificationBuilder.ACTION_REPLY:
                 Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);

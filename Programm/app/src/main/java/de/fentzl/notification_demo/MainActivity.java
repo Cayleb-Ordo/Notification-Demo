@@ -23,13 +23,23 @@ import java.util.List;
 
 /**
  * Hauptklasse. Startet alle Unteraktivitäten
+ *
  * @author Simon Fentzl
- * @version 1
+ * @version 2
  */
 public class MainActivity extends AppCompatActivity {
     private static final List<Message> MESSAGES = new ArrayList<>();
-    private View mLayout;
     private static final int PERMISSION_REQUEST_NOT = 0;
+    private View mLayout;
+
+    /**
+     * Gibt die Liste der Nachrichten zurück
+     *
+     * @return List<Message> Liste der Nachrichten
+     */
+    public static List<Message> getMessages() {
+        return MESSAGES;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,44 +57,31 @@ public class MainActivity extends AppCompatActivity {
             startActivity(createNotIntent);
         });
         String annKey = "de.fentzl.anna";
-        MESSAGES.add(new Message(getString(R.string.MessageMoring),new Person.Builder().setName(getString(R.string.MessageAnna)).setKey(annKey).build()));
-        MESSAGES.add(new Message(getString(R.string.MessageAnswer1),null));
+        MESSAGES.add(new Message(getString(R.string.MessageMoring), new Person.Builder().setName(getString(R.string.MessageAnna)).setKey(annKey).build()));
+        MESSAGES.add(new Message(getString(R.string.MessageAnswer1), null));
         String richardKey = "de.fentzl.richard";
-        MESSAGES.add(new Message(getString(R.string.MessageAnswer2),new Person.Builder().setName(getString(R.string.MessageRichard)).setKey(richardKey).build()));
-        checkUserPermissions();
-    }
-
-    /**
-     * Gibt die Liste der Nachrichten zurück
-     * @return List<Message> Liste der Nachrichten
-     */
-    public static List<Message> getMessages() {
-        return MESSAGES;
+        MESSAGES.add(new Message(getString(R.string.MessageAnswer2), new Person.Builder().setName(getString(R.string.MessageRichard)).setKey(richardKey).build()));
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+        } else{
+            requestPermissions();
+        }
     }
 
     /**
      * Überprüft ob die App die benötigten Berechtigungen hat
      */
-    private void checkUserPermissions(){
-        if(ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED){
-            return;
-        } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)){
+    public void requestPermissions() {
+       if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
             Snackbar.make(mLayout, R.string.AskPerm,
-                    Snackbar.LENGTH_INDEFINITE).setAction(R.string.Ok, new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Request the permission
-                    ActivityCompat.requestPermissions(MainActivity.this,
-                            new String[]{Manifest.permission.POST_NOTIFICATIONS},
-                            PERMISSION_REQUEST_NOT);
-                }
-            }).show();
-        }else{
+                    Snackbar.LENGTH_INDEFINITE).setAction(R.string.Ok, view -> ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    PERMISSION_REQUEST_NOT)).show();
+        } else {
             ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if(isGranted){
-                    Log.d(NotificationDemoApplication.debugTag, "if in on create main Activity");
-                }else {
-                    Log.d(NotificationDemoApplication.debugTag, "else in on create main Activity");
+                if (isGranted) {
+                    Log.d(NotificationDemoApplication.debugTag, "Berechtigung erteilt!");
+                } else {
+                    Log.d(NotificationDemoApplication.debugTag, "Berechtigung nicht erteilt");
                 }
             });
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);

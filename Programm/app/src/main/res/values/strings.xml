@@ -30,6 +30,7 @@
     <string name="NotExpANext">Nächstes</string>
     <string name="NotExpAPause">Pausieren</string>
     <string name="NotExpAMute">Ton aus</string>
+    <string name="NotExpAUMute">Ton an</string>
     <string name="NotExpAAbort">Beenden</string>
     <!-- Button-Contents-->
     <string name="CNotCh1">Kanal 1</string>
