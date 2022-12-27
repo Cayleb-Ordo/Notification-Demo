@@ -4,31 +4,38 @@ Demo App für Android Push-Notifications.
 
 ## Beschreibung
 
-Dieses Repository enthällt den Code einer Demonstration's Anwendung für Android Push-Notifications. Diese Anwendung zeigt anschaulich was mit den Push-Notifications ereicht werden kann.
-Diese App wurde für Android 8(Oreo) konzipiert und getestet. 
+Dieses Repository enthält den Code einer Demonstrations Anwendung für Android Push-Notifications. Diese Anwendung zeigt anschaulich was mit den Push-Notifications erreicht werden kann.
+Diese App wurde ursprünglich für Android 8(Oreo) entwickelt, ist aber kompatibel bis Android 13.
 
 ## Inhalt
 
-- Android-Studio Sourcefiles
-- Javadoc
-- PowerPoint Präsentation 
+- [Ordnerstruktur](#ordnerstrucktur)
+- [Installation](#installation)
+- [Notifications Codebeispiele](#notifications-codebaispiele)
+    - [Default-Notification mit Action-Buttons](#default-notifications-mit-action-buttons) 
+    - [Progress bar Notification](#progress-bar-notification)
+    - [Expandable Notification](#expandable-notification)
+    - [BigPictureStyle Notification](#bigpictureStyle-notification)
+    - [Media-Controls Notification](#media-controls-notification)
+    - [Messaging-Style und Reply Button](#messaging-style-und-reply-button)
+    - [Custom](#custom)
 
 ## Ordnerstruktur
 - Dokumentation:
-    - enthällt die Projekt-Dokumentation.
+    - enthält die Projekt-Dokumentation.
     - Problems.txt: darin sind aufgetretene Probleme und deren Lösungen aufgeführt.
-    - Arbeitszeit.xlsx: Excel Datei zum festhalten der Arbeitszeit.
+    - Arbeitszeit.xlsx: Excel Datei zum Festhalten der Arbeitszeit.
 - Dokumentation/JavaDoc: **aktuell nicht erstellbar**
-    - enthällt das JavaDoc der App.
+    - enthält das JavaDoc der App.
 - Dokumentation/Planung:
-    - enthällt die Datei, wo erstmalig aufgeschrieben wurde was umgesetzt werden soll.
+    - enthält die Datei, wo erstmalig aufgeschrieben wurde was umgesetzt werden soll.
 - Dokumentation/Präsentation:
-    - enthällt die Präsentation mit den Code Beispielen.
+    - enthält die Präsentation mit den Code Beispielen.
 - Dokumentation/Projektarbeit:
-    - enthällt die Projektarbeit.
+    - enthält die Projektarbeit.
 - Programm:
-    - enthällt die Android Sourcefiles.
-    - ordnerstruktur Gleich wie bei einem normalen Android-Studio Projekt.
+    - enthält die Android Sourcefiles.
+    - Ordnerstruktur gleich wie bei einem normalen Android-Studio Projekt.
     
 ## Installation
 Zum Installieren am einfachsten das Android-Studio Projekt laden und für die Benötigte Android-Version kompilieren.  
@@ -41,7 +48,7 @@ Die verwendeten Android-Librarys sind alle androidx.
 
 ### Default-Notification mit Action-Buttons
 ---
-Erstellung einer einfachen Push-Notification mit Titel, Tab-Action, Inhalt's Text, Icon und einem Action-Button.  
+Erstellung einer einfachen Push-Notification mit Titel, Tab-Action, Inhalts Text, Icon und einem Action-Button.  
 Es muss bei der Action kein Icon spezifiziert werden. Bei der Unterscheidung der PendingIntent's aufpassen.  
 Diese müssen eindeutig unterscheidbar sein, z. B. eine eindeutige Action.  
 **Code:** 
@@ -120,8 +127,8 @@ notificationManager.notify(notID, bigTxtNot);
 ### Media-Controls Notification
 ---
 Erstellung einer Notification zur Steuerung von Media Inhalten.  
-!! Zu beachten ist die richtige importierung in build.gradle.  
-Ab Android Oreo kann eine MediaSession hinzugefügt werden, dadurch wird die gesammte Notification in der Farbe des Albumcovers eingefärbt.  
+!! Zu beachten ist die richtige Importierung in build.gradle.  
+Ab Android Oreo kann eine MediaSession hinzugefügt werden, dadurch wird die gesamte Notification in der Farbe des Albumcovers eingefärbt.  
 **Code**
 ```
 notbuilder = new NotificationCompat.Builder(context, channelid)
@@ -192,8 +199,8 @@ notificationManager.notify(notID, rplyNot);
 ### Custom
 ---
 Erstellt eine Komplett benutzerdefiniert Notification. Es werden Layouts für RemoteViews benötigt.  
-Zwei Einschrenkungen: CollapsedView(Notification ist klein) höhe max 64dp. ExpandedView(Erweiterte Notification) höhe 256dp.  
-Um einen Konsistentes Aussehen mit den restlichen Notifications zu ereichen sollte man die Notification mit dem NotificationCompat.DecoratedCustomViewStyle versehen.  
+Zwei Einschränkungen: CollapsedView(Notification ist klein) höhe max. 64dp. ExpandedView(Erweiterte Notification) höhe 256dp.  
+Um einen Konsistentes Aussehen mit den restlichen Notifications zu erreichen sollte man die Notification mit dem NotificationCompat.DecoratedCustomViewStyle versehen.  
 **Code:**
 ```
 RemoteViews collapsedView = new RemoteViews(context.getPackageName(), R.layout.notification_collapsed);
