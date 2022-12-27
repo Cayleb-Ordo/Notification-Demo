@@ -3,6 +3,7 @@ package de.fentzl.notification_demo;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Gibt die Liste der Nachrichten zurück
-     *
      * @return List<Message> Liste der Nachrichten
      */
     public static List<Message> getMessages() {
@@ -62,29 +62,34 @@ public class MainActivity extends AppCompatActivity {
         String richardKey = "de.fentzl.richard";
         MESSAGES.add(new Message(getString(R.string.MessageAnswer2), new Person.Builder().setName(getString(R.string.MessageRichard)).setKey(richardKey).build()));
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            Log.i(NotificationDemoApplication.debugTag, "Berechtigt!");
         } else{
             requestPermissions();
         }
     }
 
     /**
-     * Überprüft ob die App die benötigten Berechtigungen hat
+     * Fragt die benötigten Berechtigungen an
      */
     public void requestPermissions() {
+        //PermissionRationale wir das erste mal aufgerufen, wenn der Benutzer einmal auf nicht erlauben getrückt hat. Bei zweimaligem verneinen wird angenommen, das nicht nocheinmal nachgefragt werden soll
        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
-            Snackbar.make(mLayout, R.string.AskPerm,
-                    Snackbar.LENGTH_INDEFINITE).setAction(R.string.Ok, view -> ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
-                    PERMISSION_REQUEST_NOT)).show();
-        } else {
+           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+               Snackbar.make(mLayout, R.string.AskPerm, Snackbar.LENGTH_INDEFINITE).setAction(R.string.Ok, view -> ActivityCompat.requestPermissions(MainActivity.this,
+                       new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                       PERMISSION_REQUEST_NOT)).show();
+           }
+       } else {
             ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
-                    Log.d(NotificationDemoApplication.debugTag, "Berechtigung erteilt!");
+                    Log.i(NotificationDemoApplication.debugTag, "Berechtigung erteilt!");
                 } else {
-                    Log.d(NotificationDemoApplication.debugTag, "Berechtigung nicht erteilt");
+                    Log.i(NotificationDemoApplication.debugTag, "Berechtigung nicht erteilt");
                 }
             });
-            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
-        }
+           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+               requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+           }
+       }
     }
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -51,7 +52,7 @@ public class NotificationController {
     public void createNotificationChannels(boolean createOption) {
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
         if (createOption) {
-            //der if prüft ob wir android 8.0 oder höher haben, sonnst muss er kein channel erstellen.
+            //der if prüft ob wir android 8.0 oder höher haben, sonnst muss er keinen Kanal erstellen.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel1 = new NotificationChannel(CHANNEL1_ID, channel1Name, importance);
                 NotificationChannel channel2 = new NotificationChannel(CHANNEL2_ID, channel2Name, importance);
@@ -78,7 +79,9 @@ public class NotificationController {
      */
     public void notifyChannel1(CreateNotificationsOverview.NotificationType selected) {
         if (!notificationManager.areNotificationsEnabled()){
-            Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Notifications nicht aktiviert!");
+            Log.i(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Notifications nicht aktiviert!");
+            Toast.makeText(context, R.string.NotDisabled, Toast.LENGTH_SHORT).show();
+            return;
         }
         int stray = random.nextInt(randMax -randMin) + randMin;
         switch (selected) {
@@ -112,7 +115,7 @@ public class NotificationController {
                         NotificationDemoApplication.getNotBuilder().buildCustomNot(stray, CHANNEL1_ID, R.drawable.ic_channel1));
                 break;
             default:
-                Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Das sollte nicht passieren");
+                Log.e(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Das sollte nicht passieren");
                 break;
         }
     }
@@ -123,7 +126,9 @@ public class NotificationController {
      */
     public void notifyChannel2(CreateNotificationsOverview.NotificationType selected) {
         if (!notificationManager.areNotificationsEnabled()){
-            Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Notifications nicht aktiviert!");
+            Log.i(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Notifications nicht aktiviert!");
+            Toast.makeText(context, R.string.NotDisabled, Toast.LENGTH_SHORT).show();
+            return;
         }
         int stray = random.nextInt(randMax -randMin) + randMin;
         switch (selected) {
@@ -157,7 +162,7 @@ public class NotificationController {
                         NotificationDemoApplication.getNotBuilder().buildCustomNot(stray, CHANNEL2_ID, R.drawable.ic_channel2));
                 break;
             default:
-                Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Das sollte nicht passieren");
+                Log.e(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Das sollte nicht passieren");
                 break;
         }
     }
@@ -213,7 +218,7 @@ public class NotificationController {
         } else if (channelID == notCh2){
             notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(notID, channelID, CHANNEL2_ID, R.drawable.ic_channel2));
         } else {
-            Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Konnte den Kanal nicht identifizieren!");
+            Log.e(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Konnte den Kanal nicht identifizieren!");
         }
     }
 
@@ -224,7 +229,7 @@ public class NotificationController {
     public void dismissNotification(int id) {
         //Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + id);
         if (id == 0)
-            Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Das sollte nicht passieren");
+            Log.e(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Das sollte nicht passieren");
         else
             notificationManager.cancel(id);
     }

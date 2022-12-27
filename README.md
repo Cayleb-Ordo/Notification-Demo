@@ -11,6 +11,10 @@ Diese App wurde ursprünglich für Android 8(Oreo) entwickelt, ist aber kompatib
 
 - [Ordnerstruktur](#ordnerstruSktur)
 - [Installation](#installation)
+- [Android Berechtigungen](#android-berechtigungen)
+    - [Berechtigung für Benachrichtigungen Anfragen](#berechtigung-für-benachrichtigungen-anfragen)
+    - [Begründen der Anfrage](#begründen-der-anfrage)
+    - [Code Beispiel](#code-beispiel)
 - [Notifications Codebeispiele](#notifications-codebeispiele)
     - [Default-Notification mit Action-Buttons](#default-notification-mit-action-buttons) 
     - [Progress bar Notification](#progress-bar-notification)
@@ -19,31 +23,87 @@ Diese App wurde ursprünglich für Android 8(Oreo) entwickelt, ist aber kompatib
     - [Media-Controls Notification](#media-controls-notification)
     - [Messaging-Style und Reply Button](#messaging-style-und-reply-button)
     - [Custom](#custom)
+- [Offizielle Android Dokumentation](#offizielle-android-dokumentation)
+- [Entwickler](#entwickler)
+- [Lizenz](#lizenz)
 
 ## Ordnerstruktur
 - Dokumentation:
     - enthält die Projekt-Dokumentation.
     - Problems.txt: darin sind aufgetretene Probleme und deren Lösungen aufgeführt.
     - Arbeitszeit.xlsx: Excel Datei zum Festhalten der Arbeitszeit.
-- Dokumentation/JavaDoc: **aktuell nicht erstellbar**
-    - enthält das JavaDoc der App.
-- Dokumentation/Planung:
-    - enthält die Datei, wo erstmalig aufgeschrieben wurde was umgesetzt werden soll.
-- Dokumentation/Präsentation:
-    - enthält die Präsentation mit den Code Beispielen.
-- Dokumentation/Projektarbeit:
-    - enthält die Projektarbeit.
+    - Dokumentation/JavaDoc: **aktuell nicht erstellbar**
+        - enthält das JavaDoc der App.
+    - Dokumentation/Planung:
+        - enthält die Datei, wo erstmalig aufgeschrieben wurde was umgesetzt werden soll.
+        - erster Mockup der App
+    - Dokumentation/Präsentation:
+        - enthält die Präsentation mit den Code Beispielen im PDF und PowerPoint Format.
+    - Dokumentation/Projektarbeit:
+        - enthält die Projektarbeit.
 - Programm:
-    - enthält die Android Sourcefiles.
+    - enthält die Android Quelldateien.
     - Ordnerstruktur gleich wie bei einem normalen Android-Studio Projekt.
     
 ## Installation
 Zum Installieren am einfachsten das Android-Studio Projekt laden und für die Benötigte Android-Version kompilieren.  
 Es wird keine Separate apk-Datei mitgeliefert.
 
+## Android Berechtigungen
+
+Seit Android 6(Marshmallow) gibt es neben den Installationsberechtigungen auch sog. Runtime-Permissions. Dadurch fragt die App, während sie ausgeführt wird, nach den benötigten Berechtigungen. In Android Oreo musste der Benutzer der App nicht gefragt werden, ob die App ihm Benachrichtigungen schicken darf. Denn die Benachrichtigungen sind nicht in einer **Gefährlichen Kategorie**.   
+Das hat sich mit Erscheinen von Android 13 geändert. Nun ist standardmäßig alles deaktiviert, was nicht explizit im Manifest angegeben und dem Benutzer mitgeteilt wurde. Wenn dieser nicht zustimmt, wird die App nicht in der Lage sein, Benachrichtigungen darzustellen. Daher gibt es von Android eine API, mit der man dem Benutzer in einem Popup nach seiner Zustimmung fragen kann. Ein guter Startpunkt sind die offiziellen Dokumentationen.  
+Es werden hier nur die relevanten Elemente für die Push-Notification Berechtigung besprochen, die genauen Details zu allen Berechtigungen und deren Auswirkungen sind in der offiziellen Dokumentation enthalten([Android-Permissions](https://developer.android.com/guide/topics/permissions/overview)).
+
+### Berechtigung für Benachrichtigungen Anfragen
+**!!!Gilt nur für API 33 und aufwärts!!!**
+Zunächst müssen alle Berechtigungen, die die App braucht, in der AndroidManifest Datei eingetragen werden. Für den Fall der Benachrichtigungen wird folgende Zeile gebraucht:
+
+```xml
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+```
+Es gibt zwei Wege, wie die Berechtigung angefragt werden kann. Die einfachere Variante ist es, das Android System selbst machen zu lassen, man kann dies jedoch selbst übernehmen sofern das einen Vorteil bringt.  
+Um zu schauen, ob eine bestimmte Berechtigung gesetzt ist wird folgende Funktion verwendet: 
+
+```java
+checkSelfPermission(Context, Permission)
+```
+
+Diese gibt einen einen ```PackageManager.PERMISSION_GRANTED``` zurück, wenn die angeforderte Berechtigung gesetzt ist. Wenn dies der Fall ist, kann die App ihren normalen Ablauf weiterführen, ansonsten muss der Benutzer um die Berechtigung gebeten werden.!!Wichtig diesen Code kann man nur innerhalb eines Fragments oder einer Activity verwenden!!  
+Um nun den Nutzer darüber in Kenntnis setzen, das diese App die spezifische Berechtigung braucht muss man sich eine Referenz auf einen ```ActivityResultLauncher```. Dieser ist der Rückgabewert der Funktion *registerForActivityResult*.  
+Dieser Funktion wird ein *ActivityResultContract* und ein *ActivityResultCallback* mitgegeben. Der Contract bezieht sich auf die angeforderte Berechtigung und der *ActivityResultCallback* ist die Funktion, die aufgerufen wird, wenn der Benutzer sich für eine der beiden Optionen des Systemdialogs entschieden hat. Das kann auch eine Lambda Funktion sein. Dieser ResultLauncher wird dann ausgeführt, wenn der Benutzer noch keine Berechtigung eingestellt hat.  
+
+### Begründen der Anfrage
+
+Wenn bei der Installation der App der Benutzer zweimal den Systemdialog mit verweigern ausgewählt hat, wird der Dialog nicht mehr ausgeführt. So wird beim erstmaligen starten der App nachgefragt, der Benutzer verweigert jedoch. Sollte er die App noch einmal starten, wird wieder nach der Berechtigung gefragt. Wenn er wieder auf verweigern klickt, ist das für Android so also ob ein haken bei *nicht erneut fragen* gesetzt wurde.  
+Deswegen wir die Funktion *shouldShowRequestPermissionRationale* nur einmalig nach dem ersten mal verweigern ausgeführt. Diese ermöglicht, dem Benutzer genauer mitzuteilen, warum die Berechtigung das App Erlebnis verbessert.  
+Hat der Benutzer wieder die Berechtigung verweigert, so sollte dies Respektiert werden und die App grundsätzlich auch ohne diese ausführbar sein. Dies geht in dem Fall der Notification Demo App nicht, denn dadurch verliert sie ihren Zweck.
+
+### Code Beispiel
+
+```java
+if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+    Log.i("NotificationApp", "Berechtigung wurde schon erteilt!");
+} else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
+    Snackbar.make(mLayout, R.string.AskPerm, Snackbar.LENGTH_INDEFINITE).setAction(R.string.Ok, view -> ActivityCompat.requestPermissions(MainActivity.this,
+            new String[]{Manifest.permission.POST_NOTIFICATIONS},
+            PERMISSION_REQUEST_NOT)).show();
+} else {
+    ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted) {
+            Log.i(NotificationDemoApplication.debugTag, "Berechtigung erteilt!");
+        } else {
+            Log.i(NotificationDemoApplication.debugTag, "Berechtigung nicht erteilt");
+        }
+    });
+    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+}
+```
+
 ## Notifications Codebeispiele
-Alle Code-teile finden sich in der Klasse NotificationBuilder. Zur besseren Übersicht wurden die Einzelkomponenten hier aufgeführt.  
-Ebenfalls müssen für eigen Implementation die Jeweiligen Intents, Key-Strings und Actions geändert werden.  
+
+Alle Codeelemente finden sich in der Klasse NotificationBuilder. Zur besseren Übersicht wurden die Einzelkomponenten hier aufgeführt.  
+Ebenfalls müssen für eigen Implementation die jeweiligen Intents, Key-Strings und Actions geändert werden.  
 Die verwendeten Android-Librarys sind alle androidx.
 
 ### Default-Notification mit Action-Buttons
@@ -52,7 +112,7 @@ Erstellung einer einfachen Push-Notification mit Titel, Tab-Action, Inhalts Text
 Es muss bei der Action kein Icon spezifiziert werden. Bei der Unterscheidung der PendingIntent's aufpassen.  
 Diese müssen eindeutig unterscheidbar sein, z. B. eine eindeutige Action.  
 **Code:** 
-```
+```java
 Intent contentIntent = new Intent(context, CallActivity.class);
 contentIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 Intent dismissIntent = new Intent(context, NotificationReceiver.class);
@@ -76,7 +136,7 @@ notificationManager.notify(notID, defaultNot);
 ---
 Erstellung einer Notification mit integrierter Progress bar.  
 **Code:**
-```
+```java
 NotificationCompat.Builder progressNot = new NotificationCompat.Builder(context, channelid)
         .setSmallIcon(icon)
         .setContentTitle(context.getString(R.string.NotProgTitle))
@@ -91,7 +151,7 @@ notificationManager.notify(notID, progressNot.build());
 ---
 Erstellung einer erweiterbaren Notification, mit großem Bild.  
 **Code:**
-```
+```java
 Notification expandNot = new NotificationCompat.Builder(context, channelid)
         .setSmallIcon(icon)
         .setContentTitle(contentTitle)
@@ -109,7 +169,7 @@ notificationManager.notify(notID,expandNot);
 ---
 Erstellung einer BigPictureStyle Notification.  
 **Code:**
-```
+```java
 Notification bigTxtNot = new NotificationCompat.Builder(context, channelid)
         .setSmallIcon(icon)
         .setContentTitle(contentTitle)
@@ -130,7 +190,7 @@ Erstellung einer Notification zur Steuerung von Media Inhalten.
 !! Zu beachten ist die richtige Importierung in build.gradle.  
 Ab Android Oreo kann eine MediaSession hinzugefügt werden, dadurch wird die gesamte Notification in der Farbe des Albumcovers eingefärbt.  
 **Code**
-```
+```java
 notbuilder = new NotificationCompat.Builder(context, channelid)
         .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
         .addAction(R.drawable.ic_volume_on, context.getString(R.string.NotExpAMute),null)
@@ -157,7 +217,7 @@ könnte es sein das der User einem anderen Chat die Nachricht schreibt als er an
 **Code:**  
 #### RemoteInput
 ---
-```
+```java
 //RemoteInput, anhand dessen wird er eingegebene Text später entnommen
 RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
         .setLabel(context.getString(R.string.NotRplyLabel))
@@ -165,7 +225,7 @@ RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
 ```
 #### ActionButton mit RemoteInput
 ---
-```
+```java
 Intent rplyIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_REPLY).putExtra(PAYLOAD,notID);
 PendingIntent rplyPendingIntent = PendingIntent.getBroadcast(context, notID, rplyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 NotificationCompat.Action rplyAction = new NotificationCompat.Action.Builder(R.drawable.ic_reply, context.getString(R.string.NotActionReply), rplyPendingIntent )
@@ -174,7 +234,7 @@ NotificationCompat.Action rplyAction = new NotificationCompat.Action.Builder(R.d
 ```
 #### MessagingStyle
 ---
-```
+```java
 //MessangingStyle, wichtig hier das Person Objekt. Nur eine Charsequence ist in der alten Funktion.
 NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(me)
         .setConversationTitle(context.getString(R.string.MessageTitle));
@@ -182,7 +242,7 @@ messagingStyle.addMessage(notMessage); // Fügt die Nachricht dem Style hinzu
 ```
 #### Notification
 ---
-```
+```java
 Notification rplyNot = new NotificationCompat.Builder(context, channelid)
         .setSmallIcon(icon)
         .setStyle(messagingStyle)
@@ -202,7 +262,7 @@ Erstellt eine Komplett benutzerdefiniert Notification. Es werden Layouts für Re
 Zwei Einschränkungen: CollapsedView(Notification ist klein) höhe max. 64dp. ExpandedView(Erweiterte Notification) höhe 256dp.  
 Um einen Konsistentes Aussehen mit den restlichen Notifications zu erreichen sollte man die Notification mit dem NotificationCompat.DecoratedCustomViewStyle versehen.  
 **Code:**
-```
+```java
 RemoteViews collapsedView = new RemoteViews(context.getPackageName(), R.layout.notification_collapsed);
 RemoteViews expandedView = new RemoteViews(context.getPackageName(), R.layout.notification_expanded);
 expandedView.setOnClickPendingIntent(R.id.not_expan_Img, buildContentIntent());
@@ -216,12 +276,17 @@ Notification customNot = new NotificationCompat.Builder(context,channelid)
                 
 ```
 
-## Mitwirkende
+## Offizielle Android Dokumentation
+
+[Notification erstellen](https://developer.android.com/develop/ui/views/notifications/build-notification)
+[Notification Übersicht](https://developer.android.com/develop/ui/views/notifications)
+
+## Entwickler
 
 Simon Fentzl
 
-## License
-```
+## Lizenz
+
 This Projekt is licensed under the GNU General Public License v3.0
-```
+
 &copy; 2021 Simon Fentzl

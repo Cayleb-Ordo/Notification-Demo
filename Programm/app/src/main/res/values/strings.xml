@@ -58,6 +58,7 @@
     <!--Toast-Strings-->
     <string name="ToIntErr">Interner Fehler</string>
     <!--Anfragen der Berechtigungen-->
-    <string name="AskPerm">Benachrichtigungen müssen aktiviert sein, damit diese App ihren zweck erfüllen kann!</string>
+    <string name="AskPerm">Benachrichtigungen müssen aktiviert sein, damit diese App ihren Zweck erfüllen kann!</string>
     <string name="Ok">Ok</string>
+    <string name="NotDisabled">Benachrichtigungen sind für diese App deaktiviert!</string>
 </resources>

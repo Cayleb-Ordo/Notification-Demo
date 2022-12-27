@@ -45,7 +45,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 }
                 break;
             default:
-                Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONRECEIVER + ": No specific Action received!");
+                Log.e(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONRECEIVER + ": No specific Action received!");
                 break;
         }
    }
