@@ -9,10 +9,10 @@ Diese App wurde ursprünglich für Android 8(Oreo) entwickelt, ist aber kompatib
 
 ## Inhalt
 
-- [Ordnerstruktur](#ordnerstrucktur)
+- [Ordnerstruktur](#ordnerstruSktur)
 - [Installation](#installation)
-- [Notifications Codebeispiele](#notifications-codebaispiele)
-    - [Default-Notification mit Action-Buttons](#default-notifications-mit-action-buttons) 
+- [Notifications Codebeispiele](#notifications-codebeispiele)
+    - [Default-Notification mit Action-Buttons](#default-notification-mit-action-buttons) 
     - [Progress bar Notification](#progress-bar-notification)
     - [Expandable Notification](#expandable-notification)
     - [BigPictureStyle Notification](#bigpictureStyle-notification)
