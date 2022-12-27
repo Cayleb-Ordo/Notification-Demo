@@ -278,8 +278,8 @@ Notification customNot = new NotificationCompat.Builder(context,channelid)
 
 ## Offizielle Android Dokumentation
 
-[Notification erstellen](https://developer.android.com/develop/ui/views/notifications/build-notification)
-[Notification Übersicht](https://developer.android.com/develop/ui/views/notifications)
+- [Notification erstellen](https://developer.android.com/develop/ui/views/notifications/build-notification)
+- [Notification Übersicht](https://developer.android.com/develop/ui/views/notifications)
 
 ## Entwickler
 
