@@ -253,7 +253,7 @@ public class NotificationBuilder {
                 .setCustomContentView(collapsedView) //kleiner Status
                 .setCustomBigContentView(expandedView)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), buildDismissIntent(notID))
-                .setStyle(new NotificationCompat.DecoratedCustomViewStyle()) // Das nur machen wenn ein konsistenter aussehen mit den restlichen Notifications ereicht werden soll
+                .setStyle(new NotificationCompat.DecoratedCustomViewStyle()) // Das nur machen, wenn ein konsistentes Aussehen mit den restlichen Notifications ereicht werden soll
                 .setGroup(NOTIFICATION_GROUP_KEY)
                 .build();
     }

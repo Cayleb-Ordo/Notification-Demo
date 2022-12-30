@@ -56,7 +56,7 @@ public class NotificationDemoApplication extends Application {
 
     /**
      * Gibt die Referenz auf sich selbst zurück
-     * @return
+     * @return  Referenz auf den Singleton
      */
     public static NotificationDemoApplication getAPPLICATION() { return APPLICATION; }
 
@@ -70,7 +70,7 @@ public class NotificationDemoApplication extends Application {
 
     /**
      * Gibt den NotificationController zurück
-     * @return
+     * @return Referenz auf den Controller
      */
     public  NotificationController getNotController() { return notController; }
 

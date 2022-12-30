@@ -87,16 +87,16 @@ public class NotificationController {
         switch (selected) {
             case Default:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getAPPLICATION().getAPPLICATION().getNotBuilder().buildDefaultNot(stray, CHANNEL1_ID,context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildDefaultNot(stray, CHANNEL1_ID,context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
                 break;
             case Progress:
-                NotificationCompat.Builder tmpBuilder = NotificationDemoApplication.getAPPLICATION().getAPPLICATION().getNotBuilder().buildProgressbarNot(stray, CHANNEL1_ID, R.drawable.ic_channel1);
+                NotificationCompat.Builder tmpBuilder = NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildProgressbarNot(stray, CHANNEL1_ID, R.drawable.ic_channel1);
                 notificationManager.notify(stray,tmpBuilder.build() );
                 createThread(tmpBuilder, stray);
                 break;
             case BigPicture:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getAPPLICATION().getAPPLICATION().getNotBuilder().buildBigPictureStyleNot(stray, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildBigPictureStyleNot(stray, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
                 break;
             case BigText:
                 notificationManager.notify(stray,

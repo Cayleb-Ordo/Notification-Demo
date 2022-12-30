@@ -2,7 +2,6 @@
     <string name="app_name">Notification-Demo App</string>
     <string name="fab_content">Erstellt eine neue Notification</string>
     <!-- Channel Names-->
-    <string name="Channel1ID">Channel1</string>
     <!-- Notification-Contents-->
     <string name="NotTitleCh1">Kanal 1</string>
     <string name="NotTitleCh2">Kanal 2</string>
@@ -10,8 +9,8 @@
     <string name="NotPicContent">Ich bin eine Pig-Picture Style Nachricht</string>
     <string name="NotRplyLabel">Sag was...</string>
     <string name="NotProgTitle">Download</string>
-    <string name="NotProgIndit">Download startet ...</string>
-    <string name="NotProgStartText">Download läuft ...</string>
+    <string name="NotProgIndit">Download startet...</string>
+    <string name="NotProgStartText">Download läuft...</string>
     <string name="NotProgEndText">Download abgeschlossen</string>
     <string name="NotExpanTitle">Mausi\'s Katzenschrei</string>
     <string name="NotExpanText">Mausi und die Mäuse</string>
@@ -59,6 +58,6 @@
     <string name="ToIntErr">Interner Fehler</string>
     <!--Anfragen der Berechtigungen-->
     <string name="AskPerm">Benachrichtigungen müssen aktiviert sein, damit diese App ihren Zweck erfüllen kann!</string>
-    <string name="Ok">Ok</string>
+    <string name="Ok">OK</string>
     <string name="NotDisabled">Benachrichtigungen sind für diese App deaktiviert!</string>
 </resources>

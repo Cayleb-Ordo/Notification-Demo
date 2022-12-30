@@ -19,5 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/tulpen_fentzl"/>
+        android:src="@drawable/tulpen_fentzl"
+        android:contentDescription="CustomPicture" />
 </LinearLayout>
