@@ -41,10 +41,8 @@ public class NotificationBuilder {
      * @return PendingIntent Gibt den ContentIntent zurück
      */
     public PendingIntent buildContentIntent(){
-        Intent contentIntent = new Intent(context, CallActivity.class)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        int contentRqC = 1;
-        return PendingIntent.getActivity(context, contentRqC, contentIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT );
+        Intent contentIntent = new Intent(context, CallActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return PendingIntent.getActivity(context, 1, contentIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT );
     }
 
     /**
@@ -53,8 +51,8 @@ public class NotificationBuilder {
      * @return PendingIntent Gibt den DismissIntent zurück
      */
     public PendingIntent buildDismissIntent(int notID){
-        /*Sollte man nicht den PendingIntent variiern, zb bei unterschiedlicher RequestID, kann man den normalen Intent unterscheidbar machen. Zb eine Eindeutige Action zuweisen.
-        dismissIntent.setAction(ACTION_DISMISS + notCH1).putExtra(PAYLOAD,notCh1);
+        /*Sollte man nicht den PendingIntent variieren, zb bei unterschiedlicher RequestID, kann man den normalen Intent unterscheidbar machen. Zb eine Eindeutige Action zuweisen.
+        dismissIntent.setAction(ACTION_DISMISS + notCH1).putExtra(PAYLOAD, notCh1);
          */
         Intent dismissIntent = new Intent(context, NotificationReceiver.class)
                 .setAction(ACTION_DISMISS).putExtra(PAYLOADNOTID, notID);
@@ -202,7 +200,7 @@ public class NotificationBuilder {
      * @param icon Integer Id des Icons
      * @return Notification Gibt die Notification zurück
      */
-    public Notification buildDirRplyMessStNot(int notID, int chanID, String channelid, int icon) {
+    public Notification buildDirRplyMessStNot(int notID, int chanID, String channelid, int icon, NotificationDemoApplication application) {
         //RemoteInput, anhand dessen wird der eingegebene Text später entnommen
         RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
                 .setLabel(context.getString(R.string.NotRplyLabel))
@@ -216,7 +214,7 @@ public class NotificationBuilder {
         //MessangingStyle, wichtig hier das Person Objekt. Nur eine Charsequence ist in der alten Funktion.
         NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(me);
         messagingStyle.setConversationTitle(context.getString(R.string.MessageTitle));
-        for (Message chatMessage : MainActivity.getMessages()){
+        for (Message chatMessage : NotificationDemoApplication.getAPPLICATION().getMESSAGES()){
             NotificationCompat.MessagingStyle.Message notMessage = new NotificationCompat.MessagingStyle.Message(
                     chatMessage.getText(),
                     chatMessage.getTimestamp(),

@@ -18,6 +18,7 @@ package de.fentzl.notification_demo;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
 import androidx.core.app.Person;
 
 import java.util.ArrayList;
@@ -32,23 +33,52 @@ public class NotificationDemoApplication extends Application {
     public static final String debugTag = "NotDemo";
     public static Bitmap rwu_logo;
     public static Bitmap mausi_logo;
-    private static NotificationBuilder notBuilder;
+    private static NotificationDemoApplication APPLICATION;
+    private final List<Message> MESSAGES = new ArrayList<>();
+    private NotificationController notController;
+    private NotificationBuilder notBuilder;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        APPLICATION = this;
         notBuilder = new NotificationBuilder(getApplicationContext());
         rwu_logo = BitmapFactory.decodeResource(getResources(), R.drawable.rwu_logo);
         mausi_logo = BitmapFactory.decodeResource(getResources(), R.drawable.mausi);
-        NotificationController notificationController = new NotificationController(this.getApplicationContext());
-        notificationController.createNotificationChannels(true);
+        notController = new NotificationController(this.getApplicationContext());
+        notController.createNotificationChannels(true);
+        String annKey = "de.fentzl.anna";
+        MESSAGES.add(new Message(getString(R.string.MessageMoring), new Person.Builder().setName(getString(R.string.MessageAnna)).setKey(annKey).build()));
+        MESSAGES.add(new Message(getString(R.string.MessageAnswer1), null));
+        String richardKey = "de.fentzl.richard";
+        MESSAGES.add(new Message(getString(R.string.MessageAnswer2), new Person.Builder().setName(getString(R.string.MessageRichard)).setKey(richardKey).build()));
     }
+
+    /**
+     * Gibt die Referenz auf sich selbst zurück
+     * @return
+     */
+    public static NotificationDemoApplication getAPPLICATION() { return APPLICATION; }
+
+    /**
+     * Gibt die Liste der Nachrichten zurück
+     * @return List<Message> Liste der Nachrichten
+     */
+    public List<Message> getMESSAGES() {
+        return MESSAGES;
+    }
+
+    /**
+     * Gibt den NotificationController zurück
+     * @return
+     */
+    public  NotificationController getNotController() { return notController; }
 
     /**
      * Gibt den Notification Builder zurück
      * @return Referenz auf den internen Notification Builder
      */
-    public static NotificationBuilder getNotBuilder() {
+    public  NotificationBuilder getNotBuilder() {
         return notBuilder;
     }
 }

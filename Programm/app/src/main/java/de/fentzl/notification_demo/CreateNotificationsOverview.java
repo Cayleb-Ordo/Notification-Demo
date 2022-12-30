@@ -38,11 +38,8 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        notificationController = new NotificationController(this.getApplicationContext());
+        notificationController = NotificationDemoApplication.getAPPLICATION().getNotController();
         setContentView(R.layout.activity_create_not_overv);
-        /*
-        Toolbar-Einstellungen
-         */
         Toolbar toolbar = findViewById(R.id.main_appbar);
         setSupportActionBar(toolbar);
         setTitle(R.string.app_name);

@@ -87,32 +87,32 @@ public class NotificationController {
         switch (selected) {
             case Default:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildDefaultNot(stray, CHANNEL1_ID,context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
+                        NotificationDemoApplication.getAPPLICATION().getAPPLICATION().getNotBuilder().buildDefaultNot(stray, CHANNEL1_ID,context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
                 break;
             case Progress:
-                NotificationCompat.Builder tmpBuilder = NotificationDemoApplication.getNotBuilder().buildProgressbarNot(stray, CHANNEL1_ID, R.drawable.ic_channel1);
+                NotificationCompat.Builder tmpBuilder = NotificationDemoApplication.getAPPLICATION().getAPPLICATION().getNotBuilder().buildProgressbarNot(stray, CHANNEL1_ID, R.drawable.ic_channel1);
                 notificationManager.notify(stray,tmpBuilder.build() );
                 createThread(tmpBuilder, stray);
                 break;
             case BigPicture:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildBigPictureStyleNot(stray, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
+                        NotificationDemoApplication.getAPPLICATION().getAPPLICATION().getNotBuilder().buildBigPictureStyleNot(stray, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
                 break;
             case BigText:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildBigTextStyleNot(stray, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildBigTextStyleNot(stray, CHANNEL1_ID, context.getString(R.string.NotTitleCh1), R.drawable.ic_channel1));
                 break;
             case Media:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildMediaConNot(stray, notCh1, CHANNEL1_ID, R.drawable.ic_channel1, false));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(stray, notCh1, CHANNEL1_ID, R.drawable.ic_channel1, false));
                 break;
             case Reply:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(stray, notCh1, CHANNEL1_ID, R.drawable.ic_channel1));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildDirRplyMessStNot(stray, notCh1, CHANNEL1_ID, R.drawable.ic_channel1, NotificationDemoApplication.getAPPLICATION()));
                 break;
             case Custom:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildCustomNot(stray, CHANNEL1_ID, R.drawable.ic_channel1));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildCustomNot(stray, CHANNEL1_ID, R.drawable.ic_channel1));
                 break;
             default:
                 Log.e(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Das sollte nicht passieren");
@@ -134,32 +134,32 @@ public class NotificationController {
         switch (selected) {
             case Default:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildDefaultNot(stray, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildDefaultNot(stray, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
                 break;
             case Progress:
-                NotificationCompat.Builder tmpBuilder = NotificationDemoApplication.getNotBuilder().buildProgressbarNot(stray, CHANNEL2_ID, R.drawable.ic_channel2);
+                NotificationCompat.Builder tmpBuilder = NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildProgressbarNot(stray, CHANNEL2_ID, R.drawable.ic_channel2);
                 notificationManager.notify(stray, tmpBuilder.build());
                 createThread(tmpBuilder, stray);
                 break;
             case BigPicture:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildBigPictureStyleNot(stray, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildBigPictureStyleNot(stray, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
                 break;
             case BigText:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildBigTextStyleNot(stray, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildBigTextStyleNot(stray, CHANNEL2_ID, context.getString(R.string.NotTitleCh2), R.drawable.ic_channel2));
                 break;
             case Media:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildMediaConNot(stray, notCh2, CHANNEL2_ID, R.drawable.ic_channel2, false));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(stray, notCh2, CHANNEL2_ID, R.drawable.ic_channel2, false));
                 break;
             case Reply:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(stray, notCh2, CHANNEL2_ID, R.drawable.ic_channel2));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildDirRplyMessStNot(stray, notCh2, CHANNEL2_ID, R.drawable.ic_channel2, NotificationDemoApplication.getAPPLICATION()));
                 break;
             case Custom:
                 notificationManager.notify(stray,
-                        NotificationDemoApplication.getNotBuilder().buildCustomNot(stray, CHANNEL2_ID, R.drawable.ic_channel2));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildCustomNot(stray, CHANNEL2_ID, R.drawable.ic_channel2));
                 break;
             default:
                 Log.e(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Das sollte nicht passieren");
@@ -189,8 +189,8 @@ public class NotificationController {
             notBuilder.setContentText(context.getString(R.string.NotProgEndText))
                     .setProgress(0, 0, false)
                     .setOngoing(false)
-                    .setContentIntent(NotificationDemoApplication.getNotBuilder().buildContentIntent())
-                    .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), NotificationDemoApplication.getNotBuilder().buildDismissIntent(notID));
+                    .setContentIntent(NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildContentIntent())
+                    .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildDismissIntent(notID));
             notificationManager.notify(notID, notBuilder.build());
         }).start();
     }
@@ -202,21 +202,21 @@ public class NotificationController {
     public void updateMediaCont(int channelID, int notID) {
         Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": updateMediaCont");
         if(channelID == notCh1)
-            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL1_ID, R.drawable.ic_channel1, true));
+            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL1_ID, R.drawable.ic_channel1, true));
         else if (channelID == notCh2)
-            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL2_ID, R.drawable.ic_channel2, true));
+            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL2_ID, R.drawable.ic_channel2, true));
     }
 
     /**
      * Aktualisiert die übergebene MessagingStyle Notification
-     * @param channelID String Notification-Kanal identifizierung
+     * @param channelID String Notification-Kanal Identifizierung
      * @param notID Integer Notification ID
      */
     public void handleReply(int channelID, int notID){
         if(channelID == notCh1) {
-            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(notID, channelID, CHANNEL1_ID, R.drawable.ic_channel2));
+            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildDirRplyMessStNot(notID, channelID, CHANNEL1_ID, R.drawable.ic_channel2, NotificationDemoApplication.getAPPLICATION()));
         } else if (channelID == notCh2){
-            notificationManager.notify(notID, NotificationDemoApplication.getNotBuilder().buildDirRplyMessStNot(notID, channelID, CHANNEL2_ID, R.drawable.ic_channel2));
+            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildDirRplyMessStNot(notID, channelID, CHANNEL2_ID, R.drawable.ic_channel2, NotificationDemoApplication.getAPPLICATION()));
         } else {
             Log.e(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": Konnte den Kanal nicht identifizieren!");
         }
