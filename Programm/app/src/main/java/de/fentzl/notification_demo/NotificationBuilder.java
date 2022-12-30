@@ -80,13 +80,12 @@ public class NotificationBuilder {
     }
 
     /**
-     * Erstellt eine Progressbar-Notification und startet einen Thread zur Aktualisierung der Notification
-     * @param notID     Integer Individuelle Notification ID
+     * Erstellt eine Progressbar-Notification mit festgelegtem Fortschrittsbalken
      * @param channelid String Notification-Kanal identifizierung
      * @param icon      Integer Id des Icons
      * @return NotificationCompat.Builder Gibt das NotificationCompat.Builder Objekt zurück
      */
-    public NotificationCompat.Builder buildProgressbarNot(int notID, String channelid, int icon) {
+    public NotificationCompat.Builder buildProgressbarNot(String channelid, int icon) {
         return new NotificationCompat.Builder(context, channelid)
                 .setSmallIcon(icon)
                 .setContentTitle(context.getString(R.string.NotProgTitle))
@@ -200,7 +199,7 @@ public class NotificationBuilder {
      * @param icon Integer Id des Icons
      * @return Notification Gibt die Notification zurück
      */
-    public Notification buildDirRplyMessStNot(int notID, int chanID, String channelid, int icon, NotificationDemoApplication application) {
+    public Notification buildDirRplyMessStNot(int notID, int chanID, String channelid, int icon) {
         //RemoteInput, anhand dessen wird der eingegebene Text später entnommen
         RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
                 .setLabel(context.getString(R.string.NotRplyLabel))

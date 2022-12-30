@@ -28,7 +28,7 @@ public class NotificationReceiver extends BroadcastReceiver {
          */
         switch (intent.getAction()){
             case NotificationBuilder.ACTION_DISMISS:
-                notificationController.dismissNotification(intent.getIntExtra(NotificationBuilder.PAYLOADNOTID, 0));
+                notificationController.dismissNotification(intent.getIntExtra(NotificationBuilder.PAYLOADNOTID, -1));
                 break;
             case NotificationBuilder.ACTION_MUTE:
                 notificationController.updateMediaCont(intent.getIntExtra(NotificationBuilder.PAYLOADCHID, 0), intent.getIntExtra(NotificationBuilder.PAYLOADNOTID, -1));

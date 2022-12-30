@@ -37,6 +37,7 @@ public class NotificationDemoApplication extends Application {
     private final List<Message> MESSAGES = new ArrayList<>();
     private NotificationController notController;
     private NotificationBuilder notBuilder;
+    private int idCounter;
 
     @Override
     public void onCreate() {
@@ -80,5 +81,13 @@ public class NotificationDemoApplication extends Application {
      */
     public  NotificationBuilder getNotBuilder() {
         return notBuilder;
+    }
+
+    public int getIdCounter() {
+        return idCounter;
+    }
+
+    public void setIdCounter(int idCounter) {
+        this.idCounter = idCounter;
     }
 }
