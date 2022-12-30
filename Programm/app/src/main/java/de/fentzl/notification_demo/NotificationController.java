@@ -26,7 +26,8 @@ public class NotificationController {
     private final String CLASS_NOTIFICATIONCONTROLLER = "de.fentzl.notification_demo.NotificationController";
     private final Context context;
     private final NotificationManagerCompat notificationManager;
-    private boolean updateMediaToggle = false;
+    private boolean muteToggle = false;
+    private boolean pauseToggle = false;
 
     /**
      * Konstruktor, damit der Notification Manager mit Kontext initialisiert werden kann
@@ -95,7 +96,7 @@ public class NotificationController {
                 break;
             case Media:
                 notificationManager.notify(NotificationDemoApplication.getAPPLICATION().getIdCounter(),
-                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(NotificationDemoApplication.getAPPLICATION().getIdCounter(), notCh1, CHANNEL1_ID, R.drawable.ic_channel1, false));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(NotificationDemoApplication.getAPPLICATION().getIdCounter(), notCh1, CHANNEL1_ID, R.drawable.ic_channel1, false, false));
                 break;
             case Reply:
                 notificationManager.notify(NotificationDemoApplication.getAPPLICATION().getIdCounter(),
@@ -142,7 +143,7 @@ public class NotificationController {
                 break;
             case Media:
                 notificationManager.notify(NotificationDemoApplication.getAPPLICATION().getIdCounter(),
-                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(NotificationDemoApplication.getAPPLICATION().getIdCounter(), notCh2, CHANNEL2_ID, R.drawable.ic_channel2, false));
+                        NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(NotificationDemoApplication.getAPPLICATION().getIdCounter(), notCh2, CHANNEL2_ID, R.drawable.ic_channel2, false, false));
                 break;
             case Reply:
                 notificationManager.notify(NotificationDemoApplication.getAPPLICATION().getIdCounter(),
@@ -188,16 +189,31 @@ public class NotificationController {
     }
 
     /**
-     * Aktualisiert die Mediakontrollen Notification(aktuell nicht verwendet)
+     * Verändert das Icon für den Ton der Mediakontrollen Benachrichtigung
+     * @param channelID Integer ID des Kanals
      * @param notID Integer ID der Notification
      */
-    public void updateMediaCont(int channelID, int notID) {
-        Log.i(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": updateMediaCont");
-        updateMediaToggle =! updateMediaToggle;
+    public void mediaConNotMute(int channelID, int notID) {
+        Log.i(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": mediaConNotMute");
+        muteToggle =! muteToggle;
         if(channelID == notCh1)
-            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL1_ID, R.drawable.ic_channel1, updateMediaToggle));
+            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL1_ID, R.drawable.ic_channel1, muteToggle, pauseToggle));
         else if (channelID == notCh2)
-            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL2_ID, R.drawable.ic_channel2, updateMediaToggle));
+            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL2_ID, R.drawable.ic_channel2, muteToggle,pauseToggle));
+    }
+
+    /**
+     * Verändert das Icon für pausieren der Mediakontrollen Benachrichtigung
+     * @param channelID Integer ID des Kanals
+     * @param notID Integer ID der Notification
+     */
+    public void mediaConNotPause(int channelID, int notID){
+        Log.i(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": medieConNotPause");
+        pauseToggle =! pauseToggle;
+        if(channelID == notCh1)
+            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL1_ID, R.drawable.ic_channel1, muteToggle, pauseToggle));
+        else if (channelID == notCh2)
+            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL2_ID, R.drawable.ic_channel2, muteToggle,pauseToggle));
     }
 
     /**

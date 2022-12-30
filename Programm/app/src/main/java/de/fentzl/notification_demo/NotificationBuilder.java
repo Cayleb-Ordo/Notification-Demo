@@ -12,12 +12,13 @@ import androidx.core.app.RemoteInput;
 /**
  * Bau-Klasse für Notifications
  * @author Simon Fentzl
- * @version 1
+ * @version 2
  */
 public class NotificationBuilder {
     public static final String ACTION_DISMISS = "de.fentzl.notification_demo.DISMISS";
     public static final String ACTION_REPLY = "de.fentzl.notification_demo.REPLY";
-    public static final String ACTION_MUTE = "de.fentzl.notificatin_demo.MUTE";
+    public static final String ACTION_MUTE = "de.fentzl.notification_demo.MUTE";
+    public static final String ACTION_PAUSE = "de.fentzl.notification_demo.PAUSE";
     public static final String KEY_TEXTRPLY = "reply";
     public static final String PAYLOADCHID = "payloadCHID";
     public static final String PAYLOADNOTID = "payloadNotID";
@@ -125,47 +126,39 @@ public class NotificationBuilder {
      * @param notID Integer Individuelle Notification ID
      * @param channelid String Notification-Kanal identifizierung
      * @param icon Integer Id des Icons
-     * @param update Boolean Gibt an, ob die Notification ein Update erhalten soll oder nicht.(Aktuell nicht verwendet)
+     * @param mute Boolean Gibt an, ob die Notification das Mute Icon ändern soll
+     * @param pause Boolean Gibt an, ob die Notification das Pause Icon ändern soll
      * @return Notification Gibt die Notification zurück
      */
-    public Notification buildMediaConNot(int notID, int chanID, String channelid, int icon, boolean update) {
+    public Notification buildMediaConNot(int notID, int chanID, String channelid, int icon, boolean mute, boolean pause) {
         Intent muteIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_MUTE).putExtra(PAYLOADNOTID, notID).putExtra(PAYLOADCHID, chanID);
         PendingIntent mutePendingIntent = PendingIntent.getBroadcast(context, notID, muteIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        if(!update) {
-            return new NotificationCompat.Builder(context, channelid)
-                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                    .addAction(R.drawable.ic_volume_on, context.getString(R.string.NotExpAMute), mutePendingIntent)
-                    .addAction(R.drawable.ic_prev, context.getString(R.string.NotExpAPrev), null)
-                    .addAction(R.drawable.ic_pause, context.getString(R.string.NotExpAPause), null)
-                    .addAction(R.drawable.ic_next, context.getString(R.string.NotExpANext), null)
-                    .addAction(R.drawable.ic_close, context.getString(R.string.NotExpAAbort), buildDismissIntent(notID))
-                    .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
-                            .setShowActionsInCompactView(1, 2, 3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
-                    .setContentTitle(context.getString(R.string.NotExpanTitle))
-                    .setContentText(context.getString(R.string.NotExpanText))
-                    .setLargeIcon(NotificationDemoApplication.mausi_logo)
-                    .setSmallIcon(icon)
-                    .setOnlyAlertOnce(true)
-                    .setGroup(NOTIFICATION_GROUP_KEY)
-                    .build();
+        Intent pauseIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_PAUSE).putExtra(PAYLOADNOTID, notID).putExtra(PAYLOADCHID, chanID);
+        PendingIntent pausePendingIntent = PendingIntent.getBroadcast(context, notID, pauseIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder mediaConNot = new NotificationCompat.Builder(context, channelid).setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        // Je nach Status wird ein unterschiedliches Icon geladen.
+        if(!mute) {
+            mediaConNot.addAction(R.drawable.ic_volume_on, context.getString(R.string.NotExpAMute), mutePendingIntent); // Nr. 0
         } else {
-            return new NotificationCompat.Builder(context, channelid)
-                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                    .addAction(R.drawable.ic_volume_off, context.getString(R.string.NotExpAUMute), mutePendingIntent)
-                    .addAction(R.drawable.ic_prev, context.getString(R.string.NotExpAPrev), null)
-                    .addAction(R.drawable.ic_pause, context.getString(R.string.NotExpAPause), null)
-                    .addAction(R.drawable.ic_next, context.getString(R.string.NotExpANext), null)
-                    .addAction(R.drawable.ic_close, context.getString(R.string.NotExpAAbort), buildDismissIntent(notID))
-                    .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
-                            .setShowActionsInCompactView(1, 2, 3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
-                    .setContentTitle(context.getString(R.string.NotExpanTitle))
-                    .setContentText(context.getString(R.string.NotExpanText))
-                    .setLargeIcon(NotificationDemoApplication.mausi_logo)
-                    .setSmallIcon(icon)
-                    .setOnlyAlertOnce(true)
-                    .setGroup(NOTIFICATION_GROUP_KEY)
-                    .build();
+            mediaConNot.addAction(R.drawable.ic_volume_off, context.getString(R.string.NotExpAUMute), mutePendingIntent);   // Nr. 0
         }
+        mediaConNot.addAction(R.drawable.ic_prev, context.getString(R.string.NotExpAPrev), null);   // Nr. 1
+        if (!pause) {
+            mediaConNot.addAction(R.drawable.ic_pause, context.getString(R.string.NotExpAPause), pausePendingIntent);   // Nr. 2
+        } else {
+            mediaConNot.addAction(R.drawable.ic_play, context.getString(R.string.NotExpAUPause), pausePendingIntent);   // Nr. 2
+        }
+        return mediaConNot.addAction(R.drawable.ic_next, context.getString(R.string.NotExpANext), null)   // Nr. 3
+                .addAction(R.drawable.ic_close, context.getString(R.string.NotExpAAbort), buildDismissIntent(notID))    // Nr. 3
+                .setContentTitle(context.getString(R.string.NotExpanTitle))
+                .setContentText(context.getString(R.string.NotExpanText))
+                .setLargeIcon(NotificationDemoApplication.mausi_logo)
+                .setSmallIcon(icon)
+                .setOnlyAlertOnce(true)
+                .setGroup(NOTIFICATION_GROUP_KEY)
+                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+                .setShowActionsInCompactView(1, 2, 3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
+                .build();
     }
 
     /**
