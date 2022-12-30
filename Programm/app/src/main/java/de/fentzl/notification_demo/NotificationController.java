@@ -18,10 +18,6 @@ import androidx.core.app.NotificationManagerCompat;
  */
 
 public class NotificationController {
-    public static final String channel1Name = "Kanal 1";
-    public static final String channel2Name = "Kanal 2";
-    public static final String channel1Description = "Nachrichten-Kanal 1";
-    public static final String channel2Description = "Nachrichten-Kanal 2";
     public static final int notCh1 = 1;
     public static final int notCh2 = 2;
     public static final int progressMax = 100;
@@ -30,6 +26,7 @@ public class NotificationController {
     private final String CLASS_NOTIFICATIONCONTROLLER = "de.fentzl.notification_demo.NotificationController";
     private final Context context;
     private final NotificationManagerCompat notificationManager;
+    private boolean updateMediaToggle = false;
 
     /**
      * Konstruktor, damit der Notification Manager mit Kontext initialisiert werden kann
@@ -49,10 +46,10 @@ public class NotificationController {
         if (createOption) {
             //der if prüft ob wir android 8.0 oder höher haben, sonnst muss er keinen Kanal erstellen.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel channel1 = new NotificationChannel(CHANNEL1_ID, channel1Name, importance);
-                NotificationChannel channel2 = new NotificationChannel(CHANNEL2_ID, channel2Name, importance);
-                channel1.setDescription(channel1Description);
-                channel2.setDescription(channel2Description);
+                NotificationChannel channel1 = new NotificationChannel(CHANNEL1_ID, context.getString(R.string.Chan1Name), importance);
+                NotificationChannel channel2 = new NotificationChannel(CHANNEL2_ID, context.getString(R.string.Chan2Name), importance);
+                channel1.setDescription(context.getString(R.string.Chan1Info));
+                channel2.setDescription(context.getString(R.string.Chan2Info));
                 //Kanal dem System mitteilen. Danach nicht mehr veränderbar
                 NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
                 notificationManager.createNotificationChannel(channel1);
@@ -60,8 +57,8 @@ public class NotificationController {
             }
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL1_ID, channel1Name, importance);
-            channel.setDescription(channel1Description);
+            NotificationChannel channel = new NotificationChannel(CHANNEL1_ID, context.getString(R.string.ChanName), importance);
+            channel.setDescription(context.getString(R.string.ChanInfo));
             //Kanal dem System mitteilen. Danach nicht mehr veränderbar
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
@@ -195,11 +192,12 @@ public class NotificationController {
      * @param notID Integer ID der Notification
      */
     public void updateMediaCont(int channelID, int notID) {
-        Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": updateMediaCont");
+        Log.i(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": updateMediaCont");
+        updateMediaToggle =! updateMediaToggle;
         if(channelID == notCh1)
-            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL1_ID, R.drawable.ic_channel1, true));
+            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL1_ID, R.drawable.ic_channel1, updateMediaToggle));
         else if (channelID == notCh2)
-            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL2_ID, R.drawable.ic_channel2, true));
+            notificationManager.notify(notID, NotificationDemoApplication.getAPPLICATION().getNotBuilder().buildMediaConNot(notID, channelID, CHANNEL2_ID, R.drawable.ic_channel2, updateMediaToggle));
     }
 
     /**

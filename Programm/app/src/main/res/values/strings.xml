@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">Notification-Demo App</string>
     <string name="fab_content">Erstellt eine neue Notification</string>
-    <!-- Channel Names-->
+    <!-- Kanal Informationen-->
+    <string name="ChanName">Kanal</string>
+    <string name="Chan1Name">Kanal 1</string>
+    <string name="Chan2Name">Kanal 2</string>
+    <string name="ChanInfo">Nachrichten-Kanal</string>
+    <string name="Chan1Info">Nachrichten-Kanal 1</string>
+    <string name="Chan2Info">Nachrichten-Kanal 2</string>
     <!-- Notification-Contents-->
     <string name="NotTitleCh1">Kanal 1</string>
     <string name="NotTitleCh2">Kanal 2</string>
