@@ -8,6 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(NotificationDemoApplication.debugTag, NotificationDemoApplication.getAPPLICATION().getApplicationContext().getPackageName());
         setContentView(R.layout.main_activity);
         mLayout = findViewById(R.id.include_content_main);
         //Toolbar
@@ -51,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        new MenuInflater(this).inflate(R.menu.not_popupmenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     /**
      * Fragt die benötigten Berechtigungen an
      */
@@ -58,12 +68,12 @@ public class MainActivity extends AppCompatActivity {
         //PermissionRationale wir das erste mal aufgerufen, wenn der Benutzer einmal auf nicht erlauben getrückt hat. Bei zweimaligem verneinen wird angenommen, das nicht nocheinmal nachgefragt werden soll
        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-               Snackbar.make(mLayout, R.string.AskPerm, Snackbar.LENGTH_INDEFINITE).setAction(R.string.Ok, view -> {
+/*               Snackbar.make(mLayout, R.string.AskPerm, Snackbar.LENGTH_INDEFINITE).setAction(R.string.Ok, view -> {
                    Intent tmp = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                   String packageName = "de.fentzl.notification_demo";
-                   tmp.setData(Uri.parse("package:" + packageName));
+                   tmp.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
                    startActivity(tmp);
-               }).show();
+               }).show();*/
+               new NotificationRationaleDialog().show(getSupportFragmentManager(), "testDialog");
            }
        } else {
             ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {

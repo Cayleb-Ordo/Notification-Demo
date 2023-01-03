@@ -60,7 +60,7 @@
     <string name="MessageAnswer2">Wir sind schon lang wach</string>
     <string name="MessageAnna">Anna</string>
     <string name="MessageRichard">Richard</string>
-    <string name="MessageMe">Ich</string>
+    <string name="MessageMe">Du</string>
     <!--Toast-Strings-->
     <string name="ToIntErr">Interner Fehler</string>
     <!--Anfragen der Berechtigungen-->
