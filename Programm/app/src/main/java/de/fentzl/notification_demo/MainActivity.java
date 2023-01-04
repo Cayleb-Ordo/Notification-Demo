@@ -8,20 +8,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
+import android.view.MenuItem;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 /**
  * Hauptklasse. Startet alle Unteraktivitäten
@@ -30,19 +29,14 @@ import com.google.android.material.snackbar.Snackbar;
  * @version 2
  */
 public class MainActivity extends AppCompatActivity {
-    private View mLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(NotificationDemoApplication.debugTag, NotificationDemoApplication.getAPPLICATION().getApplicationContext().getPackageName());
         setContentView(R.layout.main_activity);
-        mLayout = findViewById(R.id.include_content_main);
-        //Toolbar
         Toolbar toolbar = findViewById(R.id.main_appbar);
         setSupportActionBar(toolbar);
         setTitle(R.string.app_name);
-        //fab Button Einstellungen
         final FloatingActionButton create_remind = findViewById(R.id.fab_new_Notification);
         create_remind.setOnClickListener(v -> {
             Intent createNotIntent = new Intent(v.getContext(), CreateNotificationsOverview.class);
@@ -57,23 +51,24 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(this).inflate(R.menu.not_popupmenu, menu);
+        new MenuInflater(this).inflate(R.menu.settings_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(Uri.parse("package:" + getApplicationContext().getPackageName())));
+        return super.onOptionsItemSelected(item);
     }
 
     /**
      * Fragt die benötigten Berechtigungen an
      */
     public void requestPermissions() {
-        //PermissionRationale wir das erste mal aufgerufen, wenn der Benutzer einmal auf nicht erlauben getrückt hat. Bei zweimaligem verneinen wird angenommen, das nicht nocheinmal nachgefragt werden soll
+        //Wird nur aufgerufen, wenn der Benutzer einmal auf nicht erlauben gedrückt hat. Bei zweimaligem Verneinen wird angenommen, das nicht noch einmal nachgefragt werden soll.
        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-/*               Snackbar.make(mLayout, R.string.AskPerm, Snackbar.LENGTH_INDEFINITE).setAction(R.string.Ok, view -> {
-                   Intent tmp = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                   tmp.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
-                   startActivity(tmp);
-               }).show();*/
-               new NotificationRationaleDialog().show(getSupportFragmentManager(), "testDialog");
+               new NotificationRationaleDialog().show(getSupportFragmentManager(), "rationaleDialog");
            }
        } else {
             ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {

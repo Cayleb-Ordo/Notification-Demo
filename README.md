@@ -4,8 +4,8 @@ Demo App für Android Push-Notifications.
 
 ## Beschreibung
 
-Dieses Repository enthält den Code einer Demonstrations Anwendung für Android Push-Notifications. Diese Anwendung zeigt anschaulich was mit den Push-Notifications erreicht werden kann.
-Diese App wurde ursprünglich für Android 8(Oreo) entwickelt, ist aber kompatibel bis Android 13.
+Dieses Repository enthält den Code einer Demonstrationsanwendung für Android Push-Notifications. Diese Anwendung zeigt anschaulich, was mit den Push-Notifications erreicht werden kann.
+Diese App wurde ursprünglich für Android 8(Oreo) mit Java entwickelt, ist aber kompatibel bis Android 13.  
 
 ## Inhalt
 
@@ -32,11 +32,13 @@ Diese App wurde ursprünglich für Android 8(Oreo) entwickelt, ist aber kompatib
     - enthält die Projekt-Dokumentation.
     - Problems.txt: darin sind aufgetretene Probleme und deren Lösungen aufgeführt.
     - Arbeitszeit.xlsx: Excel Datei zum Festhalten der Arbeitszeit.
+    - Dokumentation/Grafiken:
+        - enthält die verwendeten Grafiken der App und der Projektarbeit.
     - Dokumentation/JavaDoc: **aktuell nicht erstellbar**
         - enthält das JavaDoc der App.
     - Dokumentation/Planung:
         - enthält die Datei, wo erstmalig aufgeschrieben wurde was umgesetzt werden soll.
-        - erster Mockup der App
+        - erster Mockup der App.
     - Dokumentation/Präsentation:
         - enthält die Präsentation mit den Code Beispielen im PDF und PowerPoint Format.
     - Dokumentation/Projektarbeit:
@@ -51,7 +53,7 @@ Es wird keine Separate apk-Datei mitgeliefert.
 
 ## Android Berechtigungen
 
-Seit Android 6(Marshmallow) gibt es neben den Installationsberechtigungen auch sog. Runtime-Permissions. Dadurch fragt die App, während sie ausgeführt wird, nach den benötigten Berechtigungen. In Android Oreo musste der Benutzer der App nicht gefragt werden, ob die App ihm Benachrichtigungen schicken darf. Denn die Benachrichtigungen sind nicht in einer **Gefährlichen Kategorie**.   
+Seit Android 6(Marshmallow) gibt es neben den Installationsberechtigungen auch sog. Runtime-Permissions. Dadurch fragt die App, während sie ausgeführt wird, nach den benötigten Berechtigungen. In Android Oreo musste der Benutzer der App nicht gefragt werden, ob die App ihm Benachrichtigungen schicken darf. Denn die Benachrichtigungen sind nicht in einer **Gefährlichen Kategorie**, deshalb ist es nicht relevant explizit zu fragen.   
 Das hat sich mit Erscheinen von Android 13 geändert. Nun ist standardmäßig alles deaktiviert, was nicht explizit im Manifest angegeben und dem Benutzer mitgeteilt wurde. Wenn dieser nicht zustimmt, wird die App nicht in der Lage sein, Benachrichtigungen darzustellen. Daher gibt es von Android eine API, mit der man dem Benutzer in einem Popup nach seiner Zustimmung fragen kann. Ein guter Startpunkt sind die offiziellen Dokumentationen.  
 Es werden hier nur die relevanten Elemente für die Push-Notification Berechtigung besprochen, die genauen Details zu allen Berechtigungen und deren Auswirkungen sind in der offiziellen Dokumentation enthalten([Android-Permissions](https://developer.android.com/guide/topics/permissions/overview)).
 
@@ -62,21 +64,21 @@ Zunächst müssen alle Berechtigungen, die die App braucht, in der AndroidManife
 ```xml
 <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 ```
-Es gibt zwei Wege, wie die Berechtigung angefragt werden kann. Die einfachere Variante ist es, das Android System selbst machen zu lassen, man kann dies jedoch selbst übernehmen sofern das einen Vorteil bringt.  
-Um zu schauen, ob eine bestimmte Berechtigung gesetzt ist wird folgende Funktion verwendet: 
+Es gibt zwei Wege, wie die Berechtigung angefragt werden kann. Die einfachere Variante ist es, das Android System selbst machen zu lassen, man kann dies jedoch selbst übernehmen, sofern das einen Vorteil bringt.  
+Um zu schauen, ob eine bestimmte Berechtigung gesetzt ist, wird folgende Funktion verwendet: 
 
 ```java
 checkSelfPermission(Context, Permission)
 ```
 
-Diese gibt einen einen ```PackageManager.PERMISSION_GRANTED``` zurück, wenn die angeforderte Berechtigung gesetzt ist. Wenn dies der Fall ist, kann die App ihren normalen Ablauf weiterführen, ansonsten muss der Benutzer um die Berechtigung gebeten werden.!!Wichtig diesen Code kann man nur innerhalb eines Fragments oder einer Activity verwenden!!  
-Um nun den Nutzer darüber in Kenntnis setzen, das diese App die spezifische Berechtigung braucht muss man sich eine Referenz auf einen ```ActivityResultLauncher```. Dieser ist der Rückgabewert der Funktion *registerForActivityResult*.  
+Diese gibt einen einen ```PackageManager.PERMISSION_GRANTED``` zurück, wenn die angeforderte Berechtigung gesetzt ist. Wenn dies der Fall ist, kann die App ihren normalen Ablauf weiterführen, ansonsten muss der Benutzer um die Berechtigung gebeten werden.!! Wichtig diesen Code kann man nur innerhalb eines Fragments oder einer Activity verwenden!!  
+Um nun den Nutzer darüber in Kenntnis setzen, dass diese App die spezifische Berechtigung braucht muss man sich eine Referenz auf einen ```ActivityResultLauncher```. Dieser ist der Rückgabewert der Funktion *registerForActivityResult*.  
 Dieser Funktion wird ein *ActivityResultContract* und ein *ActivityResultCallback* mitgegeben. Der Contract bezieht sich auf die angeforderte Berechtigung und der *ActivityResultCallback* ist die Funktion, die aufgerufen wird, wenn der Benutzer sich für eine der beiden Optionen des Systemdialogs entschieden hat. Das kann auch eine Lambda Funktion sein. Dieser ResultLauncher wird dann ausgeführt, wenn der Benutzer noch keine Berechtigung eingestellt hat.  
 
 ### Begründen der Anfrage
 
-Wenn bei der Installation der App der Benutzer zweimal den Systemdialog mit verweigern ausgewählt hat, wird der Dialog nicht mehr ausgeführt. So wird beim erstmaligen starten der App nachgefragt, der Benutzer verweigert jedoch. Sollte er die App noch einmal starten, wird wieder nach der Berechtigung gefragt. Wenn er wieder auf verweigern klickt, ist das für Android so also ob ein haken bei *nicht erneut fragen* gesetzt wurde.  
-Deswegen wir die Funktion *shouldShowRequestPermissionRationale* nur einmalig nach dem ersten mal verweigern ausgeführt. Diese ermöglicht, dem Benutzer genauer mitzuteilen, warum die Berechtigung das App Erlebnis verbessert.  
+Wenn bei der Installation der App der Benutzer zweimal den Systemdialog mit verweigern ausgewählt hat, wird der Dialog nicht mehr ausgeführt. So wird beim erstmaligen Starten der App nachgefragt, der Benutzer verweigert jedoch. Sollte er die App noch einmal starten, wird wieder nach der Berechtigung gefragt. Wenn er wieder auf Verweigern klickt, ist das für Android so also, ob ein haken bei *nicht erneut fragen* gesetzt wurde.  
+Deswegen wir die Funktion *shouldShowRequestPermissionRationale* nur einmalig nach dem ersten Mal verweigern ausgeführt. Diese ermöglicht, dem Benutzer genauer mitzuteilen, warum die Berechtigung das App Erlebnis verbessert.  
 Hat der Benutzer wieder die Berechtigung verweigert, so sollte dies Respektiert werden und die App grundsätzlich auch ohne diese ausführbar sein. Dies geht in dem Fall der Notification Demo App nicht, denn dadurch verliert sie ihren Zweck.
 
 ### Code Beispiel
