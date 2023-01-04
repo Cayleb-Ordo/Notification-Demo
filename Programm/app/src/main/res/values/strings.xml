@@ -1,6 +1,8 @@
 <resources>
+    <!--  Info Zeichenketten-->
     <string name="app_name">Notification-Demo App</string>
     <string name="fab_content">Erstellt eine neue Notification</string>
+    <string name="CustNotPicture">CustomPicture</string>
     <!-- Kanal Informationen-->
     <string name="ChanName">Kanal</string>
     <string name="Chan1Name">Kanal 1</string>
