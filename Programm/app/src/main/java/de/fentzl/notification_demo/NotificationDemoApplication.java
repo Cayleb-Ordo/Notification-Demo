@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * Haupt-Applicationklasse
  * @author Simon Fentzl
- * @version 1
+ * @version 2
  */
 public class NotificationDemoApplication extends Application {
     public static final String debugTag = "NotDemo";

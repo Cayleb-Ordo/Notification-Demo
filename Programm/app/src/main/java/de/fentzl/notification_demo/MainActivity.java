@@ -44,7 +44,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * Hauptklasse. Startet alle Unteraktivitäten
  *
  * @author Simon Fentzl
- * @version 2
+ * @version 2.5
  */
 public class MainActivity extends AppCompatActivity {
 

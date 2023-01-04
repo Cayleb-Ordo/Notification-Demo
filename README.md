@@ -289,6 +289,6 @@ Simon Fentzl
 
 ## Lizenz
 
-This Projekt is licensed under the GNU General Public License v3.0
+This Project is licensed under the GNU General Public License v3.0
 
-&copy; 2021 Simon Fentzl
+&copy; 2021-2023 Simon Fentzl

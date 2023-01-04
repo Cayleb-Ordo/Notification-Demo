@@ -29,6 +29,11 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * Dialog zur Darstellung der Begründung für die Berechtigung
+ * @author Simon Fentzl
+ * @version 1
+ */
 public class NotificationRationaleDialog extends DialogFragment {
     private static final int PERMISSION_REQUEST_NOT = 0;
 

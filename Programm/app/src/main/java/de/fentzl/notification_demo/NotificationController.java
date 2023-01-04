@@ -32,7 +32,7 @@ import androidx.core.app.NotificationManagerCompat;
 /**
  * Kontrollklasse, die die Notificationen verwaltet
  * @author Simon Fentzl
- * @version 1
+ * @version 3
  */
 
 public class NotificationController {

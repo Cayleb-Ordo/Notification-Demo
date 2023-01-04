@@ -29,7 +29,7 @@ import android.widget.Toast;
 /**
  * BroadcastReceiver der Aufgerufen wird wenn ein ActionButton der Notification ausgelöst wird
  * @author Simon Fentzl
- * @version 1
+ * @version 2
  */
 public class NotificationReceiver extends BroadcastReceiver {
     private final String CLASS_NOTIFICATIONRECEIVER = "de.fentzl.notification_demo.NotificationReceiver";
