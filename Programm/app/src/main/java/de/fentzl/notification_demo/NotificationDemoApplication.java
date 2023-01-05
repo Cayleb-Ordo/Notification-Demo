@@ -13,7 +13,7 @@
  *     GNU General Public License for more details.
  *
  *     You should have received a copy of the GNU General Public License
- *     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ *     along with Notification-Demo.  If not, see <http://www.gnu.org/licenses/>.
  */
 package de.fentzl.notification_demo;
 
@@ -39,7 +39,7 @@ public class NotificationDemoApplication extends Application {
     private final List<Message> MESSAGES = new ArrayList<>();
     private NotificationController notController;
     private NotificationBuilder notBuilder;
-    private int idCounter;
+    private int idCounter = 0;
 
     @Override
     public void onCreate() {
@@ -65,7 +65,7 @@ public class NotificationDemoApplication extends Application {
 
     /**
      * Gibt die Liste der Nachrichten zurück
-     * @return List<Message> Liste der Nachrichten
+     * @return Liste der Nachrichten
      */
     public List<Message> getMESSAGES() {
         return MESSAGES;
@@ -85,10 +85,18 @@ public class NotificationDemoApplication extends Application {
         return notBuilder;
     }
 
+    /**
+     * Gibt den globalen ID-Zähler zurück
+     * @return ID-Counter, beginnend bei 0
+     */
     public int getIdCounter() {
         return idCounter;
     }
 
+    /**
+     * Setzt den globalen ID-Zähler auf den übergebenen Wert
+     * @param idCounter Neuer Wert des ID-Zählers
+     */
     public void setIdCounter(int idCounter) {
         this.idCounter = idCounter;
     }

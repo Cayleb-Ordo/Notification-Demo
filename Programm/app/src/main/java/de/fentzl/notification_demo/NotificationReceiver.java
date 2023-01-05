@@ -13,7 +13,7 @@
  *     GNU General Public License for more details.
  *
  *     You should have received a copy of the GNU General Public License
- *     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ *     along with Notification-Demo.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.fentzl.notification_demo;
@@ -27,7 +27,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
- * BroadcastReceiver der Aufgerufen wird wenn ein ActionButton der Notification ausgelöst wird
+ * BroadcastReceiver der aufgerufen wird, wenn ein ActionButton der Notification ausgelöst wird
  * @author Simon Fentzl
  * @version 2
  */
@@ -38,7 +38,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         NotificationController notificationController = NotificationDemoApplication.getAPPLICATION().getNotController();
         /*
-        /*Diese Methode brauch man nur wenn man nicht den RequestCode des PendingIntent variiert, sondern den darunterliegenden normalen Intent.
+         * Diese Methode brauch man nur wenn man nicht den RequestCode des PendingIntent variiert, sondern den darunterliegenden normalen Intent.
         if(intent.getAction().equals(NotificationController.ACTION_DISMISS)){
             Log.d(MainActivity.debugTag, "IF-Statement Class NotificationReceiver, function onReceive \n No specific Action specified");
         } else

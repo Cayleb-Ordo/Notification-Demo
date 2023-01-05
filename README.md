@@ -34,7 +34,7 @@ Diese App wurde ursprünglich für Android 8(Oreo) mit Java entwickelt, ist aber
     - Arbeitszeit.xlsx: Excel Datei zum Festhalten der Arbeitszeit.
     - Dokumentation/Grafiken:
         - enthält die verwendeten Grafiken der App und der Projektarbeit.
-    - Dokumentation/JavaDoc: **aktuell nicht erstellbar**
+    - Dokumentation/JavaDoc:
         - enthält das JavaDoc der App.
     - Dokumentation/Planung:
         - enthält die Datei, wo erstmalig aufgeschrieben wurde was umgesetzt werden soll.

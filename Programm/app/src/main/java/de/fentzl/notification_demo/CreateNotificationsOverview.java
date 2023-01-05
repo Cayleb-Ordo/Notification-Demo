@@ -13,7 +13,7 @@
  *     GNU General Public License for more details.
  *
  *     You should have received a copy of the GNU General Public License
- *     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ *     along with Notification-Demo.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.fentzl.notification_demo;
@@ -31,7 +31,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Objects;
 
 /**
- * Diese Klasse setzt je nach Benuztereingabe eine Bestimmte Notification
+ * Diese Klasse setzt je nach Benutzereingabe eine bestimmte Notification
  * @author Simon Fentzl
  * @version 1
  */

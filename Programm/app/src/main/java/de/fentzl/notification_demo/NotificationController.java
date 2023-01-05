@@ -13,7 +13,7 @@
  *     GNU General Public License for more details.
  *
  *     You should have received a copy of the GNU General Public License
- *     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ *     along with Notification-Demo.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.fentzl.notification_demo;
@@ -58,7 +58,7 @@ public class NotificationController {
 
     /**
      * Erstellt den Notwendigen Kanal für Geräte über Android8.0
-     * @param createOption Boolean Gibt an ob zwei oder nur ein Notification Channel erstellt werden soll.
+     * @param createOption Gibt an ob zwei oder nur ein Notification Channel erstellt werden soll.
      */
     public void createNotificationChannels(boolean createOption) {
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -86,7 +86,7 @@ public class NotificationController {
 
     /**
      * Setzt eine Notification auf Kanal 1
-     * @param selected Enum Gibt an was der Benutzer ausgewählt hat.
+     * @param selected Gibt an was der Benutzer ausgewählt hat.
      */
     public void notifyChannel1(CreateNotificationsOverview.NotificationType selected) {
         if (!notificationManager.areNotificationsEnabled()){
@@ -133,7 +133,7 @@ public class NotificationController {
 
     /**
      * Setzt eine Notification auf Kanal 2
-     * @param selected Enum Gibt an was der Benutzer ausgewählt hat.
+     * @param selected Gibt an was der Benutzer ausgewählt hat.
      */
     public void notifyChannel2(CreateNotificationsOverview.NotificationType selected) {
         if (!notificationManager.areNotificationsEnabled()){
@@ -180,8 +180,8 @@ public class NotificationController {
 
     /**
      * Erstellt den Hintergrundthread für die Progressbar Notification
-     * @param notBuilder NotificationCompat.Builder builder-Objekt zum aktualisieren der Nachricht
-     * @param notID Integer ID der Notification
+     * @param notBuilder Builder-Objekt zum aktualisieren der Nachricht
+     * @param notID ID der Notification
      */
     private void createThread(NotificationCompat.Builder notBuilder, int notID){
         //Thread zur Aktualisierung der Notification, damit ein Download simuliert wird
@@ -208,8 +208,8 @@ public class NotificationController {
 
     /**
      * Verändert das Icon für den Ton der Mediakontrollen Benachrichtigung
-     * @param channelID Integer ID des Kanals
-     * @param notID Integer ID der Notification
+     * @param channelID ID des Kanals
+     * @param notID ID der Notification
      */
     public void mediaConNotMute(int channelID, int notID) {
         Log.i(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": mediaConNotMute");
@@ -222,8 +222,8 @@ public class NotificationController {
 
     /**
      * Verändert das Icon für pausieren der Mediakontrollen Benachrichtigung
-     * @param channelID Integer ID des Kanals
-     * @param notID Integer ID der Notification
+     * @param channelID ID des Kanals
+     * @param notID ID der Notification
      */
     public void mediaConNotPause(int channelID, int notID){
         Log.i(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + ": medieConNotPause");
@@ -236,8 +236,8 @@ public class NotificationController {
 
     /**
      * Aktualisiert die übergebene MessagingStyle Notification
-     * @param channelID String Notification-Kanal Identifizierung
-     * @param notID Integer Notification ID
+     * @param channelID Notification-Kanal Identifizierung
+     * @param notID Notification ID
      */
     public void handleReply(int channelID, int notID){
         if(channelID == notCh1) {
@@ -251,7 +251,7 @@ public class NotificationController {
 
     /**
      * Lässt die Notification verschwinden
-     * @param id Integer ID der Notification
+     * @param id ID der Notification
      */
     public void dismissNotification(int id) {
         //Log.d(NotificationDemoApplication.debugTag, CLASS_NOTIFICATIONCONTROLLER + " ID: " + id);

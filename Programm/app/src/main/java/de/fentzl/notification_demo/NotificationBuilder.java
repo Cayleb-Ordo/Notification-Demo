@@ -13,7 +13,7 @@
  *     GNU General Public License for more details.
  *
  *     You should have received a copy of the GNU General Public License
- *     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ *     along with Notification-Demo.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.fentzl.notification_demo;
@@ -57,7 +57,7 @@ public class NotificationBuilder {
 
     /**
      * Erstellt den Content Intent
-     * @return PendingIntent Gibt den ContentIntent zurück
+     * @return Gibt den ContentIntent zurück
      */
     public PendingIntent buildContentIntent(){
         Intent contentIntent = new Intent(context, CallActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -66,8 +66,8 @@ public class NotificationBuilder {
 
     /**
      * Erstellt den Dismiss Intent
-     * @param notID Integer ID der Notification
-     * @return PendingIntent Gibt den DismissIntent zurück
+     * @param notID ID der Notification
+     * @return Gibt den DismissIntent zurück
      */
     public PendingIntent buildDismissIntent(int notID){
         /*Sollte man nicht den PendingIntent variieren, zb bei unterschiedlicher RequestID, kann man den normalen Intent unterscheidbar machen. Zb eine Eindeutige Action zuweisen.
@@ -79,11 +79,11 @@ public class NotificationBuilder {
     }
     /**
      * Erstellt eine Default Nachricht mit übergebbaren Kanaleinstellungen
-     * @param notID        Integer Individuelle Notification ID
-     * @param channelid    String Notification-Kanal identifizierung
-     * @param contentTitle String Titel der Notification
-     * @param icon         Integer Id des Icons
-     * @return Notification Gibt die Notification zurück
+     * @param notID Individuelle Notification ID
+     * @param channelid Notification-Kanal identifizierung
+     * @param contentTitle Titel der Notification
+     * @param icon Id des Icons
+     * @return Gibt die Notification zurück
      */
     public Notification buildDefaultNot(int notID, String channelid, String contentTitle, int icon) {
         return new NotificationCompat.Builder(context, channelid)
@@ -100,9 +100,9 @@ public class NotificationBuilder {
 
     /**
      * Erstellt eine Progressbar-Notification mit festgelegtem Fortschrittsbalken
-     * @param channelid String Notification-Kanal identifizierung
-     * @param icon      Integer Id des Icons
-     * @return NotificationCompat.Builder Gibt das NotificationCompat.Builder Objekt zurück
+     * @param channelid Notification-Kanal identifizierung
+     * @param icon Id des Icons
+     * @return Gibt das NotificationCompat.Builder Objekt zurück
      */
     public NotificationCompat.Builder buildProgressbarNot(String channelid, int icon) {
         return new NotificationCompat.Builder(context, channelid)
@@ -118,11 +118,11 @@ public class NotificationBuilder {
 
     /**
      * Erstellt eine Vergrößerbare Nachricht mit übergebbaren Kanaleinstellungen
-     * @param notID        Integer Individuelle Notification ID
-     * @param channelid    String Notification-Kanal identifizierung
-     * @param contentTitle String Titel der Notification
-     * @param icon         Integer Id des Icons
-     * @return Notification Gibt die Notification zurück
+     * @param notID Individuelle Notification ID
+     * @param channelid Notification-Kanal identifizierung
+     * @param contentTitle Titel der Notification
+     * @param icon Id des Icons
+     * @return Gibt die Notification zurück
      */
     public Notification buildBigPictureStyleNot(int notID, String channelid, String contentTitle, int icon) {
         return new NotificationCompat.Builder(context, channelid)
@@ -141,12 +141,13 @@ public class NotificationBuilder {
 
     /**
      * Erstellt eine Mediakontrollen Notification
-     * @param notID Integer Individuelle Notification ID
-     * @param channelid String Notification-Kanal identifizierung
-     * @param icon Integer Id des Icons
-     * @param mute Boolean Gibt an, ob die Notification das Mute Icon ändern soll
-     * @param pause Boolean Gibt an, ob die Notification das Pause Icon ändern soll
-     * @return Notification Gibt die Notification zurück
+     * @param notID Individuelle Notification ID
+     * @param chanID Individueller Kanal
+     * @param channelid Notification-Kanal identifizierung
+     * @param icon Id des Icons
+     * @param mute Gibt an, ob die Notification das Mute Icon ändern soll
+     * @param pause Gibt an, ob die Notification das Pause Icon ändern soll
+     * @return Gibt die Notification zurück
      */
     public Notification buildMediaConNot(int notID, int chanID, String channelid, int icon, boolean mute, boolean pause) {
         Intent muteIntent = new Intent(context, NotificationReceiver.class).setAction(ACTION_MUTE).putExtra(PAYLOADNOTID, notID).putExtra(PAYLOADCHID, chanID);
@@ -181,11 +182,11 @@ public class NotificationBuilder {
 
     /**
      * Erstellt eine BigText Style Notification
-     * @param notID Integer Individuelle Notification ID
-     * @param channelid String Notification-Kanal identifizierung
-     * @param contentTitle String Titel der Notification
-     * @param icon Integer Id des Icons
-     * @return Notification Gibt die Notification zurück
+     * @param notID Individuelle Notification ID
+     * @param channelid Notification-Kanal identifizierung
+     * @param contentTitle Titel der Notification
+     * @param icon Id des Icons
+     * @return Gibt die Notification zurück
      */
     public Notification buildBigTextStyleNot(int notID, String channelid, String contentTitle, int icon) {
         return new NotificationCompat.Builder(context, channelid)
@@ -205,10 +206,11 @@ public class NotificationBuilder {
 
     /**
      * Aktualisiert oder erstellt eine Messagingstyle Notification
-     * @param notID Integer Individuelle Notification ID
-     * @param channelid String Notification-Kanal identifizierung
-     * @param icon Integer Id des Icons
-     * @return Notification Gibt die Notification zurück
+     * @param notID Individuelle Notification ID
+     * @param chanID Individueller Kanal
+     * @param channelid Notification-Kanal identifizierung
+     * @param icon Id des Icons
+     * @return Gibt die Notification zurück
      */
     public Notification buildDirRplyMessStNot(int notID, int chanID, String channelid, int icon) {
         //RemoteInput, anhand dessen wird der eingegebene Text später entnommen
@@ -249,10 +251,10 @@ public class NotificationBuilder {
 
     /**
      * Erstellt eine eigene Notification
-     * @param notID Integer Individuelle Notification ID
-     * @param channelid String Notification-Kanal identifizierung
-     * @param icon Integer Id des Icons
-     * @return Notification Gibt die Notification zurück
+     * @param notID Individuelle Notification ID
+     * @param channelid Notification-Kanal identifizierung
+     * @param icon Id des Icons
+     * @return Gibt die Notification zurück
      */
     public Notification buildCustomNot(int notID, String channelid, int icon) {
         RemoteViews collapsedView = new RemoteViews(context.getPackageName(), R.layout.notification_collapsed);
