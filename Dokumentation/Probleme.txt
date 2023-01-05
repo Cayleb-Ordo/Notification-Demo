@@ -2,4 +2,5 @@
     Dadurch hat sich nur die Payload immer überschrieben und somit wurde nicht das aktuelle genommen.
 - Reply, konnte nicht realisieren was geplant, da von einem BroadcastReceiver keine Activity gestartet werden soll.
 - Die korrekte Gradle abhängigkeit für den MediaStyle war nicht einfach herauszufinden.
-- Messaging Style, häufiges Öffnen der mainActivity hat dazu geführt das die Arraylist immer wieder mit demselben überschrieben wurde. Daher eine Application Klasser hinzugefügt, damit nur einmal geladen.
+- Messaging Style, häufiges Öffnen der mainActivity hat dazu geführt das die Arraylist immer wieder mit demselben überschrieben wurde. Daher eine Application Klasse hinzugefügt, damit nur einmal geladen.
+- Bei Umzug auf Android 13 sind keine Nachrichten angezeigt worden. Lösung: Implementieren der Berechtigungsabfrage basierend auf den neuen Runtime-Permissions

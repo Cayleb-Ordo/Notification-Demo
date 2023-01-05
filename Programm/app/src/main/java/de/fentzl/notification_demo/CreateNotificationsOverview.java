@@ -1,3 +1,21 @@
+/*
+ *     Copyright (C) 2021-2023 Simon Fentzl
+ *     This file is part of Notification-Demo
+ *
+ *     Notification-Demo is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Notification-Demo is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Notification-Demo.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.fentzl.notification_demo;
 
 import android.content.Intent;
@@ -13,7 +31,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Objects;
 
 /**
- * Diese Klasse setzt je nach Benuztereingabe eine Bestimmte Notification
+ * Diese Klasse setzt je nach Benutzereingabe eine bestimmte Notification
  * @author Simon Fentzl
  * @version 1
  */
@@ -38,11 +56,8 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        notificationController = new NotificationController(this.getApplicationContext());
+        notificationController = NotificationDemoApplication.getAPPLICATION().getNotController();
         setContentView(R.layout.activity_create_not_overv);
-        /*
-        Toolbar-Einstellungen
-         */
         Toolbar toolbar = findViewById(R.id.main_appbar);
         setSupportActionBar(toolbar);
         setTitle(R.string.app_name);

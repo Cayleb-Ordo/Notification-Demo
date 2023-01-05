@@ -1,17 +1,42 @@
+<!--
+  ~     Copyright (C) 2021-2023 Simon Fentzl
+  ~     This file is part of Notification-Demo
+  ~
+  ~     Notification-Demo is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     Notification-Demo is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with Notification-Demo.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
+    <!--Info Zeichenketten-->
     <string name="app_name">Notification-Demo App</string>
     <string name="fab_content">Erstellt eine neue Notification</string>
-    <!-- Channel Names-->
-    <string name="Channel1ID">Channel1</string>
-    <!-- Notification-Contents-->
+    <string name="CustNotPicture">CustomPicture</string>
+    <!--Kanal Informationen-->
+    <string name="ChanName">Kanal</string>
+    <string name="Chan1Name">Kanal 1</string>
+    <string name="Chan2Name">Kanal 2</string>
+    <string name="ChanInfo">Nachrichten-Kanal</string>
+    <string name="Chan1Info">Nachrichten-Kanal 1</string>
+    <string name="Chan2Info">Nachrichten-Kanal 2</string>
+    <!--Notification-Contents-->
     <string name="NotTitleCh1">Kanal 1</string>
     <string name="NotTitleCh2">Kanal 2</string>
     <string name="NotDefContent">Ich bin eine Push-Nachricht</string>
     <string name="NotPicContent">Ich bin eine Pig-Picture Style Nachricht</string>
     <string name="NotRplyLabel">Sag was...</string>
     <string name="NotProgTitle">Download</string>
-    <string name="NotProgIndit">Download startet ...</string>
-    <string name="NotProgStartText">Download läuft ...</string>
+    <string name="NotProgIndit">Download startet...</string>
+    <string name="NotProgStartText">Download läuft...</string>
     <string name="NotProgEndText">Download abgeschlossen</string>
     <string name="NotExpanTitle">Mausi\'s Katzenschrei</string>
     <string name="NotExpanText">Mausi und die Mäuse</string>
@@ -19,19 +44,21 @@
     <string name="NotBText_lorem">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</string>
     <string name="NotBTextConTitle">Das ist viel Text</string>
     <string name="NotBTextSumm">Zusammenfasung:</string>
-    <!-- Custom-Notification-->
+    <!--Custom-Notification-->
     <string name="NotCuCoTitle">Schönes Bild!</string>
     <string name="NotCuCoInfo">Erweitern zum ansehen</string>
     <string name="NotCuExpTitle">Eine Eigene Notification</string>
-    <!-- Notification-Action-Buttons-->
+    <!--Notification-Action-Buttons-->
     <string name="NotActionClose">Schließen</string>
     <string name="NotActionReply">Antworten</string>
     <string name="NotExpAPrev">Vorheriges</string>
     <string name="NotExpANext">Nächstes</string>
     <string name="NotExpAPause">Pausieren</string>
+    <string name="NotExpAUPause">Starten</string>
     <string name="NotExpAMute">Ton aus</string>
+    <string name="NotExpAUMute">Ton an</string>
     <string name="NotExpAAbort">Beenden</string>
-    <!-- Button-Contents-->
+    <!--Button-Contents-->
     <string name="CNotCh1">Kanal 1</string>
     <string name="CNotCh2">Kanal 2</string>
     <!--TextView-Contents-->
@@ -46,6 +73,8 @@
     <string name="Pop_Media">Media Kontrollen</string>
     <string name="Pop_Rply">Messenger Style</string>
     <string name="Pop_Custom">Benutzerdefiniert</string>
+    <!--Einstellungs-Menü-->
+    <string name="Set_Settings">Einstellungen</string>
     <!--Messenging-Style-"Nachrichten"-->
     <string name="MessageTitle">Party Chat</string>
     <string name="MessageMoring">Moin Leute</string>
@@ -53,7 +82,14 @@
     <string name="MessageAnswer2">Wir sind schon lang wach</string>
     <string name="MessageAnna">Anna</string>
     <string name="MessageRichard">Richard</string>
-    <string name="MessageMe">Ich</string>
+    <string name="MessageMe">Du</string>
     <!--Toast-Strings-->
     <string name="ToIntErr">Interner Fehler</string>
+    <!--Anfragen der Berechtigungen-->
+    <string name="AskPerm">Benachrichtigungen müssen aktiviert sein, damit diese App ihren Zweck erfüllen kann!</string>
+    <string name="Ok">OK</string>
+    <string name="Aktivate">Aktivieren</string>
+    <string name="acknowledge">Verstanden</string>
+    <string name="NotDisabled">Benachrichtigungen sind für diese App deaktiviert!</string>
+    <string name="NotEnableSettings">Die Benachrichtigungen können über die App Einstellungen aktiviert werden.</string>
 </resources>
