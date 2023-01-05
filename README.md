@@ -9,7 +9,7 @@ Diese App wurde ursprünglich für Android 8(Oreo) mit Java entwickelt, ist aber
 
 ## Inhalt
 
-- [Ordnerstruktur](#ordnerstruSktur)
+- [Ordnerstruktur](#ordnerstruktur)
 - [Installation](#installation)
 - [Android Berechtigungen](#android-berechtigungen)
     - [Berechtigung für Benachrichtigungen Anfragen](#berechtigung-für-benachrichtigungen-anfragen)
