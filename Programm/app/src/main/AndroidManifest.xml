@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~     Copyright (C) 2021-2023 Simon Fentzl
   ~     This file is part of Notification-Demo
   ~
@@ -51,9 +50,7 @@
 
         <receiver
             android:name=".NotificationReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="TODO" />
+            android:exported="false" />
     </application>
 
 </manifest>

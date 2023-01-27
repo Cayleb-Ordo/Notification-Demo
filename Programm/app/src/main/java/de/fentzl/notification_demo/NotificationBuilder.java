@@ -40,7 +40,6 @@ public class NotificationBuilder {
     public static final String KEY_TEXTRPLY = "reply";
     public static final String PAYLOADCHID = "payloadCHID";
     public static final String PAYLOADNOTID = "payloadNotID";
-    private final String CLASS_NOTIFICATIONBUILDER = "de.fentzl.notification_demo.NotificationBuilder";
     private final String NOTIFICATION_GROUP_KEY = "de.fentzl.notification_demo.Gruppe";
     private final Person me;
     private final Context context;
