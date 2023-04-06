@@ -22,6 +22,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
@@ -130,7 +131,7 @@ public class NotificationBuilder {
                 .setContentText(context.getString(R.string.NotPicContent))
                 .setContentIntent(buildContentIntent())
                 .setLargeIcon(NotificationDemoApplication.rwu_logo)
-                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(NotificationDemoApplication.rwu_logo).bigLargeIcon(null))
+                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(NotificationDemoApplication.rwu_logo).bigLargeIcon((Bitmap) null))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), buildDismissIntent(notID))
                 .setAutoCancel(true)
