@@ -176,7 +176,7 @@ public class NotificationBuilder {
                 .setOnlyAlertOnce(true)
                 .setGroup(NOTIFICATION_GROUP_KEY)
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
-                .setShowActionsInCompactView(1, 2, 3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
+                        .setShowActionsInCompactView(1, 2, 3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
                 .build();
     }
 
