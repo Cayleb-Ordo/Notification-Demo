@@ -51,9 +51,7 @@
 
         <receiver
             android:name=".NotificationReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="TODO" />
+            android:exported="false" />
     </application>
 
 </manifest>

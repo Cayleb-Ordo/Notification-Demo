@@ -22,6 +22,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
@@ -40,7 +41,6 @@ public class NotificationBuilder {
     public static final String KEY_TEXTRPLY = "reply";
     public static final String PAYLOADCHID = "payloadCHID";
     public static final String PAYLOADNOTID = "payloadNotID";
-    private final String CLASS_NOTIFICATIONBUILDER = "de.fentzl.notification_demo.NotificationBuilder";
     private final String NOTIFICATION_GROUP_KEY = "de.fentzl.notification_demo.Gruppe";
     private final Person me;
     private final Context context;
@@ -131,7 +131,7 @@ public class NotificationBuilder {
                 .setContentText(context.getString(R.string.NotPicContent))
                 .setContentIntent(buildContentIntent())
                 .setLargeIcon(NotificationDemoApplication.rwu_logo)
-                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(NotificationDemoApplication.rwu_logo).bigLargeIcon(null))
+                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(NotificationDemoApplication.rwu_logo).bigLargeIcon((Bitmap) null))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .addAction(R.drawable.ic_launcher_foreground, context.getString(R.string.NotActionClose), buildDismissIntent(notID))
                 .setAutoCancel(true)
@@ -176,7 +176,7 @@ public class NotificationBuilder {
                 .setOnlyAlertOnce(true)
                 .setGroup(NOTIFICATION_GROUP_KEY)
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
-                .setShowActionsInCompactView(1, 2, 3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
+                        .setShowActionsInCompactView(1, 2, 3)) //diese Integer beziehen sich auf die Reihenfolge der Action Buttons
                 .build();
     }
 
