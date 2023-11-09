@@ -41,7 +41,7 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
     private boolean button1Clicked = false;
 
     /**
-     * Enumeration für die Unterschiedlichen Typen von Notifications
+     * Enumeration für die unterschiedlichen Typen von Notifications
      */
     enum NotificationType {
         Default,
