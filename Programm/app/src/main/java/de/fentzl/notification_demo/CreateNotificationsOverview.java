@@ -32,6 +32,7 @@ import java.util.Objects;
 
 /**
  * Diese Klasse setzt je nach Benutzereingabe eine bestimmte Notification
+ *
  * @author Simon Fentzl
  * @version 1
  */
@@ -64,67 +65,70 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
+    // evtl auf view-binding umstellen damit oder auf if else wechseln
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         Intent tmpInt = new Intent(CreateNotificationsOverview.this, MainActivity.class);
-        switch (item.getItemId()) {
-            case R.id.Pop_Default:
-                if (button1Clicked)
-                    notificationController.notifyChannel1(NotificationType.Default);
-                else
-                    notificationController.notifyChannel2(NotificationType.Default);
-                startActivity(tmpInt);
-                return true;
-            case R.id.Pop_Progress:
-                if (button1Clicked)
-                    notificationController.notifyChannel1(NotificationType.Progress);
-                else
-                    notificationController.notifyChannel2(NotificationType.Progress);
-                startActivity(tmpInt);
-                return true;
-            case R.id.Pop_BigPicture:
-                if (button1Clicked)
-                    notificationController.notifyChannel1(NotificationType.BigPicture);
-                else
-                    notificationController.notifyChannel2(NotificationType.BigPicture);
-                startActivity(tmpInt);
-                return true;
-            case R.id.Pop_BigText:
-                if (button1Clicked)
-                    notificationController.notifyChannel1(NotificationType.BigText);
-                else
-                    notificationController.notifyChannel2(NotificationType.BigText);
-                startActivity(tmpInt);
-                return true;
-            case R.id.Pop_Media:
-                if (button1Clicked)
-                    notificationController.notifyChannel1(NotificationType.Media);
-                else
-                    notificationController.notifyChannel2(NotificationType.Media);
-                startActivity(tmpInt);
-                return true;
-            case R.id.Pop_Rply:
-                if (button1Clicked)
-                    notificationController.notifyChannel1(NotificationType.Reply);
-                else
-                    notificationController.notifyChannel2(NotificationType.Reply);
-                startActivity(tmpInt);
-                return true;
-            case R.id.Pop_Custom:
-                if (button1Clicked)
-                    notificationController.notifyChannel1(NotificationType.Custom);
-                else
-                    notificationController.notifyChannel2(NotificationType.Custom);
-                startActivity(tmpInt);
-                return true;
-            default:
-                Log.d(NotificationDemoApplication.debugTag, CLASS_CreateNotificationsOverview + ": Default von MenuItem Listener");
-                return false;
+        int id = item.getItemId();
+        if (id == R.id.Pop_Default) {
+            if (button1Clicked)
+                notificationController.notifyChannel1(NotificationType.Default);
+            else
+                notificationController.notifyChannel2(NotificationType.Default);
+            startActivity(tmpInt);
+            return true;
+        } else if (id == R.id.Pop_Progress) {
+            if (button1Clicked)
+                notificationController.notifyChannel1(NotificationType.Progress);
+            else
+                notificationController.notifyChannel2(NotificationType.Progress);
+            startActivity(tmpInt);
+            return true;
+        } else if (id == R.id.Pop_BigPicture) {
+
+            if (button1Clicked)
+                notificationController.notifyChannel1(NotificationType.BigPicture);
+            else
+                notificationController.notifyChannel2(NotificationType.BigPicture);
+            startActivity(tmpInt);
+            return true;
+        } else if (id == R.id.Pop_BigText) {
+            if (button1Clicked)
+                notificationController.notifyChannel1(NotificationType.BigText);
+            else
+                notificationController.notifyChannel2(NotificationType.BigText);
+            startActivity(tmpInt);
+            return true;
+        } else if (id == R.id.Pop_Media) {
+            if (button1Clicked)
+                notificationController.notifyChannel1(NotificationType.Media);
+            else
+                notificationController.notifyChannel2(NotificationType.Media);
+            startActivity(tmpInt);
+            return true;
+        } else if (id == R.id.Pop_Rply) {
+            if (button1Clicked)
+                notificationController.notifyChannel1(NotificationType.Reply);
+            else
+                notificationController.notifyChannel2(NotificationType.Reply);
+            startActivity(tmpInt);
+            return true;
+        } else if (id == R.id.Pop_Custom) {
+            if (button1Clicked)
+                notificationController.notifyChannel1(NotificationType.Custom);
+            else
+                notificationController.notifyChannel2(NotificationType.Custom);
+            startActivity(tmpInt);
+            return true;
+        } else {
+            Log.d(NotificationDemoApplication.debugTag, CLASS_CreateNotificationsOverview + ": Else Zweig von MenuItem Listener");
+            return false;
         }
     }
 
     /**
      * Zeigt ein Custom Popup Menü an
+     *
      * @param view View Das View Objekt, an dem dieses Menü angehängt wird
      */
     private void showPopupMenu(View view) {
