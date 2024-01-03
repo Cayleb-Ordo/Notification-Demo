@@ -5,7 +5,7 @@ Demo App für Android Push-Notifications.
 ## Beschreibung
 
 Dieses Repository enthält den Code einer Demonstrationsanwendung für Android Push-Notifications. Diese Anwendung zeigt anschaulich, was mit den Push-Notifications erreicht werden kann.
-Diese App wurde ursprünglich für Android 8(Oreo) mit Java entwickelt, ist aber kompatibel bis Android 13.  
+Diese App wurde ursprünglich für Android 8 (Oreo) mit Java entwickelt, ist aber kompatibel bis Android 13.  
 
 ## Inhalt
 
@@ -48,17 +48,19 @@ Diese App wurde ursprünglich für Android 8(Oreo) mit Java entwickelt, ist aber
     - Ordnerstruktur gleich wie bei einem normalen Android-Studio Projekt.
     
 ## Installation
+
 Zum Installieren am einfachsten das Android-Studio Projekt laden und für die benötigte Android-Version kompilieren.  
 Es wird keine Separate apk-Datei mitgeliefert.
 
 ## Android Berechtigungen
 
-Seit Android 6(Marshmallow) gibt es neben den Installationsberechtigungen auch sog. Runtime-Permissions. Dadurch fragt die App, während sie ausgeführt wird, nach den benötigten Berechtigungen. In Android Oreo musste der Benutzer der App nicht gefragt werden, ob die App ihm Benachrichtigungen schicken darf. Denn die Benachrichtigungen sind nicht in einer **Gefährlichen Kategorie**, deshalb ist es nicht relevant explizit zu fragen.   
-das hat sich mit Erscheinen von Android 13 geändert. Nun ist standardmäßig alles deaktiviert, was nicht explizit im Manifest angegeben und dem Benutzer mitgeteilt wurde. Wenn dieser nicht zustimmt, wird die App nicht in der Lage sein, Benachrichtigungen darzustellen. Daher gibt es von Android eine API, mit der man dem Benutzer in einem Popup nach seiner Zustimmung fragen kann. Ein guter Startpunkt sind die offiziellen Dokumentationen.  
-Es werden hier nur die relevanten Elemente für die Push-Notification Berechtigung besprochen, die genauen Details zu allen Berechtigungen und deren Auswirkungen sind in der offiziellen Dokumentation enthalten([Android-Permissions](https://developer.android.com/guide/topics/permissions/overview)).
+Seit Android 6 (Marshmallow) gibt es neben den Installationsberechtigungen auch sog. Runtime-Permissions. Dadurch fragt die App, während sie ausgeführt wird, nach den benötigten Berechtigungen. In Android Oreo musste der Benutzer der App nicht gefragt werden, ob die App ihm Benachrichtigungen schicken darf. Denn die Benachrichtigungen sind nicht in einer **Gefährlichen Kategorie**, deshalb ist es nicht relevant explizit zu fragen.   
+Das hat sich mit Erscheinen von Android 13 geändert. Nun ist standardmäßig alles deaktiviert, was nicht explizit im Manifest angegeben und dem Benutzer mitgeteilt wurde. Wenn dieser nicht zustimmt, wird die App nicht in der Lage sein, Benachrichtigungen darzustellen. Daher gibt es von Android eine API, mit der man dem Benutzer in einem Popup nach seiner Zustimmung fragen kann. Ein guter Startpunkt sind die offiziellen Dokumentationen.  
+Es werden hier nur die relevanten Elemente für die Push-Notification Berechtigung besprochen, die genauen Details zu allen Berechtigungen und deren Auswirkungen sind in der offiziellen Dokumentation enthalten ([Android-Permissions](https://developer.android.com/guide/topics/permissions/overview)).
 
 ### Berechtigung für Benachrichtigungen Anfragen
-**!!!Gilt nur für API 33 und aufwärts!!!**
+
+**!!!Gilt nur für API 33 und aufwärts!!!**  
 Zunächst müssen alle Berechtigungen, die die App braucht, in der AndroidManifest Datei eingetragen werden. Für den Fall der Benachrichtigungen wird folgende Zeile gebraucht:
 
 ```xml
@@ -71,7 +73,7 @@ Um zu schauen, ob eine bestimmte Berechtigung gesetzt ist, wird folgende Funktio
 checkSelfPermission(Context, Permission)
 ```
 
-Diese gibt einen ```PackageManager.PERMISSION_GRANTED``` zurück, wenn die angeforderte Berechtigung gesetzt ist. Wenn dies der Fall ist, kann die App ihren normalen Ablauf weiterführen, ansonsten muss der Benutzer um die Berechtigung gebeten werden.!! Wichtig diesen Code kann man nur innerhalb eines Fragments oder einer Activity verwenden!!  
+Diese gibt einen ```PackageManager.PERMISSION_GRANTED``` zurück, wenn die angeforderte Berechtigung gesetzt ist. Wenn dies der Fall ist, kann die App ihren normalen Ablauf weiterführen, ansonsten muss der Benutzer um die Berechtigung gebeten werden. !! Wichtig diesen Code kann man nur innerhalb eines Fragments oder einer Activity verwenden!!  
 Um nun den Nutzer darüber in Kenntnis setzen, dass diese App die spezifische Berechtigung braucht, muss man sich eine Referenz auf einen ```ActivityResultLauncher```. Dieser ist der Rückgabewert der Funktion *registerForActivityResult*.  
 Dieser Funktion wird ein *ActivityResultContract* und ein *ActivityResultCallback* mitgegeben. Der Contract bezieht sich auf die angeforderte Berechtigung und der *ActivityResultCallback* ist die Funktion, die aufgerufen wird, wenn der Benutzer sich für eine der beiden Optionen des Systemdialogs entschieden hat. Das kann auch eine Lambda Funktion sein. Dieser ResultLauncher wird dann ausgeführt, wenn der Benutzer noch keine Berechtigung eingestellt hat.  
 
@@ -214,9 +216,10 @@ notificationManager.notify(notID, notbuilder.build());
 ---
 Erstellen einer Messaging-Style Notification mit Antwortmöglichkeit (siehe WhatsApp).  
 Diese erfordert weitere Einstellungen um zu Funktionieren. Wichtig ist das der ConversionTitle im Style nicht für Chats   
-unter drei Personen verwendet werden soll. Ebenfalls wichtig ist bei das der PendingIntent des RemoteInput immer einzigartig ist, sonst  
+unter drei Personen verwendet werden soll. Ebenfalls wichtig ist, dass der PendingIntent des RemoteInput immer einzigartig ist, sonst  
 könnte es sein das der User in einem anderen Chat die Nachricht schreibt als er annimmt.  
 **Code:**  
+
 #### RemoteInput
 ---
 ```java
@@ -225,6 +228,7 @@ RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXTRPLY)
         .setLabel(context.getString(R.string.NotRplyLabel))
         .build();
 ```
+
 #### ActionButton mit RemoteInput
 ---
 ```java
@@ -234,6 +238,7 @@ NotificationCompat.Action rplyAction = new NotificationCompat.Action.Builder(R.d
         .addRemoteInput(remoteInput)
         .build();
 ```
+
 #### MessagingStyle
 ---
 ```java
@@ -242,6 +247,7 @@ NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.Messag
         .setConversationTitle(context.getString(R.string.MessageTitle));
 messagingStyle.addMessage(notMessage); // Fügt die Nachricht dem Style hinzu
 ```
+
 #### Notification
 ---
 ```java
@@ -261,8 +267,8 @@ notificationManager.notify(notID, rplyNot);
 ### Custom
 ---
 Erstellt eine Komplett benutzerdefiniert Notification. Es werden Layouts für RemoteViews benötigt.  
-Zwei Einschränkungen: CollapsedView(Notification ist klein) höhe max. 64dp. ExpandedView(Erweiterte Notification) höhe 256dp.  
-Um ein konsistentes Aussehen mit den restlichen Notifications zu erreichen sollte man die Notification mit dem NotificationCompat.DecoratedCustomViewStyle versehen.  
+Zwei Einschränkungen: CollapsedView (Notification ist klein) höhe max. 64dp. ExpandedView (Erweiterte Notification) höhe 256dp.  
+Um ein konsistentes Aussehen mit den restlichen Notifications zu erreichen, sollte man die Notification mit dem NotificationCompat.DecoratedCustomViewStyle versehen.  
 **Code:**
 ```java
 RemoteViews collapsedView = new RemoteViews(context.getPackageName(), R.layout.notification_collapsed);
