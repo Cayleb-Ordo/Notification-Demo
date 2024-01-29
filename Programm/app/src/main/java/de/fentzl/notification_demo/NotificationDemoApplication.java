@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Haupt-Applicationklasse
+ * Haupt-Applikationklasse
  * @author Simon Fentzl
  * @version 2
  */
