@@ -1,5 +1,5 @@
 /*
- *     Copyright (C) 2021-2023 Simon Fentzl
+ *     Copyright (C) 2021-2024 Simon Fentzl
  *     This file is part of Notification-Demo
  *
  *     Notification-Demo is free software: you can redistribute it and/or modify
@@ -26,6 +26,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 /**
  * BroadcastReceiver der aufgerufen wird, wenn ein ActionButton der Notification ausgelöst wird
  * @author Simon Fentzl
@@ -44,7 +46,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         } else
             notificationController.dismissNotification(intent.getIntExtra(NotificationController.PAYLOAD,0));
          */
-        switch (intent.getAction()){
+        switch (Objects.requireNonNull(intent.getAction())){
             case NotificationBuilder.ACTION_DISMISS:
                 notificationController.dismissNotification(intent.getIntExtra(NotificationBuilder.PAYLOADNOTID, -1));
                 break;

@@ -1,5 +1,5 @@
 /*
- *     Copyright (C) 2021-2023 Simon Fentzl
+ *     Copyright (C) 2021-2024 Simon Fentzl
  *     This file is part of Notification-Demo
  *
  *     Notification-Demo is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package de.fentzl.notification_demo;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -60,6 +61,7 @@ public class NotificationController {
      * Erstellt den Notwendigen Kanal für Geräte über Android8.0
      * @param createOption Gibt an ob zwei oder nur ein Notification Channel erstellt werden soll.
      */
+    @SuppressLint("ObsoleteSdkInt")
     public void createNotificationChannels(boolean createOption) {
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
         if (createOption) {
