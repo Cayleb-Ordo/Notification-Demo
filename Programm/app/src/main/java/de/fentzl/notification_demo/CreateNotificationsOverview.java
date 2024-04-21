@@ -1,5 +1,5 @@
 /*
- *     Copyright (C) 2021-2023 Simon Fentzl
+ *     Copyright (C) 2021-2024 Simon Fentzl
  *     This file is part of Notification-Demo
  *
  *     Notification-Demo is free software: you can redistribute it and/or modify
@@ -44,7 +44,7 @@ public class CreateNotificationsOverview extends AppCompatActivity implements Po
     /**
      * Enumeration für die unterschiedlichen Typen von Notifications
      */
-    enum NotificationType {
+    public enum NotificationType {
         Default,
         Progress,
         BigPicture,
