@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 #
-#     Copyright (C) 2023 Simon
+#     Copyright (C) 2021-2024 Simon Fentzl
 #     This file is part of Notification-Demo
 #
 #     Notification-Demo is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 #     GNU General Public License for more details.
 #
 #     You should have received a copy of the GNU General Public License
-#     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+#     along with Notification-Demo.  If not, see <http://www.gnu.org/licenses/>.
 #
 
 ##############################################################################
