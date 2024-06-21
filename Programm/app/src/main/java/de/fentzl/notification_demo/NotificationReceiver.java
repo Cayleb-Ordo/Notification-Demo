@@ -34,6 +34,7 @@ import java.util.Objects;
  * @version 2
  */
 public class NotificationReceiver extends BroadcastReceiver {
+    /** @noinspection FieldCanBeLocal*/
     private final String CLASS_NOTIFICATIONRECEIVER = "de.fentzl.notification_demo.NotificationReceiver";
 
     @Override

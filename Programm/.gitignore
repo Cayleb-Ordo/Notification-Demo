@@ -33,6 +33,7 @@ local.properties
 .idea/jarRepositories.xml
 .idea/navEditor.xml
 .idea/deploymentTargetDropDown.xml
+.idea/deploymentTargetSelector.xml
 .idea/inspectionProfiles
 .idea/copyright/
 .idea/migrations.xml

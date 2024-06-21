@@ -37,6 +37,7 @@ import java.util.Objects;
  * @version 1
  */
 public class CreateNotificationsOverview extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+    /** @noinspection FieldCanBeLocal*/
     private final String CLASS_CreateNotificationsOverview = "de.fentzl.notification_demo.CreateNotificationsOverview";
     private NotificationController notificationController;
     private boolean button1Clicked = false;
